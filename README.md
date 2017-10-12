@@ -1,0 +1,1 @@
+Projekt iz predmeta Oblikovanje Programske Potpore
