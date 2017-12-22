@@ -5,7 +5,7 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
 /**
- * Created by Ivan on 21/12/2017.
+ * Created by ivan_varga on 21/12/2017.
  */
 
 @Entity(primaryKeys = {"email", "nadimak"},

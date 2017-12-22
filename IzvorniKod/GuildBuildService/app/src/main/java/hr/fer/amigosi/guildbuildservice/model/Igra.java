@@ -4,7 +4,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Created by Ivan on 21/12/2017.
+ * Created by ivan_varga on 21/12/2017.
  */
 
 public class Igra {

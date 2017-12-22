@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Ivan on 21/12/2017.
+ * Created by ivan_varga on 21/12/2017.
  */
 
 public class Cilj {

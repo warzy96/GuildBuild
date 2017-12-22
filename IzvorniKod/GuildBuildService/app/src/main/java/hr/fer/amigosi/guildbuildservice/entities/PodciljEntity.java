@@ -4,7 +4,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 
 /**
- * Created by Ivan on 21/12/2017.
+ * Created by ivan_varga on 21/12/2017.
  */
 @Entity(primaryKeys = "sifraPodcilja",
         foreignKeys = @ForeignKey(entity = CiljEntity.class, parentColumns = "sifraCilja", childColumns = "sifraCilja", onDelete = ForeignKey.CASCADE))

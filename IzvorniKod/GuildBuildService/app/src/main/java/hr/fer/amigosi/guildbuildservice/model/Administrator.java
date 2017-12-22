@@ -3,7 +3,7 @@ package hr.fer.amigosi.guildbuildservice.model;
 import java.util.List;
 
 /**
- * Created by Ivan on 21/12/2017.
+ * Created by ivan_varga on 21/12/2017.
  */
 
 public class Administrator extends AnonimniKorisnik {

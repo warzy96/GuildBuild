@@ -1,7 +1,7 @@
 package hr.fer.amigosi.guildbuildservice.model;
 
 /**
- * Created by Ivan on 21/12/2017.
+ * Created by ivan_varga on 21/12/2017.
  */
 
 public class Obrazac {

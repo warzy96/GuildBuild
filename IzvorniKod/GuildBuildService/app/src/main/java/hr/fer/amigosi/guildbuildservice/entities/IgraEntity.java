@@ -3,7 +3,7 @@ package hr.fer.amigosi.guildbuildservice.entities;
 import android.arch.persistence.room.Entity;
 
 /**
- * Created by Ivan on 21/12/2017.
+ * Created by ivan_varga on 21/12/2017.
  */
 
 @Entity(primaryKeys = {"sifraIgre"})
