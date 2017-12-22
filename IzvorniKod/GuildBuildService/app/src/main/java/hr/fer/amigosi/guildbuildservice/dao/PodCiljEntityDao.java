@@ -23,7 +23,7 @@ public interface PodCiljEntityDao {
     @Delete
     public void deletePodcilj(Podcilj podcilj);
 
-    @Query("SELECT * FROM PodciljEntity WHERE sifraCilja== :sifraCilja")
+    @Query("SELECT * FROM PodciljEntity WHERE sifraCilja == :sifraCilja")
     public Podcilj[] getAllSubgoalsForGoal(int sifraCilja);
 
     @Query("SELECT * FROM PodciljEntity WHERE sifraPodcilja == :sifraPodcilja")
