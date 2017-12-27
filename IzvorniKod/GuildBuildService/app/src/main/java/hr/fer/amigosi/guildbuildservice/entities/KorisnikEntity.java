@@ -2,7 +2,9 @@ package hr.fer.amigosi.guildbuildservice.entities;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 /**
  * Created by ivan_varga on 21/12/2017.
@@ -11,10 +13,12 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(primaryKeys = {"email", "nadimak"},
 foreignKeys = {
         @ForeignKey(entity = CehEntity.class, parentColumns = "sifraCeha", childColumns = "sifraCeha")
-})
+},indices = @Index(value = "nadimak",unique = true))
 public class KorisnikEntity {
 
+    @NonNull
     private String email;
+    @NonNull
     private String nadimak;
     private String lozinka;
     private boolean statusRegistracije;

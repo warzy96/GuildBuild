@@ -28,10 +28,10 @@ public class Ceh {
         dogadaji = new LinkedList<>();
         brojGlasova = new HashMap<>();
     }
-    public Ceh(int sifraCeha, String naziv, int sifraIgre, String opis) {
+    /*public Ceh(int sifraCeha, String naziv, int sifraIgre, String opis) {
         this(sifraCeha, naziv, sifraIgre);
         this.opis = opis;
-    }
+    }*/
 
     //TODO: metode
 

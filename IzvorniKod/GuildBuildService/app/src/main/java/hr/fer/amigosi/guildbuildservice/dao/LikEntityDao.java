@@ -6,6 +6,9 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.util.List;
+
+import hr.fer.amigosi.guildbuildservice.entities.LikEntity;
 import hr.fer.amigosi.guildbuildservice.model.Lik;
 
 /**
@@ -15,17 +18,17 @@ import hr.fer.amigosi.guildbuildservice.model.Lik;
 @Dao
 public interface LikEntityDao {
     @Insert
-    public void insertLik(Lik lik);
+    public void insertLik(LikEntity lik);
 
     @Update
-    public void updateLik(Lik lik);
+    public void updateLik(LikEntity lik);
 
     @Delete
-    public void deleteLik(Lik lik);
+    public void deleteLik(LikEntity lik);
 
     @Query("SELECT * FROM LikEntity WHERE sifraKlase == :sifraKlase")
-    public Lik[] getAllCharactersForClass(int sifraKlase);
+    public List<Lik> getAllCharactersForClass(int sifraKlase);
 
     @Query("SELECT * FROM LikEntity WHERE nadimak LIKE :nadimak")
-    public Lik[] getAllCharactersForUser(String nadimak);
+    public List<Lik> getAllCharactersForUser(String nadimak);
 }

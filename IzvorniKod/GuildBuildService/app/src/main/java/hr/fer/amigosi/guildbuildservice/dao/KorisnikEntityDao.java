@@ -6,6 +6,9 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.util.List;
+
+import hr.fer.amigosi.guildbuildservice.entities.KorisnikEntity;
 import hr.fer.amigosi.guildbuildservice.model.AnonimniKorisnik;
 import hr.fer.amigosi.guildbuildservice.model.RegistriraniKorisnik;
 
@@ -16,27 +19,19 @@ import hr.fer.amigosi.guildbuildservice.model.RegistriraniKorisnik;
 @Dao
 public interface KorisnikEntityDao {
     @Insert
-    public void insertUser(AnonimniKorisnik anonimniKorisnik);
-
-    @Insert
-    public void insertUser(RegistriraniKorisnik registriraniKorisnik);
+    public void insertUser(KorisnikEntity korisnik);
 
     @Update
-    public void updateUser(AnonimniKorisnik anonimniKorisnik);
+    public void updateUser(KorisnikEntity korisnik);
 
-    @Update
-    public void updateUser(RegistriraniKorisnik registriraniKorisnik);
 
     @Delete
-    public void deleteUser(AnonimniKorisnik anonimniKorisnik);
-
-    @Delete
-    public void deleteUser (RegistriraniKorisnik registriraniKorisnik);
+    public void deleteUser (KorisnikEntity korisnik);
 
     @Query("SELECT * FROM KorisnikEntity WHERE statusRegistracije")
-    public RegistriraniKorisnik[] loadAllRegisteredUsers();
+    public List<RegistriraniKorisnik> loadAllRegisteredUsers();
 
     @Query("SELECT * FROM KorisnikEntity WHERE NOT statusRegistracije")
-    public AnonimniKorisnik[] loadAllAnonymousUsers();
+    public List<AnonimniKorisnik> loadAllAnonymousUsers();
 
 }

@@ -2,6 +2,7 @@ package hr.fer.amigosi.guildbuildservice.entities;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.support.annotation.NonNull;
 
 /**
  * Created by ivan_varga on 21/12/2017.
@@ -13,8 +14,10 @@ import android.arch.persistence.room.ForeignKey;
         })
 public class LikEntity {
     private int level;
+    @NonNull
     private int sifraKlase;
     private String craftingSkills;
+    @NonNull
     private String nadimak;
 
     public int getLevel() {

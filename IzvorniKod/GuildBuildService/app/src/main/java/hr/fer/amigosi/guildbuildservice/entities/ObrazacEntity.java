@@ -2,17 +2,19 @@ package hr.fer.amigosi.guildbuildservice.entities;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.support.annotation.NonNull;
 
 /**
  * Created by ivan_varga on 21/12/2017.
  */
 @Entity(primaryKeys = {"sifraCeha", "nadimakKorisnika"},
         foreignKeys = {
-                @ForeignKey(entity = ObrazacEntity.class, parentColumns = "sifraCeha", childColumns = "sifraCeha", onDelete = ForeignKey.CASCADE),
+                @ForeignKey(entity = CehEntity.class, parentColumns = "sifraCeha", childColumns = "sifraCeha", onDelete = ForeignKey.CASCADE),
                 @ForeignKey(entity = KorisnikEntity.class, parentColumns = "nadimak", childColumns = "nadimakKorisnika", onDelete = ForeignKey.CASCADE)
         })
 public class ObrazacEntity {
     private int sifraCeha;
+    @NonNull
     private String nadimakKorisnika;
     private  String poruka;
 

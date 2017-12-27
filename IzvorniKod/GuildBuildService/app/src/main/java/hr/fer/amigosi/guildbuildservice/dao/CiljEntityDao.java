@@ -6,6 +6,9 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.util.List;
+
+import hr.fer.amigosi.guildbuildservice.entities.CiljEntity;
 import hr.fer.amigosi.guildbuildservice.model.Cilj;
 
 /**
@@ -15,16 +18,16 @@ import hr.fer.amigosi.guildbuildservice.model.Cilj;
 @Dao
 public interface CiljEntityDao {
     @Insert
-    public void insertCilj(Cilj cilj);
+    public void insertCilj(CiljEntity cilj);
 
     @Update
-    public void updateCilj(Cilj cilj);
+    public void updateCilj(CiljEntity cilj);
 
     @Delete
-    public void deleteCilj(Cilj cilj);
+    public void deleteCilj(CiljEntity cilj);
 
     @Query("SELECT * FROM CiljEntity WHERE sifraDogadaja == :sifraDogadaja")
-    public Cilj[] getAllGoalsForEvent(int sifraDogadaja);
+    public List<Cilj> getAllGoalsForEvent(int sifraDogadaja);
 
     @Query("SELECT * FROM CiljEntity WHERE sifraCilja == :sifraCilja")
     public Cilj getGoal(int sifraCilja);

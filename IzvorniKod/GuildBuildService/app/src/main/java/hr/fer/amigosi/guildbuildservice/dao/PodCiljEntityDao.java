@@ -6,6 +6,9 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.util.List;
+
+import hr.fer.amigosi.guildbuildservice.entities.PodciljEntity;
 import hr.fer.amigosi.guildbuildservice.model.Podcilj;
 
 /**
@@ -15,16 +18,16 @@ import hr.fer.amigosi.guildbuildservice.model.Podcilj;
 @Dao
 public interface PodCiljEntityDao {
     @Insert
-    public void insertPodcilj(Podcilj podcilj);
+    public void insertPodcilj(PodciljEntity podcilj);
 
     @Update
-    public void updatePodcilj(Podcilj podcilj);
+    public void updatePodcilj(PodciljEntity podcilj);
 
     @Delete
-    public void deletePodcilj(Podcilj podcilj);
+    public void deletePodcilj(PodciljEntity podcilj);
 
     @Query("SELECT * FROM PodciljEntity WHERE sifraCilja == :sifraCilja")
-    public Podcilj[] getAllSubgoalsForGoal(int sifraCilja);
+    public List<Podcilj> getAllSubgoalsForGoal(int sifraCilja);
 
     @Query("SELECT * FROM PodciljEntity WHERE sifraPodcilja == :sifraPodcilja")
     public Podcilj getSubgoal(int sifraPodcilja);

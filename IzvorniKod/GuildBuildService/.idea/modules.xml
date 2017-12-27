@@ -4,8 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GuildBuildService.iml" filepath="$PROJECT_DIR$/GuildBuildService.iml" />
       <module fileurl="file://C:\Users\ivan_\Git\Amigosi\IzvorniKod\GuildBuildService\GuildBuildService.iml" filepath="C:\Users\ivan_\Git\Amigosi\IzvorniKod\GuildBuildService\GuildBuildService.iml" />
+      <module fileurl="file://D:\Karlo\FER\5. semestar\Oblikovanje programske potpore\Amigosi\Amigosi\IzvorniKod\GuildBuildService\GuildBuildService.iml" filepath="D:\Karlo\FER\5. semestar\Oblikovanje programske potpore\Amigosi\Amigosi\IzvorniKod\GuildBuildService\GuildBuildService.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://C:\Users\ivan_\Git\Amigosi\IzvorniKod\GuildBuildService\app\app.iml" filepath="C:\Users\ivan_\Git\Amigosi\IzvorniKod\GuildBuildService\app\app.iml" />
+      <module fileurl="file://D:\Karlo\FER\5. semestar\Oblikovanje programske potpore\Amigosi\Amigosi\IzvorniKod\GuildBuildService\app\app.iml" filepath="D:\Karlo\FER\5. semestar\Oblikovanje programske potpore\Amigosi\Amigosi\IzvorniKod\GuildBuildService\app\app.iml" />
     </modules>
   </component>
 </project>

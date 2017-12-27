@@ -6,6 +6,9 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.util.List;
+
+import hr.fer.amigosi.guildbuildservice.entities.CehEntity;
 import hr.fer.amigosi.guildbuildservice.model.Ceh;
 
 /**
@@ -15,13 +18,13 @@ import hr.fer.amigosi.guildbuildservice.model.Ceh;
 @Dao
 public interface CehEntityDao {
     @Insert
-    public void insertCeh(Ceh ceh);
+    public void insertCeh(CehEntity ceh);
 
     @Update
-    public void updateCeh(Ceh ceh);
+    public void updateCeh(CehEntity ceh);
 
     @Delete
-    public void deleteCeh(Ceh ceh);
+    public void deleteCeh(CehEntity ceh);
 
     @Query("SELECT * FROM CehEntity")
     public Ceh[] getAllGuilds();
@@ -30,5 +33,5 @@ public interface CehEntityDao {
     public Ceh getGuild(int sifraCeha);
 
     @Query("SELECT * FROM CehEntity WHERE sifraIgre == :sifraIgre")
-    public Ceh[] getGuildsForGame(int sifraIgre);
+    public List<Ceh> getGuildsForGame(int sifraIgre);
 }

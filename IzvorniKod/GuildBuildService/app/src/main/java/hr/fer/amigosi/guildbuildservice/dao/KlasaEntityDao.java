@@ -6,6 +6,9 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.util.List;
+
+import hr.fer.amigosi.guildbuildservice.entities.KlasaEntity;
 import hr.fer.amigosi.guildbuildservice.model.Klasa;
 
 /**
@@ -15,14 +18,14 @@ import hr.fer.amigosi.guildbuildservice.model.Klasa;
 @Dao
 public interface KlasaEntityDao {
     @Insert
-    public void insertKlasa(Klasa klasa);
+    public void insertKlasa(KlasaEntity klasa);
 
     @Update
-    public void updateKlasa(Klasa klasa);
+    public void updateKlasa(KlasaEntity klasa);
 
     @Delete
-    public void deleteKlasa(Klasa klasa);
+    public void deleteKlasa(KlasaEntity klasa);
 
     @Query("SELECT * FROM KlasaEntity WHERE sifraIgre == :sifraIgre")
-    public Klasa[] getAllClassesForGame(int sifraIgre);
+    public List<Klasa> getAllClassesForGame(int sifraIgre);
 }

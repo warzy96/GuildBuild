@@ -6,6 +6,10 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.util.List;
+
+import hr.fer.amigosi.guildbuildservice.entities.ObrazacEntity;
+import hr.fer.amigosi.guildbuildservice.model.Lik;
 import hr.fer.amigosi.guildbuildservice.model.Obrazac;
 
 /**
@@ -15,15 +19,15 @@ import hr.fer.amigosi.guildbuildservice.model.Obrazac;
 @Dao
 public interface ObrazacEntityDao {
     @Insert
-    public void insertObrazac(Obrazac obrazac);
+    public void insertObrazac(ObrazacEntity obrazac);
 
     @Update
-    public void updateObrazac(Obrazac obrazac);
+    public void updateObrazac(ObrazacEntity obrazac);
 
     @Delete
-    public void deleteObrazac(Obrazac obrazac);
+    public void deleteObrazac(ObrazacEntity obrazac);
 
     @Query("SELECT * FROM ObrazacEntity WHERE sifraCeha == :sifraCeha")
-    public Obrazac[] getAllFormsForGuild(int sifraCeha);
+    public List<ObrazacEntity> getAllFormsForGuild(int sifraCeha);
 
 }
