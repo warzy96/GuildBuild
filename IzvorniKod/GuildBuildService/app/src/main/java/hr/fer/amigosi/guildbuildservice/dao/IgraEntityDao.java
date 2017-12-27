@@ -27,5 +27,5 @@ public interface IgraEntityDao {
     public void deleteIgra(IgraEntity igra);
 
     @Query("SELECT * FROM IgraEntity")
-    public List<Igra> getAllGames();
+    public List<IgraEntity> getAllGames();
 }

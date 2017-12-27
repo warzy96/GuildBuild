@@ -27,8 +27,8 @@ public interface LikEntityDao {
     public void deleteLik(LikEntity lik);
 
     @Query("SELECT * FROM LikEntity WHERE sifraKlase == :sifraKlase")
-    public List<Lik> getAllCharactersForClass(int sifraKlase);
+    public List<LikEntity> getAllCharactersForClass(int sifraKlase);
 
     @Query("SELECT * FROM LikEntity WHERE nadimak LIKE :nadimak")
-    public List<Lik> getAllCharactersForUser(String nadimak);
+    public List<LikEntity> getAllCharactersForUser(String nadimak);
 }

@@ -2,6 +2,7 @@ package hr.fer.amigosi.guildbuildservice.entities;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 
 /**
  * Created by ivan_varga on 21/12/2017.
@@ -9,7 +10,8 @@ import android.arch.persistence.room.ForeignKey;
 @Entity(primaryKeys = "sifraCeha",
         foreignKeys = {
             @ForeignKey(entity = IgraEntity.class, parentColumns = "sifraIgre", childColumns = "sifraIgre")
-        })
+        },
+        indices = @Index(value = "sifraIgre", unique = true))
 public class CehEntity {
     private int sifraCeha;
     private String naziv;

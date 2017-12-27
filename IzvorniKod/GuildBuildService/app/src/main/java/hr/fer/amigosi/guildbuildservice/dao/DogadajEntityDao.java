@@ -27,8 +27,8 @@ public interface DogadajEntityDao {
     public void deleteDogadaj(DogadajEntity dogadaj);
 
     @Query("SELECT * FROM DogadajEntity WHERE sifraCeha == :sifraCeha")
-    public List<Dogadaj> getAllEventsForGuild(int sifraCeha);
+    public List<DogadajEntity> getAllEventsForGuild(int sifraCeha);
 
     @Query("SELECT * FROM DogadajEntity WHERE sifraCeha == :sifraCeha AND vidljivost")
-    public Dogadaj getVisibleEventForGuild(int sifraCeha);
+    public DogadajEntity getVisibleEventForGuild(int sifraCeha);
 }

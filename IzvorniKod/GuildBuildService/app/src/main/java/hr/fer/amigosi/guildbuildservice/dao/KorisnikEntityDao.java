@@ -29,9 +29,9 @@ public interface KorisnikEntityDao {
     public void deleteUser (KorisnikEntity korisnik);
 
     @Query("SELECT * FROM KorisnikEntity WHERE statusRegistracije")
-    public List<RegistriraniKorisnik> loadAllRegisteredUsers();
+    public List<KorisnikEntity> loadAllRegisteredUsers();
 
     @Query("SELECT * FROM KorisnikEntity WHERE NOT statusRegistracije")
-    public List<AnonimniKorisnik> loadAllAnonymousUsers();
+    public List<KorisnikEntity> loadAllAnonymousUsers();
 
 }

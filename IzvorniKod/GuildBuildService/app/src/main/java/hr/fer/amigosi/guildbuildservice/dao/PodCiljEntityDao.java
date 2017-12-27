@@ -27,9 +27,9 @@ public interface PodCiljEntityDao {
     public void deletePodcilj(PodciljEntity podcilj);
 
     @Query("SELECT * FROM PodciljEntity WHERE sifraCilja == :sifraCilja")
-    public List<Podcilj> getAllSubgoalsForGoal(int sifraCilja);
+    public List<PodciljEntity> getAllSubgoalsForGoal(int sifraCilja);
 
     @Query("SELECT * FROM PodciljEntity WHERE sifraPodcilja == :sifraPodcilja")
-    public Podcilj getSubgoal(int sifraPodcilja);
+    public PodciljEntity getSubgoal(int sifraPodcilja);
 
 }

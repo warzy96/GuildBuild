@@ -27,5 +27,5 @@ public interface KlasaEntityDao {
     public void deleteKlasa(KlasaEntity klasa);
 
     @Query("SELECT * FROM KlasaEntity WHERE sifraIgre == :sifraIgre")
-    public List<Klasa> getAllClassesForGame(int sifraIgre);
+    public List<KlasaEntity> getAllClassesForGame(int sifraIgre);
 }

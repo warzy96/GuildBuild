@@ -13,7 +13,10 @@ import android.support.annotation.NonNull;
 @Entity(primaryKeys = {"email", "nadimak"},
 foreignKeys = {
         @ForeignKey(entity = CehEntity.class, parentColumns = "sifraCeha", childColumns = "sifraCeha")
-},indices = @Index(value = "nadimak",unique = true))
+},indices = {
+        @Index(value = "nadimak",unique = true),
+        @Index(value = "sifraCeha", unique = true)
+})
 public class KorisnikEntity {
 
     @NonNull

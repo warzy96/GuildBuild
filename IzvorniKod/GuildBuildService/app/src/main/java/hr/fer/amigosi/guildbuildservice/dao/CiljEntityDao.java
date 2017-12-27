@@ -27,9 +27,9 @@ public interface CiljEntityDao {
     public void deleteCilj(CiljEntity cilj);
 
     @Query("SELECT * FROM CiljEntity WHERE sifraDogadaja == :sifraDogadaja")
-    public List<Cilj> getAllGoalsForEvent(int sifraDogadaja);
+    public List<CiljEntity> getAllGoalsForEvent(int sifraDogadaja);
 
     @Query("SELECT * FROM CiljEntity WHERE sifraCilja == :sifraCilja")
-    public Cilj getGoal(int sifraCilja);
+    public CiljEntity getGoal(int sifraCilja);
 
 }

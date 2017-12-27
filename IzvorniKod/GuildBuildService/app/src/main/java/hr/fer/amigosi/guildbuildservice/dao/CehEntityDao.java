@@ -27,11 +27,11 @@ public interface CehEntityDao {
     public void deleteCeh(CehEntity ceh);
 
     @Query("SELECT * FROM CehEntity")
-    public Ceh[] getAllGuilds();
+    public CehEntity[] getAllGuilds();
 
     @Query("SELECT * FROM CehEntity WHERE sifraCeha LIKE :sifraCeha")
-    public Ceh getGuild(int sifraCeha);
+    public CehEntity getGuild(int sifraCeha);
 
     @Query("SELECT * FROM CehEntity WHERE sifraIgre == :sifraIgre")
-    public List<Ceh> getGuildsForGame(int sifraIgre);
+    public List<CehEntity> getGuildsForGame(int sifraIgre);
 }
