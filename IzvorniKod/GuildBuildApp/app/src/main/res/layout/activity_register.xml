@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/colorPrimaryDark"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    tools:context="hr.fer.amigosi.guildbuild.RegisterActivity"
+    android:background="@color/colorPrimaryDark">>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,10 +17,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="serif"
-            android:text="@string/app_name"
+            android:text="Create a new account"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-            android:textColor="@android:color/background_light" />
+            android:textColor="@android:color/background_light"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/editText"
+            style="@style/editText_style"
+            android:inputType="textPersonName"
+            android:hint="Nickname"/>
 
         <EditText
             android:id="@+id/editText6"
@@ -40,13 +46,6 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button"
-                style="@style/button_style"
-                android:layout_weight="1"
-                android:onClick="userProfile"
-                android:text="Log in"
-                android:textAlignment="center" />
 
             <Button
                 android:id="@+id/button2"
