@@ -2,7 +2,6 @@ package hr.fer.amigosi.guildbuildservice.entities;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Index;
 import android.support.annotation.NonNull;
 
 /**
@@ -12,9 +11,6 @@ import android.support.annotation.NonNull;
         foreignKeys = {
                 @ForeignKey(entity = KlasaEntity.class, parentColumns = "sifraKlase", childColumns = "sifraKlase", onDelete = ForeignKey.CASCADE),
                 @ForeignKey(entity = KorisnikEntity.class, parentColumns = "nadimak", childColumns = "nadimak", onDelete = ForeignKey.CASCADE)
-        },
-        indices = {
-        @Index(value = "nadimak", unique = true)
         })
 public class LikEntity {
     private int level;

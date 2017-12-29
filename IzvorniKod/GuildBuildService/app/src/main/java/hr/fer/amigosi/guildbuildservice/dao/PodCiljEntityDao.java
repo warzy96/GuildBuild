@@ -9,7 +9,6 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuildservice.entities.PodciljEntity;
-import hr.fer.amigosi.guildbuildservice.model.Podcilj;
 
 /**
  * Created by ivan_varga on 22/12/2017.

@@ -9,7 +9,7 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuildservice.entities.KlasaEntity;
-import hr.fer.amigosi.guildbuildservice.model.Klasa;
+import hr.fer.amigosi.guildbuildservice.entities.LikEntity;
 
 /**
  * Created by ivan_varga on 23/12/2017.
@@ -28,4 +28,7 @@ public interface KlasaEntityDao {
 
     @Query("SELECT * FROM KlasaEntity WHERE sifraIgre == :sifraIgre")
     public List<KlasaEntity> getAllClassesForGame(int sifraIgre);
+
+    @Query("SELECT LikEntity.level, LikEntity.sifraKlase, LikEntity.craftingSkills, LikEntity.nadimak FROM LikEntity, KlasaEntity WHERE LikEntity.sifraKlase=KlasaEntity.sifraKlase")
+    public List<LikEntity> getCharacters();
 }

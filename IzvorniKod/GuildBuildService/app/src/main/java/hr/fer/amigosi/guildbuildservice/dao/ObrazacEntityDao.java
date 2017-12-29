@@ -9,8 +9,6 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuildservice.entities.ObrazacEntity;
-import hr.fer.amigosi.guildbuildservice.model.Lik;
-import hr.fer.amigosi.guildbuildservice.model.Obrazac;
 
 /**
  * Created by ivan_varga on 23/12/2017.

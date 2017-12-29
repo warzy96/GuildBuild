@@ -9,7 +9,6 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuildservice.entities.LikEntity;
-import hr.fer.amigosi.guildbuildservice.model.Lik;
 
 /**
  * Created by ivan_varga on 23/12/2017.

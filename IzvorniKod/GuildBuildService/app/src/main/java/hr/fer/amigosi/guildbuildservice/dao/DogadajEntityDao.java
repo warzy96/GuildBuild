@@ -8,8 +8,8 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
+import hr.fer.amigosi.guildbuildservice.entities.CiljEntity;
 import hr.fer.amigosi.guildbuildservice.entities.DogadajEntity;
-import hr.fer.amigosi.guildbuildservice.model.Dogadaj;
 
 /**
  * Created by ivan_varga on 22/12/2017.
@@ -31,4 +31,8 @@ public interface DogadajEntityDao {
 
     @Query("SELECT * FROM DogadajEntity WHERE sifraCeha == :sifraCeha AND vidljivost")
     public DogadajEntity getVisibleEventForGuild(int sifraCeha);
+
+    @Query("SELECT CiljEntity.sifraDogadaja, CiljEntity.sifraCilja, CiljEntity.nazivCilja," +
+            "CiljEntity.ispunjenost FROM CiljEntity, DogadajEntity WHERE CiljEntity.sifraDogadaja=DogadajEntity.sifraDogadaja")
+    public List<CiljEntity> getGoals();
 }

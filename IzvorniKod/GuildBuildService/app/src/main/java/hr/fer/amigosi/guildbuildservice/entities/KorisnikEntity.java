@@ -13,10 +13,7 @@ import android.support.annotation.NonNull;
 @Entity(primaryKeys = {"email", "nadimak"},
 foreignKeys = {
         @ForeignKey(entity = CehEntity.class, parentColumns = "sifraCeha", childColumns = "sifraCeha")
-},indices = {
-        @Index(value = "nadimak",unique = true),
-        @Index(value = "sifraCeha", unique = true)
-})
+},indices = @Index(value = "nadimak",unique = true))
 public class KorisnikEntity {
 
     @NonNull
@@ -29,6 +26,7 @@ public class KorisnikEntity {
     private int sifraCeha;
     private boolean statusPrijave;
     private String opisKorisnika;
+    private boolean isAdmin;
 
     public String getEmail() {
         return email;
@@ -92,5 +90,13 @@ public class KorisnikEntity {
 
     public void setOpisKorisnika(String opisKorisnika) {
         this.opisKorisnika = opisKorisnika;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }

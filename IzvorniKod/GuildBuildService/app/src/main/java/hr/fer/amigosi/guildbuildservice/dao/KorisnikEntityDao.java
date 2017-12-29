@@ -9,8 +9,7 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuildservice.entities.KorisnikEntity;
-import hr.fer.amigosi.guildbuildservice.model.AnonimniKorisnik;
-import hr.fer.amigosi.guildbuildservice.model.RegistriraniKorisnik;
+import hr.fer.amigosi.guildbuildservice.entities.LikEntity;
 
 /**
  * Created by ivan_varga on 22/12/2017.
@@ -33,5 +32,12 @@ public interface KorisnikEntityDao {
 
     @Query("SELECT * FROM KorisnikEntity WHERE NOT statusRegistracije")
     public List<KorisnikEntity> loadAllAnonymousUsers();
+
+    @Query("SELECT LikEntity.level, LikEntity.sifraKlase, LikEntity.craftingSkills, LikEntity.nadimak" +
+            " FROM LikEntity, KorisnikEntity WHERE (likEntity.nadimak=KorisnikEntity.nadimak AND statusRegistracije)")
+    public List<LikEntity> getUserCharacters();
+
+    @Query("SELECT * FROM KorisnikEntity WHERE isAdmin")
+    public KorisnikEntity getAdmin();
 
 }

@@ -2,14 +2,12 @@ package hr.fer.amigosi.guildbuildservice.entities;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Index;
 
 /**
  * Created by ivan_varga on 21/12/2017.
  */
 @Entity(primaryKeys = "sifraDogadaja",
-        foreignKeys = @ForeignKey(entity = CehEntity.class, parentColumns = "sifraCeha", childColumns = "sifraCeha", onDelete = ForeignKey.CASCADE),
-        indices = @Index(value = "sifraCeha", unique = true))
+        foreignKeys = @ForeignKey(entity = CehEntity.class, parentColumns = "sifraCeha", childColumns = "sifraCeha", onDelete = ForeignKey.CASCADE))
 public class DogadajEntity {
     private int sifraDogadaja;
     private String nazivDogadaja;

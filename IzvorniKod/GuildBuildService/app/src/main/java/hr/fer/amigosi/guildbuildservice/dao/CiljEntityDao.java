@@ -9,7 +9,7 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuildservice.entities.CiljEntity;
-import hr.fer.amigosi.guildbuildservice.model.Cilj;
+import hr.fer.amigosi.guildbuildservice.entities.PodciljEntity;
 
 /**
  * Created by ivan_varga on 22/12/2017.
@@ -31,5 +31,9 @@ public interface CiljEntityDao {
 
     @Query("SELECT * FROM CiljEntity WHERE sifraCilja == :sifraCilja")
     public CiljEntity getGoal(int sifraCilja);
+
+    @Query("SELECT PodciljEntity.sifraCilja, PodciljEntity.sifraPodcilja, PodciljEntity.nazivPodcilja," +
+            "PodciljEntity.ispunjenost FROM PodciljEntity, CiljEntity WHERE PodciljEntity.sifraCilja=CiljEntity.sifraCilja")
+    public List<PodciljEntity> getSubgoals();
 
 }

@@ -9,7 +9,7 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuildservice.entities.IgraEntity;
-import hr.fer.amigosi.guildbuildservice.model.Igra;
+import hr.fer.amigosi.guildbuildservice.entities.KlasaEntity;
 
 /**
  * Created by ivan_varga on 23/12/2017.
@@ -28,4 +28,8 @@ public interface IgraEntityDao {
 
     @Query("SELECT * FROM IgraEntity")
     public List<IgraEntity> getAllGames();
+
+    @Query("SELECT KlasaEntity.sifraIgre, KlasaEntity.sifraKlase, KlasaEntity.nazivKlase FROM KlasaEntity," +
+            "IgraEntity WHERE KlasaEntity.sifraIgre=IgraEntity.sifraIgre")
+    public List<KlasaEntity> getClasses();
 }

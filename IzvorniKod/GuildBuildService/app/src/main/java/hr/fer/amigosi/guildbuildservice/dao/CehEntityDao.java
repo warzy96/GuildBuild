@@ -9,7 +9,9 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuildservice.entities.CehEntity;
-import hr.fer.amigosi.guildbuildservice.model.Ceh;
+import hr.fer.amigosi.guildbuildservice.entities.DogadajEntity;
+import hr.fer.amigosi.guildbuildservice.entities.KorisnikEntity;
+import hr.fer.amigosi.guildbuildservice.entities.ObrazacEntity;
 
 /**
  * Created by ivan_varga on 22/12/2017.
@@ -34,4 +36,14 @@ public interface CehEntityDao {
 
     @Query("SELECT * FROM CehEntity WHERE sifraIgre == :sifraIgre")
     public List<CehEntity> getGuildsForGame(int sifraIgre);
+
+    @Query("SELECT * FROM KorisnikEntity WHERE KorisnikEntity.sifraCeha == :sifraCeha")
+    public List<KorisnikEntity> getGuildMemebers(int sifraCeha);
+
+    @Query("SELECT ObrazacEntity.sifraCeha, ObrazacEntity.nadimakKorisnika, ObrazacEntity.poruka FROM ObrazacEntity, CehEntity WHERE ObrazacEntity.sifraCeha==CehEntity.sifraCeha")
+    public List<ObrazacEntity> getObrasci();
+
+    @Query("SELECT DogadajEntity.sifraDogadaja, DogadajEntity.nazivDogadaja, DogadajEntity.sifraCeha," +
+            "DogadajEntity.ispunjenost, DogadajEntity.vidljivost FROM DogadajEntity, CehEntity WHERE DogadajEntity.sifraCeha==CehEntity.sifraCeha")
+    public List<DogadajEntity> getDogadaji();
 }
