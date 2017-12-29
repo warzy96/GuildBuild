@@ -1,7 +1,9 @@
 package hr.fer.amigosi.guildbuildservice;
 
 import android.arch.persistence.room.Database;
+import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.content.Context;
 
 import hr.fer.amigosi.guildbuildservice.dao.CehEntityDao;
 import hr.fer.amigosi.guildbuildservice.dao.CiljEntityDao;
@@ -39,4 +41,15 @@ public abstract class ApplicationDatabase extends RoomDatabase {
     public  abstract ObrazacEntityDao obrazacEntityDao();
     public  abstract PodCiljEntityDao podCiljEntityDao();
     public  abstract KorisnikEntityDao korisnikEntityDao();
+    private static ApplicationDatabase INSTANCE;
+    public static ApplicationDatabase getApplicationDatabase(Context context) {
+        if(INSTANCE  == null) {
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), ApplicationDatabase.class, "db").build();
+        }
+        return INSTANCE;
+    }
+
+    public static void destroyInstance() {
+        INSTANCE = null;
+    }
 }
