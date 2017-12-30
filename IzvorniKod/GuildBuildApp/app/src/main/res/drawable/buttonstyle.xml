@@ -6,8 +6,8 @@
             <solid android:color="#FDFDFE"/>
             <size android:height="30dp"/>
             <size android:width="30dp"/>
-            <gradient android:startColor="#ccc4fc"
-                android:endColor="#d1cfd0">
+            <gradient android:startColor="#3d7359"
+                android:endColor="#307d83">
 
             </gradient>
         </shape>

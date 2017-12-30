@@ -16,30 +16,37 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="serif"
+            android:fontFamily="cursive"
             android:text="Create a new account"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display3"
             android:textColor="@android:color/background_light"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/nicknameTextRegister"
             style="@style/editText_style"
+            android:hint="Nickname"
             android:inputType="textPersonName"
-            android:hint="Nickname"/>
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHint="@color/hintColor" />
 
         <EditText
-            android:id="@+id/editText6"
+            android:id="@+id/emailTextRegister"
             style="@style/editText_style"
             android:hint="Email"
-            android:inputType="textEmailAddress" />
+            android:textColorHint="@color/hintColor"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/colorPrimaryDark" />
 
         <EditText
-            android:id="@+id/editText7"
+            android:id="@+id/passwordTextRegister"
             style="@style/editText_style"
             android:hint="Password"
-            android:inputType="textPassword" />
+            android:textColorHint="@color/hintColor"
+            android:inputType="textPassword"
+            android:textColor="@color/colorPrimaryDark" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,9 +55,10 @@
 
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnRegister2"
                 style="@style/button_style"
                 android:layout_weight="1"
+                android:onClick="Home"
                 android:text="Register" />
 
         </LinearLayout>

@@ -4,24 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hr.fer.amigosi.guildbuild.UserProfileActivity">
+    tools:context="hr.fer.amigosi.guildbuild.UserProfileActivity"
+    android:background="@color/colorPrimaryDark"><![CDATA[>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="57dp"
-        android:layout_toEndOf="@+id/textView"
-        android:text="TextView"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="131dp"
-        tools:layout_editor_absoluteY="0dp" />
+
+    ]]>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ProfileText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="cursive"
+            android:text="Profile"
+            android:textAlignment="center"
+            android:textSize="55sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/EditProfile"
+                style="@style/button_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Edit profile"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+            <Button
+                android:id="@+id/DeleteProfile"
+                style="@style/button_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Delete profile"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+        </LinearLayout>
+    </LinearLayout>
+
 </android.widget.RelativeLayout>
