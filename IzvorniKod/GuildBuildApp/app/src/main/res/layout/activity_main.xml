@@ -18,42 +18,46 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="serif"
+            android:fontFamily="cursive"
             android:text="@string/app_name"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display3"
             android:textColor="@android:color/background_light" />
 
         <EditText
-            android:id="@+id/emailText"
+            android:id="@+id/emailTextLogin"
             style="@style/editText_style"
             android:hint="Email"
-            android:inputType="textEmailAddress" />
+            android:textColorHint="@color/hintColor"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/colorPrimaryDark" />
 
         <EditText
-            android:id="@+id/passwordText"
+            android:id="@+id/passwordTextLogin"
             style="@style/editText_style"
             android:hint="Password"
-            android:inputType="textPassword" />
+            android:textColorHint="@color/hintColor"
+            android:inputType="textPassword"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="103dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnLogin"
                 style="@style/button_style"
                 android:layout_weight="1"
-                android:onClick="userProfile"
+                android:onClick="Home"
                 android:text="Log in"
                 android:textAlignment="center" />
 
             <Button
                 android:id="@+id/btnRegister"
                 style="@style/button_style"
-                android:onClick="register"
                 android:layout_weight="1"
+                android:onClick="Register"
                 android:text="Register" />
 
         </LinearLayout>
