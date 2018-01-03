@@ -45,8 +45,8 @@ public class RegisterActivity extends AppCompatActivity {
 //        });
     }
 
-    public void Home(View view){
-        Intent intent = new Intent(this, HomeActivity.class);
+    public void Login(View view){
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         Toast toast = Toast.makeText(RegisterActivity.this, "Registration complete!", Toast.LENGTH_LONG);
         toast.show();
