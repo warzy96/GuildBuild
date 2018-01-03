@@ -31,7 +31,7 @@ import hr.fer.amigosi.guildbuildservice.entities.PodciljEntity;
 @Database(entities = {CehEntity.class, CiljEntity.class, DogadajEntity.class, IgraEntity.class,
         KlasaEntity.class, KorisnikEntity.class, LikEntity.class, ObrazacEntity.class, PodciljEntity.class}, version = 1)
 
-public abstract class ApplicationDatabase extends RoomDatabase {
+public abstract class ApplicationDatabase extends RoomDatabase{
     public  abstract CehEntityDao cehEntityDao();
     public  abstract CiljEntityDao ciljEntityDao();
     public  abstract DogadajEntityDao dogadajEntityDao();
@@ -42,6 +42,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
     public  abstract PodCiljEntityDao podCiljEntityDao();
     public  abstract KorisnikEntityDao korisnikEntityDao();
     private static ApplicationDatabase INSTANCE;
+
     public static ApplicationDatabase getApplicationDatabase(Context context) {
         if(INSTANCE  == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(), ApplicationDatabase.class, "db").build();
