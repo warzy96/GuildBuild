@@ -20,19 +20,20 @@
         </activity>
         <activity
             android:name=".UserProfileActivity"
-            android:parentActivityName=".HomeActivity">
-
-        </activity>
+            android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".RegisterActivity"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".HomeActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".GuildListActivity"
-            android:parentActivityName=".HomeActivity">
-        </activity>
+            android:parentActivityName=".HomeActivity" />
+        <activity
+            android:name=".MessagesActivity"
+            android:parentActivityName=".UserProfileActivity" />
+        <activity android:name=".EditProfileActivity"></activity>
     </application>
 
 </manifest>

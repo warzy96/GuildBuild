@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../GuildBuildApp.iml" filepath="$PROJECT_DIR$/../GuildBuildApp.iml" />
+      <module fileurl="file://C:\Filip\Faks\5. semestar\OPP\Projekt\Amigosi\IzvorniKod\GuildBuildApp\GuildBuildApp.iml" filepath="C:\Filip\Faks\5. semestar\OPP\Projekt\Amigosi\IzvorniKod\GuildBuildApp\GuildBuildApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app.iml" filepath="$PROJECT_DIR$/app.iml" />
     </modules>
   </component>

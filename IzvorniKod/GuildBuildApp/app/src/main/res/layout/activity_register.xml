@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="hr.fer.amigosi.guildbuild.RegisterActivity"
-    android:background="@color/colorPrimaryDark">>
+    android:background="@color/colorPrimaryDark">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                 android:id="@+id/btnRegister2"
                 style="@style/button_style"
                 android:layout_weight="1"
-                android:onClick="Home"
+                android:onClick="Login"
                 android:text="Register" />
 
         </LinearLayout>
