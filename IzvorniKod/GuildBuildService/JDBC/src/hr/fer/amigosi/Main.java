@@ -54,8 +54,8 @@ public class Main {
 		CehEntity ceh = new CehEntity();
 		ceh.setNaziv("guild");
 		ceh.setOpis("op");
-		ceh.setSifraCeha(123);
-		ceh.setSifraIgre(111);
+		//ceh.setSifraCeha(123);
+		//ceh.setSifraIgre(111);
 		
 		
 		//IGRA
@@ -85,37 +85,38 @@ public class Main {
 		podciljEntity.setSifraCilja(ciljEntity.getSifraCilja());
 		podciljEntity.setSifraPodcilja(999);
 		
+		
 		//OPERACIJE ZA KORISNIKA
-		//userDao.insertUser(korisnik);
+		userDao.insertUser(korisnik);
 		//userDao.deleteUser(korisnik.getNadimak());
-		//userDao.updateUser(korisnik);
+		userDao.updateUser(korisnik);
 		
 		//OPERACIJE ZA IGRU
-		//igraDao.insertGame(igra);
+		igraDao.insertGame(igra);
 		
 		//OPERACIJE ZA CEH
-		//cehDao.insertGuild(ceh);
+		cehDao.insertGuild(ceh);
 		//cehDao.deleteGuild(ceh.getSifraCeha());
-		//ceh.setNaziv("guild1");
-		//cehDao.updateGuild(ceh);
+		ceh.setNaziv("guild1");
+		cehDao.updateGuild(ceh);
 		
 		//OPERACIJE ZA DOGADAJ
-		//dogadajDao.insertEvent(dogadajEntity);
+		dogadajDao.insertEvent(dogadajEntity);
 		//dogadajDao.deleteEvent(dogadajEntity.getSifraDogadaja());
-		//dogadajEntity.setNazivDogadaja("ghjk");
-		//dogadajDao.updateEvent(dogadajEntity);
+		dogadajEntity.setNazivDogadaja("ghjk");
+		dogadajDao.updateEvent(dogadajEntity);
 				
 		//OPERACIJE ZA CILJ
-		//ciljDao.insertGoal(ciljEntity);
+		ciljDao.insertGoal(ciljEntity);
 		//ciljDao.deleteGoal(ciljEntity.getSifraCilja());
-		//ciljEntity.setNazivCilja("bbb");
-		//ciljDao.updateGoal(ciljEntity);
+		ciljEntity.setNazivCilja("bbb");
+		ciljDao.updateGoal(ciljEntity);
 		
 		//OPERACIJE ZA PODCILJ
-		//podciljDao.insertSubgoal(podciljEntity);
+		podciljDao.insertSubgoal(podciljEntity);
 		//podciljDao.deleteSubgoal(podciljEntity.getSifraPodcilja());
-		//podciljEntity.setNazivPodcilja("m&m");
-		//podciljDao.updateSubgoal(podciljEntity);
+		podciljEntity.setNazivPodcilja("m&m");
+		podciljDao.updateSubgoal(podciljEntity);
 	}
 
 }

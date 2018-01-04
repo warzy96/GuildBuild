@@ -10,6 +10,7 @@ import hr.fer.amigosi.Entities.IgraEntity;
 public class IgraDAO {
 	Connection connection = null;
 	public IgraDAO() throws Exception{
+		
 		connection = DatabaseConnection.getConnection();
 	}
 	public void insertGame(IgraEntity igraEntity) throws SQLException {
