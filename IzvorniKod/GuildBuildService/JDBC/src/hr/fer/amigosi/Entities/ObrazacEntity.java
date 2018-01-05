@@ -8,7 +8,21 @@ public class ObrazacEntity {
     private String nadimakKorisnika;
     private  String poruka;
 
-    public int getSifraCeha() {
+    public ObrazacEntity() {
+	}
+    
+    
+    
+    public ObrazacEntity(int sifraCeha, String nadimakKorisnika, String poruka) {
+		super();
+		this.sifraCeha = sifraCeha;
+		this.nadimakKorisnika = nadimakKorisnika;
+		this.poruka = poruka;
+	}
+
+
+
+	public int getSifraCeha() {
         return sifraCeha;
     }
 

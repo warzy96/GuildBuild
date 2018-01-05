@@ -9,7 +9,22 @@ public class LikEntity {
     private String craftingSkills;
     private String nadimak;
 
-    public int getLevel() {
+    public LikEntity() {
+	}
+    
+    
+    
+    public LikEntity(int level, int sifraKlase, String craftingSkills, String nadimak) {
+		super();
+		this.level = level;
+		this.sifraKlase = sifraKlase;
+		this.craftingSkills = craftingSkills;
+		this.nadimak = nadimak;
+	}
+
+
+
+	public int getLevel() {
         return level;
     }
 

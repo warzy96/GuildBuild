@@ -9,7 +9,24 @@ public class DogadajEntity {
     private boolean ispunjenost;
     private boolean vidljivost;
 
-    public int getSifraDogadaja() {
+    public DogadajEntity() {
+	}
+    
+    
+    
+    public DogadajEntity(int sifraDogadaja, String nazivDogadaja, int sifraCeha, boolean ispunjenost,
+			boolean vidljivost) {
+		super();
+		this.sifraDogadaja = sifraDogadaja;
+		this.nazivDogadaja = nazivDogadaja;
+		this.sifraCeha = sifraCeha;
+		this.ispunjenost = ispunjenost;
+		this.vidljivost = vidljivost;
+	}
+
+
+
+	public int getSifraDogadaja() {
         return sifraDogadaja;
     }
 

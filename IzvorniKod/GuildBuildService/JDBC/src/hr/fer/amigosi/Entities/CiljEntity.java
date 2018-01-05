@@ -10,7 +10,21 @@ public class CiljEntity {
     private String nazivCilja;
     private boolean ispunjenost;
 
-    public int getSifraDogadaja() {
+    public CiljEntity() {
+    }
+    
+    
+    public CiljEntity(int sifraDogadaja, int sifraCilja, String nazivCilja, boolean ispunjenost) {
+		super();
+		this.sifraDogadaja = sifraDogadaja;
+		this.sifraCilja = sifraCilja;
+		this.nazivCilja = nazivCilja;
+		this.ispunjenost = ispunjenost;
+	}
+
+
+
+	public int getSifraDogadaja() {
         return sifraDogadaja;
     }
 

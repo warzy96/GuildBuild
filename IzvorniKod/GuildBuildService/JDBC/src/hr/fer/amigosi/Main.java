@@ -36,6 +36,9 @@ public class Main {
 		DogadajDAO dogadajDao = new DogadajDAO();
 		CiljDAO ciljDao = new CiljDAO();
 		PodciljDAO podciljDao = new PodciljDAO();
+		KlasaDAO klasaDao = new KlasaDAO();
+		LikDAO likDao = new LikDAO();
+		ObrazacDAO obrazacDao = new ObrazacDAO();
 		
 		//KORISNIK
 		KorisnikEntity korisnik = new KorisnikEntity();
@@ -54,8 +57,8 @@ public class Main {
 		CehEntity ceh = new CehEntity();
 		ceh.setNaziv("guild");
 		ceh.setOpis("op");
-		//ceh.setSifraCeha(123);
-		//ceh.setSifraIgre(111);
+		ceh.setSifraCeha(123);
+		ceh.setSifraIgre(111);
 		
 		
 		//IGRA
@@ -84,6 +87,26 @@ public class Main {
 		podciljEntity.setNazivPodcilja("podcilj");
 		podciljEntity.setSifraCilja(ciljEntity.getSifraCilja());
 		podciljEntity.setSifraPodcilja(999);
+		
+		//KLASA
+		KlasaEntity klasaEntity = new KlasaEntity();
+		klasaEntity.setNazivKlase("ajmo");
+		klasaEntity.setSifraIgre(igra.getSifraIgre());
+		klasaEntity.setSifraKlase(1);
+		
+		//LIK
+		LikEntity likEntity = new LikEntity();
+		likEntity.setNadimak(korisnik.getNadimak());
+		likEntity.setSifraKlase(klasaEntity.getSifraKlase());
+		likEntity.setLevel(10);
+		likEntity.setCraftingSkills("Crafting runes: 5");
+		
+		//OBRAZAC
+		ObrazacEntity obrazacEntity = new ObrazacEntity();
+		obrazacEntity.setNadimakKorisnika(korisnik.getNadimak());
+		obrazacEntity.setSifraCeha(ceh.getSifraCeha());
+		obrazacEntity.setPoruka("lijep, njezan, neizbjezan");
+		
 		
 		
 		//OPERACIJE ZA KORISNIKA
@@ -117,6 +140,16 @@ public class Main {
 		//podciljDao.deleteSubgoal(podciljEntity.getSifraPodcilja());
 		podciljEntity.setNazivPodcilja("m&m");
 		podciljDao.updateSubgoal(podciljEntity);
+		
+		//OPERACIJE ZA KLASU
+		klasaDao.insertClass(klasaEntity);
+		
+		//OPERACIJE ZA LIK
+		likDao.insertCharacter(likEntity);
+		
+		//OPERACIJE ZA OBRAZAC
+		obrazacDao.insertForm(obrazacEntity);
+		
 	}
 
 }

@@ -1,8 +1,11 @@
 package hr.fer.amigosi.DAO;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import hr.fer.amigosi.DatabaseConnection;
 import hr.fer.amigosi.Entities.LikEntity;
@@ -60,4 +63,55 @@ public class LikDAO {
 			throw e;
 		}
 	}
+	
+    public List<LikEntity> getAllCharactersForClass(int sifraKlase) throws SQLException{
+    	String querry = "SELECT * FROM lik WHERE lik.sifKlase =" + sifraKlase;
+    	List<LikEntity> result = new ArrayList<>();
+    	
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(querry);
+			
+			while(rs.next()){
+				String nadimak = rs.getString("nadimak");
+				int level = rs.getInt("level");
+				int sifKlase = rs.getInt("sifKlase");
+				String craftingSkills = rs.getString("craftingSkills");
+				
+				LikEntity lik = new LikEntity(level, sifKlase, craftingSkills, nadimak);
+				result.add(lik);
+			}
+			return result;
+		}
+		catch(SQLException e) 
+		{
+			throw e;
+		}
+    }
+    
+    public List<LikEntity> getAllCharactersForUser(String nadimakKorisnika) throws SQLException{
+    	String querry = "SELECT * FROM lik WHERE lik.nadimak =" + nadimakKorisnika;
+    	List<LikEntity> result = new ArrayList<>();
+    	
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(querry);
+			
+			while(rs.next()){
+				String nadimak = rs.getString("nadimak");
+				int level = rs.getInt("level");
+				int sifKlase = rs.getInt("sifKlase");
+				String craftingSkills = rs.getString("craftingSkills");
+				
+				LikEntity lik = new LikEntity(level, sifKlase, craftingSkills, nadimak);
+				result.add(lik);
+			}
+			return result;
+		}
+		catch(SQLException e) 
+		{
+			throw e;
+		}
+    }
+
 }

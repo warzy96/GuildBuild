@@ -1,6 +1,8 @@
 package hr.fer.amigosi.DAO;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import hr.fer.amigosi.DatabaseConnection;
 import hr.fer.amigosi.Entities.KorisnikEntity;
@@ -64,4 +66,63 @@ public class UserDAO {
 			throw e;
 		}
 	}
+	
+    public List<KorisnikEntity> loadAllRegisteredUsers() throws SQLException{
+    	String querry = "SELECT * FROM korisnik WHERE statusR";
+    	List<KorisnikEntity> result = new ArrayList<>();
+    	
+    	try{
+    		Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(querry);
+			
+			while(rs.next()){
+				String nadimak = rs.getString("nadimak");
+				String email = rs.getString("email");
+				String lozinka =rs.getString("lozinka");
+				boolean statusR = rs.getBoolean("statusR");
+				String rang = rs.getString("rang");
+				int sifCeh = rs.getInt("sifCeh");
+				boolean statusP = rs.getBoolean("statusP");
+				String opis = rs.getString("opis");
+				boolean isAdmin = rs.getBoolean("isAdmin");
+				
+				KorisnikEntity korisnik = new KorisnikEntity(email, nadimak, lozinka, statusR, rang, sifCeh, statusP, opis, isAdmin);
+				result.add(korisnik);
+			}
+			return result;
+    	}
+    	catch(Exception e){
+    		throw e;
+    	}
+    }
+    
+    public List<KorisnikEntity> loadAllAnonymousUsers() throws SQLException{
+    	String querry = "SELECT * FROM korisnik WHERE NOT statusR";
+    	List<KorisnikEntity> result = new ArrayList<>();
+    	
+    	try{
+    		Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(querry);
+			
+			while(rs.next()){
+				String nadimak = rs.getString("nadimak");
+				String email = rs.getString("email");
+				String lozinka =rs.getString("lozinka");
+				boolean statusR = rs.getBoolean("statusR");
+				String rang = rs.getString("rang");
+				int sifCeh = rs.getInt("sifCeh");
+				boolean statusP = rs.getBoolean("statusP");
+				String opis = rs.getString("opis");
+				boolean isAdmin = rs.getBoolean("isAdmin");
+				
+				KorisnikEntity korisnik = new KorisnikEntity(email, nadimak, lozinka, statusR, rang, sifCeh, statusP, opis, isAdmin);
+				result.add(korisnik);
+			}
+			return result;
+    	}
+    	catch(Exception e){
+    		throw e;
+    	}
+    }
+
 }

@@ -15,7 +15,28 @@ public class KorisnikEntity {
     private String opisKorisnika;
     private boolean isAdmin;
 
-    public String getEmail() {
+    public KorisnikEntity() {
+	}
+    
+    
+    
+    public KorisnikEntity(String email, String nadimak, String lozinka, boolean statusRegistracije, String rang,
+			int sifraCeha, boolean statusPrijave, String opisKorisnika, boolean isAdmin) {
+		super();
+		this.email = email;
+		this.nadimak = nadimak;
+		this.lozinka = lozinka;
+		this.statusRegistracije = statusRegistracije;
+		this.rang = rang;
+		this.sifraCeha = sifraCeha;
+		this.statusPrijave = statusPrijave;
+		this.opisKorisnika = opisKorisnika;
+		this.isAdmin = isAdmin;
+	}
+
+
+
+	public String getEmail() {
         return email;
     }
 

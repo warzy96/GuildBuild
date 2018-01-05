@@ -8,7 +8,22 @@ public class CehEntity {
     private int sifraIgre;
     private String opis;
 
-    public int getSifraCeha() {
+    public CehEntity() {
+	}
+    
+    
+    
+    public CehEntity(int sifraCeha, String naziv, int sifraIgre, String opis) {
+		super();
+		this.sifraCeha = sifraCeha;
+		this.naziv = naziv;
+		this.sifraIgre = sifraIgre;
+		this.opis = opis;
+	}
+
+
+
+	public int getSifraCeha() {
         return sifraCeha;
     }
 

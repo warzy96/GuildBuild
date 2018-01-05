@@ -1,11 +1,15 @@
 package hr.fer.amigosi.DAO;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import hr.fer.amigosi.DatabaseConnection;
 import hr.fer.amigosi.Entities.CehEntity;
+import hr.fer.amigosi.Entities.KorisnikEntity;
 
 public class CehDAO {
 	Connection connection = null;
@@ -53,4 +57,108 @@ public class CehDAO {
 			throw e;
 		}
 	}
+	
+	public List<CehEntity> getAllGuilds() throws SQLException{
+		String querry = "SELECT * FROM ceh";
+		List<CehEntity> result = new ArrayList<>();
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(querry);
+			
+			while(rs.next()){
+				int sifCeh=rs.getInt("sifCeh");
+				String naziv=rs.getString("naziv");
+				int sifIgre=rs.getInt("sifIgre");
+				String opis=rs.getString("opis");
+				
+				CehEntity ceh = new CehEntity(sifCeh, naziv, sifIgre, opis);
+				result.add(ceh);
+			}
+			return result;
+			
+		}
+		catch(SQLException e) {
+			throw e;
+		}
+	}
+	
+	public CehEntity getGuild(int sifraCeha) throws SQLException{
+		String querry = "SELECT * FROM ceh WHERE ceh.sifCeh =" + sifraCeha;
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(querry);
+			
+			int sifCeh=rs.getInt("sifCeh");
+			String naziv=rs.getString("naziv");
+			int sifIgre=rs.getInt("sifIgre");
+			String opis=rs.getString("opis");
+				
+			CehEntity ceh = new CehEntity(sifCeh, naziv, sifIgre, opis);
+			
+			return ceh;
+			
+		}
+		catch(SQLException e) {
+			throw e;
+		}
+	}
+	
+    public List<CehEntity> getGuildsForGame(int sifraIgre) throws SQLException{
+    	String querry = "SELECT * FROM ceh WHERE ceh.sifIgre =" + sifraIgre;
+    	List<CehEntity> result = new ArrayList<>();
+    	
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(querry);
+			
+			while(rs.next()){
+				int sifCeh=rs.getInt("sifCeh");
+				String naziv=rs.getString("naziv");
+				int sifIgre=rs.getInt("sifIgre");
+				String opis=rs.getString("opis");
+				
+				CehEntity ceh = new CehEntity(sifCeh, naziv, sifIgre, opis);
+				result.add(ceh);
+			}
+			return result;
+			
+		}
+		catch(SQLException e) {
+			throw e;
+		}
+    }
+    
+    public List<KorisnikEntity> getGuildMembers(int sifraCeha) throws SQLException{
+    	String querry = "SELECT * FROM korisnik WHERE korisnik.sifCeh =" + sifraCeha;
+    	List<KorisnikEntity> result = new ArrayList<>();
+    	
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(querry);
+			
+			while(rs.next()){
+				String nadimak = rs.getString("nadimak");
+				String email = rs.getString("email");
+				String lozinka =rs.getString("lozinka");
+				boolean statusR = rs.getBoolean("statusR");
+				String rang = rs.getString("rang");
+				int sifCeh = rs.getInt("sifCeh");
+				boolean statusP = rs.getBoolean("statusP");
+				String opis = rs.getString("opis");
+				boolean isAdmin = rs.getBoolean("isAdmin");
+				
+				KorisnikEntity korisnik = new KorisnikEntity(email, nadimak, lozinka, statusR, rang, sifCeh, statusP, opis, isAdmin);
+				result.add(korisnik);
+			}
+			return result;
+			
+		}
+		catch(SQLException e) {
+			throw e;
+		}
+    }
+    
+    
+
+
 }

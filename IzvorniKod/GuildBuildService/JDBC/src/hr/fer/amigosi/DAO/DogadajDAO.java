@@ -1,8 +1,11 @@
 package hr.fer.amigosi.DAO;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import hr.fer.amigosi.DatabaseConnection;
 import hr.fer.amigosi.Entities.DogadajEntity;
@@ -55,4 +58,84 @@ public class DogadajDAO {
 			throw e;
 		}
 	}
+	
+    public List<DogadajEntity> getAllEventsForGuild(int sifraCeha) throws SQLException{
+    	String querry = "SELECT * FROM dogadaj WHERE dogadaj.sifCeh =" + sifraCeha;
+    	List<DogadajEntity> result = new ArrayList<>();
+    	
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(querry);
+			
+			while(rs.next()){
+				int sifDog = rs.getInt("sifDog");
+				String nazivDog = rs.getString("nazivDog");
+				int sifCeh = rs.getInt("sifCeh");
+				boolean ispunjen = rs.getBoolean("ispunjen");
+				boolean vidljiv = rs.getBoolean("vidljiv");
+				
+				DogadajEntity dogadaj = new DogadajEntity(sifDog, nazivDog, sifCeh, ispunjen, vidljiv);
+				result.add(dogadaj);
+			}
+			return result;
+		}
+		catch(SQLException e) 
+		{
+			throw e;
+		}
+    }
+
+    public List<DogadajEntity> getVisibleEventsForGuild(int sifraCeha) throws SQLException{
+    	String querry = "SELECT * FROM dogadaj WHERE dogadaj.sifCeh =" + sifraCeha 
+    			+" AND vidljiv";
+    	List<DogadajEntity> result = new ArrayList<>();
+    	
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(querry);
+			
+			while(rs.next()){
+				int sifDog = rs.getInt("sifDog");
+				String nazivDog = rs.getString("nazivDog");
+				int sifCeh = rs.getInt("sifCeh");
+				boolean ispunjen = rs.getBoolean("ispunjen");
+				boolean vidljiv = rs.getBoolean("vidljiv");
+				
+				DogadajEntity dogadaj = new DogadajEntity(sifDog, nazivDog, sifCeh, ispunjen, vidljiv);
+				result.add(dogadaj);
+			}
+			return result;
+		}
+		catch(SQLException e) 
+		{
+			throw e;
+		}
+    }
+    
+    public List<DogadajEntity> getFinishedEventsForGuild(int sifraCeha) throws SQLException{
+    	String querry = "SELECT * FROM dogadaj WHERE dogadaj.sifCeh =" + sifraCeha 
+    			+" AND ispunjen";
+    	List<DogadajEntity> result = new ArrayList<>();
+    	
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(querry);
+			
+			while(rs.next()){
+				int sifDog = rs.getInt("sifDog");
+				String nazivDog = rs.getString("nazivDog");
+				int sifCeh = rs.getInt("sifCeh");
+				boolean ispunjen = rs.getBoolean("ispunjen");
+				boolean vidljiv = rs.getBoolean("vidljiv");
+				
+				DogadajEntity dogadaj = new DogadajEntity(sifDog, nazivDog, sifCeh, ispunjen, vidljiv);
+				result.add(dogadaj);
+			}
+			return result;
+		}
+		catch(SQLException e) 
+		{
+			throw e;
+		}
+    }
 }

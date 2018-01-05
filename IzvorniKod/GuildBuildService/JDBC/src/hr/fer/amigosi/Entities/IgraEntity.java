@@ -7,7 +7,20 @@ public class IgraEntity {
     private int sifraIgre;
     private String nazivIgre;
 
-    public int getSifraIgre() {
+    public IgraEntity() {
+	}
+    
+    
+    
+    public IgraEntity(int sifraIgre, String nazivIgre) {
+		super();
+		this.sifraIgre = sifraIgre;
+		this.nazivIgre = nazivIgre;
+	}
+
+
+
+	public int getSifraIgre() {
         return sifraIgre;
     }
 

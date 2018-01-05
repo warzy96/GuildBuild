@@ -10,7 +10,20 @@ public class PodciljEntity {
     private String nazivPodcilja;
     private boolean ispunjenost;
 
-    public int getSifraCilja() {
+    
+    
+    public PodciljEntity(int sifraCilja, int sifraPodcilja, String nazivPodcilja, boolean ispunjenost) {
+		super();
+		this.sifraCilja = sifraCilja;
+		this.sifraPodcilja = sifraPodcilja;
+		this.nazivPodcilja = nazivPodcilja;
+		this.ispunjenost = ispunjenost;
+	}
+
+    public PodciljEntity() {
+	}
+    
+	public int getSifraCilja() {
         return sifraCilja;
     }
 

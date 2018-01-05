@@ -9,7 +9,21 @@ public class KlasaEntity {
     private int sifraKlase;
     private String nazivKlase;
 
-    public int getSifraIgre() {
+    public KlasaEntity() {
+	}
+    
+    
+    
+    public KlasaEntity(int sifraIgre, int sifraKlase, String nazivKlase) {
+		super();
+		this.sifraIgre = sifraIgre;
+		this.sifraKlase = sifraKlase;
+		this.nazivKlase = nazivKlase;
+	}
+
+
+
+	public int getSifraIgre() {
         return sifraIgre;
     }
 
