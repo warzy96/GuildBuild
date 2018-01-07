@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hr.fer.amigosi.guildbuild.AdministratorDelGuildActivity"
+    tools:context="hr.fer.amigosi.guildbuild.AdministratorAddGameActivity"
     android:background="@color/colorPrimaryDark">>
 
     <LinearLayout
@@ -13,11 +13,11 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textViewG"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="cursive"
-            android:text="Delete guild"
+            android:text="Add game"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display3"
             android:textColor="@android:color/background_light"
@@ -25,9 +25,9 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/guildNameForDeleteText"
+            android:id="@+id/gameToAdd"
             style="@style/editText_style"
-            android:hint="Guild name"
+            android:hint="Game name"
             android:inputType="textPersonName"
             android:textColor="@color/colorPrimaryDark"
             android:textColorHint="@color/hintColor" />
@@ -39,11 +39,10 @@
 
 
             <Button
-                android:id="@+id/btnDeleteGuild"
+                android:id="@+id/btnAddGame"
                 style="@style/button_style"
                 android:layout_weight="1"
-                android:onClick="Home"
-                android:text="Delete guild" />
+                android:text="Add game" />
 
         </LinearLayout>
 

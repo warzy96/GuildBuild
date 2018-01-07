@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hr.fer.amigosi.guildbuild.UserProfileActivity"
+    tools:context="hr.fer.amigosi.guildbuild.AdministratorProfileActivity"
     android:background="@color/colorPrimaryDark"><![CDATA[>]]>
 
 
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Create user profile"
+                android:text="View User Requests"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
 
@@ -74,6 +74,25 @@
 
 
             </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/AdminAddGameButton"
+                style="@style/button_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:text="Add Game"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+
+
+        </LinearLayout>
 
     </LinearLayout>
 

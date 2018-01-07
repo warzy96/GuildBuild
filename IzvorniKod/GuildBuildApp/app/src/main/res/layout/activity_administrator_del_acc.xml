@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hr.fer.amigosi.guildbuild.RegisterActivity"
+    tools:context="hr.fer.amigosi.guildbuild.AdministratorDelAccActivity"
     android:background="@color/colorPrimaryDark">>
 
     <LinearLayout
@@ -42,7 +42,6 @@
                 android:id="@+id/btnDeleteUser"
                 style="@style/button_style"
                 android:layout_weight="1"
-                android:onClick="Home"
                 android:text="Delete user" />
 
         </LinearLayout>
