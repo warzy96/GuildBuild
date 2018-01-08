@@ -2,14 +2,15 @@
 <android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/AnonUsersList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="hr.fer.amigosi.guildbuild.AdministratorViewUserReqActivity">
-    android:background="@color/colorPrimaryDark">
 
-    <ListView
+    <LinearLayout
+        android:id="@+id/linLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listView"></ListView>
-    
+        android:orientation="vertical"></LinearLayout>
 </android.widget.RelativeLayout>
