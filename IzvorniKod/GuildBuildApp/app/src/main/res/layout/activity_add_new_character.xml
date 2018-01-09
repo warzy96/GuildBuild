@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="hr.fer.amigosi.guildbuild.AdministratorAddGameActivity"
+    android:background="@color/colorPrimaryDark">>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="cursive"
+            android:text="Add new character"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+            android:textColor="@android:color/background_light"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/characterName"
+            style="@style/editText_style"
+            android:hint="Character name"
+            android:inputType="textPersonName"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHint="@color/hintColor" />
+
+
+        <EditText
+            android:id="@+id/characterLevel"
+            style="@style/editText_style"
+            android:hint="Character level"
+            android:inputType="textPersonName"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHint="@color/hintColor" />
+
+        <TextView
+            android:id="@+id/gameClassTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Character class:"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+            android:textColor="@android:color/background_light"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/gameClassSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"></Spinner>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/addCharacterBtn"
+                style="@style/button_style"
+                android:layout_weight="1"
+                android:text="Add Character" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.widget.RelativeLayout>
+
