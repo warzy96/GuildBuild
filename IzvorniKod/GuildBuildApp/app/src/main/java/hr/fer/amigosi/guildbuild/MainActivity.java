@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE1 ="aaa";
     public static final String EXTRA_MESSAGE2 ="bbb";
 
+    private String nickname;
 
     private EditText etEmail;
     private EditText etPassword;
@@ -138,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     Toast.makeText(MainActivity.this , "Login Successfull" , Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    intent.putExtra(EXTRA_MESSAGE1, nickname);
                     startActivity(intent);
                 }
             }else{
@@ -169,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
                         if(rs.next())
                         {
                             isAdmin = rs.getBoolean("isAdmin");
+                            nickname = rs.getString("nadimak");
                             z = "Login successful";
                             isSuccess=true;
                             con.close();

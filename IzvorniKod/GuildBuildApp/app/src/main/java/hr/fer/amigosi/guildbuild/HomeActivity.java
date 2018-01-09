@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 /**
  *  @author Filip Kerman
@@ -16,6 +19,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        Intent intent = getIntent();
+        String nickname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
+
+        TextView textView = (TextView) findViewById(R.id.Nickname);
+        textView.setText(nickname);
 
     }
 

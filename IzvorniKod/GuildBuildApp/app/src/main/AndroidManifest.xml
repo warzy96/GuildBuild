@@ -41,7 +41,9 @@
         <activity android:name=".AdministratorViewUserReqActivity" />
         <activity android:name=".AdministratorDelAccActivity" />
         <activity android:name=".AdministratorDelGuildActivity" />
-        <activity android:name=".AdministratorAddGameActivity"></activity>
+        <activity android:name=".AdministratorAddGameActivity" />
+        <activity android:name=".AdministratorAddClassActivity" />
+        <activity android:name=".AdministratorDelClassActivity"></activity>
     </application>
 
 </manifest>
