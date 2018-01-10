@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="93dp"
@@ -19,8 +20,8 @@
 
             <TextView
                 android:id="@+id/HomeText"
-                android:layout_width="458dp"
-                android:layout_height="111dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="1"
@@ -38,40 +39,10 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/SeeProfile"
-                style="@style/button_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_weight="1"
-                android:enabled="true"
-                android:onClick="UserProfile"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="Profile" />
-
-            <Button
-                android:id="@+id/GuildList"
-                style="@style/button_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="GuildList"
-                android:text="List of Guilds" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="93dp"
-            android:orientation="horizontal">
-
             <TextView
                 android:id="@+id/Nickname"
-                android:layout_width="458dp"
-                android:layout_height="111dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="1"
@@ -80,6 +51,45 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Display3"
                 android:textColor="@android:color/background_light"
                 android:textSize="58sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/MyGuild"
+                style="@style/button_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/my_guild"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/GuildList"
+                style="@style/button_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="GuildList"
+                android:text="@string/list_of_guilds" />
+
+            <Button
+                android:id="@+id/SeeProfile"
+                style="@style/button_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_weight="1"
+                android:enabled="true"
+                android:onClick="UserProfile"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/profile" />
 
         </LinearLayout>
 

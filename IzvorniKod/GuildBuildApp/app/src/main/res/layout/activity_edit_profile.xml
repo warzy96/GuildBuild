@@ -67,6 +67,15 @@
                 android:textAlignment="center"
                 android:text="Add new character"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+            <Button
+                android:id="@+id/deleteProfile"
+                style="@style/button_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Delete profile"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
         </LinearLayout>
 
     </LinearLayout>
