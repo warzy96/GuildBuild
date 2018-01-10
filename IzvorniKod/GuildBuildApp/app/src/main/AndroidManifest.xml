@@ -42,9 +42,8 @@
         <activity android:name=".AdministratorDelAccActivity" />
         <activity android:name=".AdministratorDelGuildActivity" />
         <activity android:name=".AdministratorAddGameActivity" />
-        <activity android:name=".AdministratorDelClassActivity"></activity>
-        <activity android:name=".AdministratorAddClassActivity"></activity>
-        <activity android:name=".AddNewCharacterActivity"></activity>
+        <activity android:name=".AddNewCharacterActivity" />
+        <activity android:name=".MyGuildActivity"></activity>
     </application>
 
 </manifest>

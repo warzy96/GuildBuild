@@ -60,14 +60,6 @@
                 android:text="Edit profile"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
-            <Button
-                android:id="@+id/DeleteProfile"
-                style="@style/button_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Delete profile"
-                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
         </LinearLayout>
     </LinearLayout>
 

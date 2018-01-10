@@ -49,7 +49,6 @@
                 android:id="@+id/btnLogin"
                 style="@style/button_style"
                 android:layout_weight="1"
-                android:onClick="Home"
                 android:text="Log in"
                 android:textAlignment="center" />
 
