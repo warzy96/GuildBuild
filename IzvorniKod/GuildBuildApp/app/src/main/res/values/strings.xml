@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GuildBuild</string>
+    <string name="send_message">Send message</string>
+    <string name="list_of_guilds">List of Guilds</string>
+    <string name="profile">Profile</string>
+    <string name="my_guild">My guild</string>
 </resources>

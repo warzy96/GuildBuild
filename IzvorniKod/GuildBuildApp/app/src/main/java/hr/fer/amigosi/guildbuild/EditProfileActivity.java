@@ -16,24 +16,49 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import hr.fer.amigosi.guildbuild.DAO.UserDAO;
+
 
 public class EditProfileActivity extends AppCompatActivity {
     private Button changeAvatarBtn;
     private Button aboutMeBtn;
     private Button addNewCharacterBtn;
+    private Button deleteProfileButton;
     private String aboutMeText="";
-    private String nickNameStr;
-
-    Connection con;
+    private String nickname;
+    private int sifraCeha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
+        Intent pastIntent = getIntent();
+        nickname = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
+        sifraCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2, 0);
+
         changeAvatarBtn=(Button) findViewById(R.id.ChangeAvatarButton);
         aboutMeBtn=(Button) findViewById(R.id.AboutMeButton);
         addNewCharacterBtn=(Button) findViewById(R.id.AddNewCharButton);
+        deleteProfileButton = findViewById(R.id.deleteProfile);
+
+        deleteProfileButton.setOnClickListener(view -> {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle("Are you sure you want delete your profile?");
+            alertDialog.setCancelable(false);
+            alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    new DeleteUserProfile().execute();
+                }
+            });
+            alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            });
+        });
 
         Intent intent = getIntent();
         nickNameStr = intent.getStringExtra("Nickname");
@@ -91,6 +116,30 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
+    private class DeleteUserProfile extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... v) {
+            try {
+                UserDAO userDAO = new UserDAO();
+                userDAO.deleteUser(nickname);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(EditProfileActivity.this,
+                    "Delete successful", Toast.LENGTH_SHORT);
+            Intent returnToMainScreen =
+                    new Intent(EditProfileActivity.this, MainActivity.class);
+            startActivity(returnToMainScreen);
+            EditProfileActivity.this.finish();
+        }
+    }
 
     public class AboutMe extends AsyncTask<String,String,String>{
         private String message = "";
@@ -108,17 +157,14 @@ public class EditProfileActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             try {
-                con=DatabaseConnection.getConnection();
-                if (con == null)
+                if (DatabaseConnection.getConnection() == null)
                 {
                     message = "Check Your Internet Access!";
                 }
                 else
                 {
-                    String query = "update korisnik set opis = '" + aboutMeText +
-                            "' where korisnik.nadimak= '" + nickNameStr + "'";
-                    Statement stmt = con.createStatement();
-                    int tmp = stmt.executeUpdate(query);
+                    UserDAO userDAO = new UserDAO();
+                    userDAO.updateUsersDescription(nickname, aboutMeText);
                     message="Operation successfull!";
                     success=true;
                 }

@@ -16,6 +16,32 @@ public class UserDAO {
     public UserDAO() throws Exception{
         connection = DatabaseConnection.getConnection();
     }
+    public KorisnikEntity getUser(String email, String password) throws SQLException{
+        KorisnikEntity korisnikEntity = null;
+        String querry = "SELECT * FROM korisnik WHERE email= '"
+                + email + "' AND lozinka = '"+ password +"' AND statusR ";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(querry);
+            if(rs != null) {
+                korisnikEntity = new KorisnikEntity();
+                String nadimak = rs.getString("nadimak");
+                String email1 = rs.getString("email");
+                String lozinka =rs.getString("lozinka");
+                boolean statusR = rs.getBoolean("statusR");
+                String rang = rs.getString("rang");
+                int sifCeh = rs.getInt("sifCeh");
+                boolean statusP = rs.getBoolean("statusP");
+                String opis = rs.getString("opis");
+                boolean isAdmin = rs.getBoolean("isAdmin");
+                korisnikEntity = new KorisnikEntity(email1, nadimak, lozinka, statusR, rang, sifCeh, statusP, opis, isAdmin);
+            }
+        }
+        catch (SQLException e) {
+            throw e;
+        }
+        return korisnikEntity;
+    }
     public void insertUser(KorisnikEntity korisnik) throws SQLException {
         String querry = "INSERT INTO korisnik VALUES ('"
                 + korisnik.getNadimak() + "', '"
@@ -122,6 +148,19 @@ public class UserDAO {
             return result;
         }
         catch(Exception e){
+            throw e;
+        }
+    }
+
+    public void updateUsersDescription(String nadimak, String opis) throws SQLException{
+        String querry = "UPDATE korisnik SET opis = '"
+                + opis + "'"
+                + " WHERE korisnik.nadimak = '" + nadimak;
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(querry);
+        }
+        catch(SQLException e) {
             throw e;
         }
     }

@@ -71,6 +71,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     public void Messages(View view){
         Intent intent = new Intent(this, MessagesActivity.class);
+        intent.putExtra(MainActivity.EXTRA_MESSAGE1, nickname);
         startActivity(intent);
     }
 
