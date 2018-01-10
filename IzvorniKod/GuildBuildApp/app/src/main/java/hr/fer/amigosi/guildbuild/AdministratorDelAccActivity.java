@@ -1,24 +1,28 @@
 package hr.fer.amigosi.guildbuild;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
+
+import hr.fer.amigosi.guildbuild.DAO.UserDAO;
+import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
 public class AdministratorDelAccActivity extends AppCompatActivity {
 
-    private EditText etNickname;
-    private Button btnDelete;
-
-    Connection con;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,88 +30,84 @@ public class AdministratorDelAccActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_administrator_del_acc);
 
-        etNickname = (EditText) findViewById(R.id.nicknameForDeleteText);
-        btnDelete = (Button) findViewById(R.id.btnDeleteUser);
-
-        btnDelete.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                CheckUser checkUser = new CheckUser();// this is the Asynctask, which is used to process in background to reduce load on app process
-                checkUser.execute("");
-            }
-        });
+        GetRegisteredUsers getRegisteredUsers = new GetRegisteredUsers();
+        getRegisteredUsers.execute();
 
     }
 
-    public class CheckUser extends AsyncTask<String,String,String>
-    {
-        String z = "";
-        Boolean isSuccess = false;
+    private class GetRegisteredUsers extends AsyncTask<String, String, List<KorisnikEntity>> {
 
         @Override
-        protected void onPreExecute()
-        {
-
+        protected List<KorisnikEntity> doInBackground(String... strings) {
+            try {
+                UserDAO userDAO = new UserDAO();
+                List<KorisnikEntity> userEntities = userDAO.loadAllRegisteredUsers();
+                return userEntities;
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
         }
 
         @Override
-        protected void onPostExecute(String r)
-        {
-            //Toast.makeText(MainActivity.this, r, Toast.LENGTH_SHORT).show();
-            if(isSuccess)
-            {
-                Toast.makeText(AdministratorDelAccActivity.this , r , Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(AdministratorDelAccActivity.this, AdministratorProfileActivity.class);
-                startActivity(intent);
-            }else{
-                Toast.makeText(AdministratorDelAccActivity.this , r , Toast.LENGTH_LONG).show();
+        protected void onPostExecute(List<KorisnikEntity> korisnikEntities) {
+            LinearLayout layout = findViewById(R.id.linLayout1);
+            layout.removeAllViews();
+            for(KorisnikEntity korisnik : korisnikEntities) {
+                TextView emailTextView = new TextView(getApplicationContext());
+                Button removeButton = new Button(new ContextThemeWrapper(getApplicationContext(),R.style.button_style), null, R.style.button_style);
 
+                emailTextView.setText(korisnik.getEmail());
+                emailTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                emailTextView.setTextColor(Color.WHITE);
+                emailTextView.setTextSize(25);
+                removeButton.setText("Remove");
+                removeButton.setTextSize(25);
+                removeButton.setTextColor(Color.WHITE);
+
+                removeButton.setOnClickListener(view -> {
+                    RemoveUser removeUser = new RemoveUser();
+                    removeUser.execute(korisnik);
+                });
+
+                LinearLayout mainLayout = new LinearLayout(getApplicationContext());
+                mainLayout.setOrientation(LinearLayout.VERTICAL);
+                mainLayout.setMinimumWidth(layout.getWidth());
+                LinearLayout removeButtonLayout = new LinearLayout(getApplicationContext());
+                removeButtonLayout.setOrientation(LinearLayout.VERTICAL);
+                TextView v = new TextView(getApplicationContext());
+                v.setText(" ");
+                v.setTextSize(3);
+
+                removeButtonLayout.addView(removeButton);
+                mainLayout.addView(emailTextView);
+                mainLayout.addView(v);
+                mainLayout.addView(removeButtonLayout);
+                layout.addView(mainLayout);
+            }
+        }
+    }
+
+
+    private class RemoveUser extends AsyncTask<KorisnikEntity, String, String> {
+        @Override
+        protected String doInBackground(KorisnikEntity... korisnikEntities) {
+            KorisnikEntity korisnikEntity = korisnikEntities[0];
+            try {
+                UserDAO userDAO = new UserDAO();
+                userDAO.deleteUser(korisnikEntity.getNadimak());
+                return "Removed successfully";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Removing user unsuccessful";
             }
         }
         @Override
-        protected String doInBackground(String... params)
-        {
-            String nick = etNickname.getText().toString();
-            if(nick.trim().equals(""))
-                z = "Please enter nickname";
-            else
-            {
-                try
-                {
-                    con = DatabaseConnection.getConnection();        // Connect to database
-                    if (con == null)
-                    {
-                        z = "Check Your Internet Access!";
-                    }
-                    else
-                    {
-                        String query = "select * from korisnik where nadimak = '" + nick + "' and statusR";
-                        Statement stmt = con.createStatement();
-                        ResultSet rs = stmt.executeQuery(query);
-                        if(rs.next())
-                        {
-                            String delquery = "delete from korisnik where nadimak = '"+nick+"'";
-                            stmt.executeUpdate(delquery);
-                            z = "Delete successfull";
-                            isSuccess=true;
-                            con.close();
-                        }
-                        else
-                        {
-                            z = "Registered user not found!";
-                            isSuccess = false;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    isSuccess = false;
-                    z = ex.getMessage();
-                }
-            }
-            return z;
+        protected void onPostExecute(String s) {
+            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+            GetRegisteredUsers getRegisteredUsers = new GetRegisteredUsers();
+            getRegisteredUsers.execute();
         }
     }
 }

@@ -95,7 +95,7 @@ public class UserDAO {
     }
 
     public List<KorisnikEntity> loadAllRegisteredUsers() throws SQLException{
-        String querry = "SELECT * FROM korisnik WHERE statusR";
+        String querry = "SELECT * FROM korisnik WHERE statusR AND NOT isAdmin";
         List<KorisnikEntity> result = new ArrayList<>();
 
         try{
