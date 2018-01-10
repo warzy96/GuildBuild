@@ -22,6 +22,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button aboutMeBtn;
     private Button addNewCharacterBtn;
     private String aboutMeText="";
+    private String nickNameStr;
 
     Connection con;
 
@@ -33,6 +34,9 @@ public class EditProfileActivity extends AppCompatActivity {
         changeAvatarBtn=(Button) findViewById(R.id.ChangeAvatarButton);
         aboutMeBtn=(Button) findViewById(R.id.AboutMeButton);
         addNewCharacterBtn=(Button) findViewById(R.id.AddNewCharButton);
+
+        Intent intent = getIntent();
+        nickNameStr = intent.getStringExtra("Nickname");
 
         changeAvatarBtn.setOnClickListener(new View.OnClickListener(){
 
@@ -81,6 +85,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(EditProfileActivity.this, AddNewCharacterActivity.class);
+                intent.putExtra("Nickname", nickNameStr);
                 startActivity(intent);
             }
         });
@@ -111,7 +116,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 else
                 {
                     String query = "update korisnik set opis = '" + aboutMeText +
-                                   "' where korisnik.nadimak= '" + "???";  //nekak dohvatit korisnika
+                            "' where korisnik.nadimak= '" + nickNameStr + "'";
                     Statement stmt = con.createStatement();
                     int tmp = stmt.executeUpdate(query);
                     message="Operation successfull!";

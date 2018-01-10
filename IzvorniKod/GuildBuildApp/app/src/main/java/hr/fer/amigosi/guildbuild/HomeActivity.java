@@ -8,11 +8,14 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import static hr.fer.amigosi.guildbuild.MainActivity.EXTRA_MESSAGE1;
+
 /**
  *  @author Filip Kerman
  *  @version v1.0 30.12.2017
  */
 public class HomeActivity extends AppCompatActivity {
+    private String nickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +23,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         Intent intent = getIntent();
-        String nickname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
+        nickname = intent.getStringExtra(EXTRA_MESSAGE1);
 
         TextView textView = (TextView) findViewById(R.id.Nickname);
         textView.setText(nickname);
@@ -29,6 +32,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void UserProfile(View view){
         Intent intent = new Intent(this, UserProfileActivity.class);
+        intent.putExtra("Nickname", nickname);
         startActivity(intent);
     }
 
