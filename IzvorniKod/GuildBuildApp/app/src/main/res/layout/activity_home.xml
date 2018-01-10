@@ -78,6 +78,14 @@
                 android:text="@string/list_of_guilds" />
 
             <Button
+                android:id="@+id/CreateNewGuildButton"
+                style="@style/button_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Create new guild" />
+
+            <Button
                 android:id="@+id/SeeProfile"
                 style="@style/button_style"
                 android:layout_width="match_parent"

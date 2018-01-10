@@ -1,15 +1,21 @@
 package hr.fer.amigosi.guildbuild;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Connection;
@@ -24,6 +30,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button aboutMeBtn;
     private Button addNewCharacterBtn;
     private Button deleteProfileButton;
+    private EditText descriptionEditText;
     private String aboutMeText="";
     private String nickname;
     private int sifraCeha;
@@ -36,12 +43,31 @@ public class EditProfileActivity extends AppCompatActivity {
         Intent pastIntent = getIntent();
         nickname = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
         sifraCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2, 0);
+        aboutMeText = pastIntent.getStringExtra(UserProfileActivity.USER_DESCRIPTION);
 
         changeAvatarBtn=(Button) findViewById(R.id.ChangeAvatarButton);
-        aboutMeBtn=(Button) findViewById(R.id.AboutMeButton);
+        descriptionEditText = findViewById(R.id.descriptionEditText);
         addNewCharacterBtn=(Button) findViewById(R.id.AddNewCharButton);
         deleteProfileButton = findViewById(R.id.deleteProfile);
 
+        descriptionEditText.setHint(aboutMeText);
+        descriptionEditText.setText(aboutMeText);
+        descriptionEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    v.setHint(v.getText());
+                    v.setFocusable(false);
+                    aboutMeText = v.getText().toString();
+                    new AboutMe().execute("");
+                }
+                return false;
+            }
+        });
+
+        deleteProfileButton.setClickable(true);
         deleteProfileButton.setOnClickListener(view -> {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle("Are you sure you want delete your profile?");
@@ -58,10 +84,8 @@ public class EditProfileActivity extends AppCompatActivity {
                     dialogInterface.cancel();
                 }
             });
+            alertDialog.show();
         });
-
-        Intent intent = getIntent();
-        nickNameStr = intent.getStringExtra("Nickname");
 
         changeAvatarBtn.setOnClickListener(new View.OnClickListener(){
 
@@ -71,58 +95,30 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-        aboutMeBtn.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
-                builder.setTitle("Write something about yourself:");
-
-                // Set up the input
-                final EditText input = new EditText(EditProfileActivity.this);
-                // Set type of input
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                input.setLines(3);
-                builder.setView(input);
-
-                // Set up the buttons
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        aboutMeText = input.getText().toString();
-                        AboutMe aboutMe = new AboutMe();
-                        aboutMe.execute("");
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                builder.show();
-            }
-        });
-
         addNewCharacterBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(EditProfileActivity.this, AddNewCharacterActivity.class);
-                intent.putExtra("Nickname", nickNameStr);
+                intent.putExtra("Nickname", nickname);
                 startActivity(intent);
             }
         });
     }
 
     private class DeleteUserProfile extends AsyncTask<Void, Void, String> {
-
+        private String message;
+        private boolean success = false;
         @Override
         protected String doInBackground(Void... v) {
             try {
+                if(DatabaseConnection.getConnection() == null) {
+                    message = "Check Your Internet Access!";
+                }
                 UserDAO userDAO = new UserDAO();
                 userDAO.deleteUser(nickname);
+                message = "Delete successful";
+                success = true;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -133,11 +129,14 @@ public class EditProfileActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             Toast.makeText(EditProfileActivity.this,
-                    "Delete successful", Toast.LENGTH_SHORT);
-            Intent returnToMainScreen =
-                    new Intent(EditProfileActivity.this, MainActivity.class);
-            startActivity(returnToMainScreen);
-            EditProfileActivity.this.finish();
+                    message, Toast.LENGTH_SHORT).show();
+            if(success) {
+                Intent returnToMainScreen =
+                        new Intent(EditProfileActivity.this, MainActivity.class);
+                returnToMainScreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(returnToMainScreen);
+            }
+
         }
     }
 
@@ -152,6 +151,8 @@ public class EditProfileActivity extends AppCompatActivity {
             {
                 Toast.makeText(EditProfileActivity.this , r , Toast.LENGTH_LONG).show();
             }
+            Toast.makeText(EditProfileActivity.this , r , Toast.LENGTH_LONG).show();
+
         }
 
         @Override
@@ -165,7 +166,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 {
                     UserDAO userDAO = new UserDAO();
                     userDAO.updateUsersDescription(nickname, aboutMeText);
-                    message="Operation successfull!";
+                    message="Description updated successfully!";
                     success=true;
                 }
             } catch (Exception e) {

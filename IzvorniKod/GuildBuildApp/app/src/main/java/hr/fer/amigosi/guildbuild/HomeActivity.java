@@ -7,10 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import static hr.fer.amigosi.guildbuild.MainActivity.EXTRA_MESSAGE1;
-
 /**
  *  @author Filip Kerman
  *  @version v1.0 30.12.2017
@@ -31,16 +27,37 @@ public class HomeActivity extends AppCompatActivity {
         textView.setText(nickname);
 
         Button myGuildButton = findViewById(R.id.MyGuild);
-        Button listOfGuildsButton = findViewById(R.id.GuildList);
+        Button createNewGuildButton = findViewById(R.id.CreateNewGuildButton);
+        Button guildListButton = findViewById(R.id.GuildList);
+
 
         //Ako korisnik nije u cehu -> sakrij gumb za pregled njegovog ceha
+        //Ako korisnik je u cehu -> sakrij gumb za stvaranje novog ceha
         if(sifraCeha == 0) {
-            myGuildButton.setVisibility(View.INVISIBLE);
+            myGuildButton.setVisibility(View.GONE);
+        }
+        else {
+            createNewGuildButton.setVisibility(View.GONE);
         }
 
+        createNewGuildButton.setOnClickListener(view -> {
+            Intent newGuild = new Intent(HomeActivity.this, GuildCreateActivity.class);
+            newGuild.putExtra(MainActivity.EXTRA_MESSAGE1, nickname);
+            startActivity(newGuild);
+        });
+
+        myGuildButton.setClickable(true);
         myGuildButton.setOnClickListener(view -> {
-            Intent myGuild = new Intent(HomeActivity.this, MyGuildActivity.class);
+            Intent myGuild = new Intent(HomeActivity.this, GuildDetailsActivity.class);
             startActivity(myGuild);
+        });
+
+        guildListButton.setClickable(true);
+        guildListButton.setOnClickListener(view -> {
+            Intent guildListIntent = new Intent(HomeActivity.this, GuildListActivity.class);
+            guildListIntent.putExtra(MainActivity.EXTRA_MESSAGE1, nickname);
+            guildListIntent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraCeha);
+            startActivity(guildListIntent);
         });
     }
 

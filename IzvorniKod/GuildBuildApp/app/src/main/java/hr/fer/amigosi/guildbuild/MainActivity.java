@@ -65,6 +65,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /*@Override
+    public void onBackPressed() {
+
+    }*/
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     public void Register(View view){
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
@@ -75,16 +85,10 @@ public class MainActivity extends AppCompatActivity {
         String z = "";
         Boolean isSuccess = false;
 
-        @Override
-        protected void onPreExecute()
-        {
-
-        }
 
         @Override
         protected void onPostExecute(String r)
         {
-            //Toast.makeText(MainActivity.this, r, Toast.LENGTH_SHORT).show();
             if(isSuccess)
             {
                 if(korisnikEntity.isAdmin()){
@@ -94,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else{
-                    Toast.makeText(MainActivity.this , "Login Successfull" , Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this , "Login Successful" , Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     intent.putExtra(EXTRA_MESSAGE1, korisnikEntity.getNadimak());
                     intent.putExtra(EXTRA_MESSAGE2, korisnikEntity.getSifraCeha());
@@ -116,7 +120,8 @@ public class MainActivity extends AppCompatActivity {
             {
                 try
                 {
-                    if (DatabaseConnection.getConnection() == null)
+                    Connection connection = DatabaseConnection.getConnection();
+                    if (connection == null)
                     {
                         z = "Check Your Internet Access!";
                     }

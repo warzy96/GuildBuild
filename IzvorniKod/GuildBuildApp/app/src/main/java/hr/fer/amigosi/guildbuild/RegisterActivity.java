@@ -51,6 +51,12 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+
     public class CheckRegister extends AsyncTask<String,String,String>{
         String z = "";
         Boolean isSuccess = false;

@@ -28,11 +28,11 @@ import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
  */
 
 public class UserProfileActivity extends AppCompatActivity {
+    public static final String USER_DESCRIPTION = "UserDescription";
     TextView nickTextView;
     TextView aboutMeTv;
     String nickNameStr;
 
-    Connection con;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class UserProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        nickNameStr = intent.getStringExtra("Nickname");
+        nickNameStr = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
 
         nickTextView = (TextView) findViewById(R.id.Nick);
         nickTextView.setText(nickNameStr);
@@ -57,27 +57,24 @@ public class UserProfileActivity extends AppCompatActivity {
         CheckClass checkClass = new CheckClass();// this is the Asynctask, which is used to process in background to reduce load on app process
         checkClass.execute("");
 
+    }
 
-        Button deleteBtn= (Button) findViewById(R.id.DeleteProfile);
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View view) {
-                                             DeleteProfile deleteProfile= new DeleteProfile();
-                                             deleteProfile.execute();
-                                         }
-                                     }
-        );
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new CheckClass().execute("");
     }
 
     public void Messages(View view){
         Intent intent = new Intent(this, MessagesActivity.class);
-        intent.putExtra(MainActivity.EXTRA_MESSAGE1, nickname);
+        intent.putExtra(MainActivity.EXTRA_MESSAGE1, nickNameStr);
         startActivity(intent);
     }
 
     public void EditProfile(View view){
         Intent intent = new Intent(this, EditProfileActivity.class);
-        intent.putExtra("Nickname", nickNameStr);
+        intent.putExtra(MainActivity.EXTRA_MESSAGE1, nickNameStr);
+        intent.putExtra(USER_DESCRIPTION, aboutMeTv.getText());
         startActivity(intent);
     }
 
@@ -86,7 +83,7 @@ public class UserProfileActivity extends AppCompatActivity {
     {
         String z = "";
         Boolean isSuccess = false;
-
+        String opis;
         @Override
         protected void onPreExecute()
         {
@@ -96,7 +93,8 @@ public class UserProfileActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String r)
         {
-
+            if(opis != null)
+                aboutMeTv.setText(opis);
         }
 
         @Override
@@ -105,23 +103,17 @@ public class UserProfileActivity extends AppCompatActivity {
 
             try
             {
-                con = DatabaseConnection.getConnection();        // Connect to database
-                if (con == null)
+                if (DatabaseConnection.getConnection() == null)
                 {
                     z = "Check Your Internet Access!";
                 }
                 else
                 {
-                    String query = "select * from korisnik where korisnik.nadimak = '"+nickNameStr+"'";
-                    Statement stmt = con.createStatement();
-                    ResultSet rs = stmt.executeQuery(query);
-                    if(rs.next()){
-                        String opis = rs.getString("opis");
-                        aboutMeTv.setText(opis);
-                    }else {
-
+                    UserDAO userDAO = new UserDAO();
+                    KorisnikEntity korisnikEntity = userDAO.getUser(nickNameStr);
+                    if(korisnikEntity != null) {
+                        opis = korisnikEntity.getOpisKorisnika();
                     }
-                    con.close();
                 }
             }
             catch (Exception ex)
@@ -131,26 +123,6 @@ public class UserProfileActivity extends AppCompatActivity {
             }
 
             return z;
-        }
-    }
-
-    private class DeleteProfile extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... korisnikEntities) {
-            try {
-                UserDAO userDAO = new UserDAO();
-                userDAO.deleteUser(nickNameStr);
-                return "Profile deleted successfully";
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "Deleting profile unsuccessful";
-            }
-        }
-        @Override
-        protected void onPostExecute(String s) {
-            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-            Intent intent= new Intent(UserProfileActivity.this, MainActivity.class);
-            startActivity(intent);
         }
     }
 }

@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="cursive"
-            android:text="Edit profie"
+            android:text="Edit profile"
             android:textAlignment="center"
             android:textSize="55sp"
             android:textStyle="bold" />
@@ -43,14 +43,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/AboutMeButton"
-                style="@style/button_style"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="About me"
-                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
         </LinearLayout>
 
         <LinearLayout
@@ -76,6 +68,15 @@
                 android:layout_weight="1"
                 android:text="Delete profile"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+            <EditText
+                android:id="@+id/descriptionEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="text"
+                android:visibility="visible" />
         </LinearLayout>
 
     </LinearLayout>

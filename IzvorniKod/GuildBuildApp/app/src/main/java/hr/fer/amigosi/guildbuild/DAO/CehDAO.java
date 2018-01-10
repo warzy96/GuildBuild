@@ -14,7 +14,7 @@ import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
 public class CehDAO {
     Connection connection = null;
-    public CehDAO() throws Exception{
+    public CehDAO() throws ClassNotFoundException, SQLException{
         connection = DatabaseConnection.getConnection();
     }
     public void insertGuild(CehEntity cehEntity) throws SQLException {
@@ -23,6 +23,21 @@ public class CehDAO {
                 + cehEntity.getNaziv() + "', "
                 + cehEntity.getSifraIgre() + ", '"
                 + cehEntity.getOpis()
+                + "')";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(querry);
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
+    public void insertGuild(String nazivCeha, int sifraIgre, String opisCeha) throws SQLException {
+        String querry = "INSERT INTO ceh VALUES ("
+                + null + ", '"
+                + nazivCeha + "', "
+                + sifraIgre + ", '"
+                + opisCeha
                 + "')";
         try {
             Statement statement = connection.createStatement();

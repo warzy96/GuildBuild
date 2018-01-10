@@ -37,13 +37,14 @@
             android:name=".MessagesActivity"
             android:parentActivityName=".UserProfileActivity" />
         <activity android:name=".EditProfileActivity" />
+        <activity android:name=".GuildCreateActivity" />
         <activity android:name=".AdministratorProfileActivity" />
         <activity android:name=".AdministratorViewUserReqActivity" />
         <activity android:name=".AdministratorDelAccActivity" />
         <activity android:name=".AdministratorDelGuildActivity" />
         <activity android:name=".AdministratorAddGameActivity" />
         <activity android:name=".AddNewCharacterActivity" />
-        <activity android:name=".MyGuildActivity"></activity>
+        <activity android:name=".GuildDetailsActivity"></activity>
     </application>
 
 </manifest>
