@@ -60,6 +60,9 @@ public class EditProfileActivity extends AppCompatActivity {
             });
         });
 
+        Intent intent = getIntent();
+        nickNameStr = intent.getStringExtra("Nickname");
+
         changeAvatarBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -107,6 +110,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(EditProfileActivity.this, AddNewCharacterActivity.class);
+                intent.putExtra("Nickname", nickNameStr);
                 startActivity(intent);
             }
         });

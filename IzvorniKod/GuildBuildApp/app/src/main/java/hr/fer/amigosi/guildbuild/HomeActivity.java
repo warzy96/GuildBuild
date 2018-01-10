@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import static hr.fer.amigosi.guildbuild.MainActivity.EXTRA_MESSAGE1;
+
 /**
  *  @author Filip Kerman
  *  @version v1.0 30.12.2017
