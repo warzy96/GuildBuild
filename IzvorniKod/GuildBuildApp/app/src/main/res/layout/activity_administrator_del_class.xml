@@ -25,19 +25,51 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/spinnerGame"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="39dp"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"></Spinner>
+            android:layout_height="wrap_content">
 
-        <Spinner
-            android:id="@+id/spinnerClass"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewg1"
+                android:text="Game: "
+                android:textSize="50px"
+                android:textAlignment="center" />
+
+            <Spinner
+                android:id="@+id/spinnerGame"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"></Spinner>
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="39dp"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"></Spinner>
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewc1"
+                android:text="Class : "
+                android:textSize="50px"
+                android:textAlignment="center" />
+
+            <Spinner
+                android:id="@+id/spinnerClass"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"></Spinner>
+
+        </LinearLayout>
+
+
+
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -1,113 +1,112 @@
 package hr.fer.amigosi.guildbuild;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
+
+import hr.fer.amigosi.guildbuild.DAO.CehDAO;
+import hr.fer.amigosi.guildbuild.entities.CehEntity;
 
 public class AdministratorDelGuildActivity extends AppCompatActivity {
-
-    private EditText etGuildName;
-    private Button btnDelete;
-
-    Connection con;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_administrator_del_guild);
 
-        etGuildName = (EditText) findViewById(R.id.guildNameForDeleteText);
-        btnDelete = (Button) findViewById(R.id.btnDeleteGuild);
-
-        btnDelete.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                CheckGuild checkGuild = new CheckGuild();// this is the Asynctask, which is used to process in background to reduce load on app process
-                checkGuild.execute("");
-            }
-        });
+        GetGuilds getGuilds = new GetGuilds();
+        getGuilds.execute();
 
 
     }
 
-    public class CheckGuild extends AsyncTask<String,String,String>
-    {
-        String z = "";
-        Boolean isSuccess = false;
+    private class GetGuilds extends AsyncTask<String, String, List<CehEntity>> {
 
         @Override
-        protected void onPreExecute()
-        {
-
+        protected List<CehEntity> doInBackground(String... strings) {
+            try {
+                CehDAO cehDAO = new CehDAO();
+                List<CehEntity> cehEntities = cehDAO.getAllGuilds();
+                return cehEntities;
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
         }
 
         @Override
-        protected void onPostExecute(String r)
-        {
-            //Toast.makeText(MainActivity.this, r, Toast.LENGTH_SHORT).show();
-            if(isSuccess)
-            {
-                Toast.makeText(AdministratorDelGuildActivity.this , r , Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(AdministratorDelGuildActivity.this, AdministratorProfileActivity.class);
-                startActivity(intent);
-            }else{
-                Toast.makeText(AdministratorDelGuildActivity.this , r , Toast.LENGTH_LONG).show();
+        protected void onPostExecute(List<CehEntity> cehEntities) {
+            LinearLayout layout = findViewById(R.id.linLayout2);
+            layout.removeAllViews();
+            for(CehEntity ceh : cehEntities) {
+                TextView cehName = new TextView(getApplicationContext());
+                Button removeButton = new Button(new ContextThemeWrapper(getApplicationContext(),R.style.button_style), null, R.style.button_style);
 
+                cehName.setText(ceh.getNaziv());
+                cehName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                cehName.setTextColor(Color.WHITE);
+                cehName.setTextSize(25);
+                removeButton.setText("Remove");
+                removeButton.setTextSize(25);
+                removeButton.setTextColor(Color.WHITE);
+
+                removeButton.setOnClickListener(view -> {
+                    RemoveCeh removeCeh = new RemoveCeh();
+                    removeCeh.execute(ceh);
+                });
+
+                LinearLayout mainLayout = new LinearLayout(getApplicationContext());
+                mainLayout.setOrientation(LinearLayout.VERTICAL);
+                mainLayout.setMinimumWidth(layout.getWidth());
+                LinearLayout removeButtonLayout = new LinearLayout(getApplicationContext());
+                removeButtonLayout.setOrientation(LinearLayout.VERTICAL);
+                TextView v = new TextView(getApplicationContext());
+                v.setText(" ");
+                v.setTextSize(3);
+
+                removeButtonLayout.addView(removeButton);
+                mainLayout.addView(cehName);
+                mainLayout.addView(v);
+                mainLayout.addView(removeButtonLayout);
+                layout.addView(mainLayout);
+            }
+        }
+    }
+
+
+    private class RemoveCeh extends AsyncTask<CehEntity, String, String> {
+        @Override
+        protected String doInBackground(CehEntity... cehEntities) {
+            CehEntity cehEntity = cehEntities[0];
+            try {
+                CehDAO cehDAO = new CehDAO();
+                cehDAO.deleteGuild(cehEntity.getSifraCeha());
+                return "Removed successfully";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Removing user unsuccessful";
             }
         }
         @Override
-        protected String doInBackground(String... params)
-        {
-            String name = etGuildName.getText().toString();
-            if(name.trim().equals(""))
-                z = "Please enter guild name";
-            else
-            {
-                try
-                {
-                    con = DatabaseConnection.getConnection();        // Connect to database
-                    if (con == null)
-                    {
-                        z = "Check Your Internet Access!";
-                    }
-                    else
-                    {
-                        String query = "select * from ceh where naziv = '" + name + "'";
-                        Statement stmt = con.createStatement();
-                        ResultSet rs = stmt.executeQuery(query);
-                        if(rs.next())
-                        {
-                            String delquery = "delete from ceh where naziv = '"+name+"'";
-                            stmt.executeUpdate(delquery);
-                            z = "Delete successfull";
-                            isSuccess=true;
-                            con.close();
-                        }
-                        else
-                        {
-                            z = "Guild not found!";
-                            isSuccess = false;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    isSuccess = false;
-                    z = ex.getMessage();
-                }
-            }
-            return z;
+        protected void onPostExecute(String s) {
+            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+            GetGuilds getGuilds = new GetGuilds();
+            getGuilds.execute();
         }
     }
 }
