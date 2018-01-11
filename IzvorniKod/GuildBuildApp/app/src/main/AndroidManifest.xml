@@ -44,7 +44,8 @@
         <activity android:name=".AdministratorDelGuildActivity" />
         <activity android:name=".AdministratorAddGameActivity" />
         <activity android:name=".AddNewCharacterActivity" />
-        <activity android:name=".GuildDetailsActivity"></activity>
+        <activity android:name=".GuildDetailsActivity" />
+        <activity android:name=".SendMessageActivity"></activity>
     </application>
 
 </manifest>
