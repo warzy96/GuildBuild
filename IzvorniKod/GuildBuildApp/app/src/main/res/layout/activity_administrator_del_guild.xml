@@ -7,9 +7,17 @@
     tools:context="hr.fer.amigosi.guildbuild.AdministratorDelGuildActivity"
     android:background="@color/colorPrimaryDark">>
 
-    <LinearLayout
-        android:id="@+id/linLayout2"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"></LinearLayout>
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/linLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"></LinearLayout>
+
+    </ScrollView>
+
+
 </android.widget.RelativeLayout>

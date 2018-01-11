@@ -22,11 +22,19 @@
             android:textColor="@android:color/background_light"
             android:textSize="55sp" />
 
-        <LinearLayout
-            android:id="@+id/guildList"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"></LinearLayout>
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/guildList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+
+        </ScrollView>
+
+
 
     </LinearLayout>
 
