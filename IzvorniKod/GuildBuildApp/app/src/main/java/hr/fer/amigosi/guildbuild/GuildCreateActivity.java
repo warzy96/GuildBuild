@@ -36,11 +36,15 @@ public class GuildCreateActivity extends AppCompatActivity{
     private Spinner gamesSpinner;
     private EditText guildDescription;
     private Object key;
+    private String nickname;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guild_create);
 
+        Intent intent = getIntent();
+        nickname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
 
         gamesSpinner = findViewById(R.id.gamesSpinnerCreate);
         new populateSpinner().execute("");
@@ -110,17 +114,25 @@ public class GuildCreateActivity extends AppCompatActivity{
             try {
                 CehDAO cehDAO = new CehDAO();
                 cehDAO.insertGuild(strings[0], igreMap.get(key), guildDescription.getText().toString());
-                //TODO: Add the user to created guild
-                result = "Guild created successfully!";
-                success = true;
+                UserDAO userDAO = new UserDAO();
+                int guildNumber = cehDAO.getGuildNumber(strings[0], igreMap.get(key));
+                if(guildNumber != 0) {
+                    userDAO.updateUserGuild(nickname, guildNumber);
+                    userDAO.updateUserRank(nickname, RangConstants.leader);
+                    result = "Guild created successfully!";
+                    success = true;
+                }
             }
             catch (SQLException e) {
+                e.printStackTrace();
                 result = e.getMessage();
             }
             catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
                 result = ex.getMessage();
             }
             catch (Exception e) {
+                e.printStackTrace();
                 result = e.getMessage();
             }
             return null;

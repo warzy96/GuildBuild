@@ -190,4 +190,28 @@ public class UserDAO {
             throw e;
         }
     }
+
+    public void updateUserGuild(String nickname, int sifraCeha) throws SQLException {
+        String querry = "UPDATE korisnik SET "
+                + "sifCeh =" + sifraCeha
+                + " WHERE korisnik.nadimak = '" + nickname + "'";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(querry);
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
+    public void updateUserRank(String nickname, String rank) throws SQLException{
+        String querry = "UPDATE korisnik SET rang='" + rank + "'"
+                + " WHERE korisnik.nadimak='" +nickname+"'";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(querry);
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
 }
