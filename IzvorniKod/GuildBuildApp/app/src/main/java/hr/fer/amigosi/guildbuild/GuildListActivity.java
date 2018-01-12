@@ -77,7 +77,7 @@ public class GuildListActivity extends AppCompatActivity {
                 textView.setOnClickListener(view -> {
                     Intent guildDetails = new Intent(GuildListActivity.this, GuildDetailsActivity.class);
                     guildDetails.putExtra(MainActivity.EXTRA_MESSAGE1, nickname);
-                    guildDetails.putExtra(MainActivity.EXTRA_MESSAGE2, sifraCeha);
+                    guildDetails.putExtra(MainActivity.EXTRA_MESSAGE2, cehEntity.getSifraCeha());
                     startActivity(guildDetails);
                 });
                 guildList.addView(textView);

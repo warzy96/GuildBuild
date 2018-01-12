@@ -118,6 +118,22 @@ public class CehDAO {
             throw e;
         }
     }
+    public int getGuildNumber(String nazivCeha, int sifraIgre) throws SQLException{
+        String querry = "SELECT * FROM ceh WHERE ceh.naziv='" + nazivCeha
+                + "' AND ceh.sifIgre=" + sifraIgre;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(querry);
+            if(rs.next()) {
+                int sifCeh=rs.getInt("sifCeh");
+                return sifCeh;
+            }
+            return 0;
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
 
     public List<CehEntity> getGuildsForGame(int sifraIgre) throws SQLException{
         String querry = "SELECT * FROM ceh WHERE ceh.sifIgre =" + sifraIgre;

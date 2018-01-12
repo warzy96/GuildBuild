@@ -5,4 +5,7 @@
     <string name="profile">Profile</string>
     <string name="my_guild">My guild</string>
     <string name="create_guild">Create guild</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="change_avatar">Change avatar</string>
+    <string name="add_new_character">Add new character</string>
 </resources>
