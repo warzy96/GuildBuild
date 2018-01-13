@@ -1,4 +1,4 @@
-package hr.fer.amigosi.guildbuild.entities;
+package hr.fer.amigosi.guildbuild;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -36,78 +36,56 @@ public class ConcedeActivity extends AppCompatActivity {
         ltMemberList = (ListView) findViewById(R.id.memberList);
         btnConcede = (Button) findViewById(R.id.btnConcede);
 
-        btnConcede.setOnClickListener(new View.OnClickListener()
-        {
+        btnConcede.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                AdministratorAddGameActivity.CheckGame checkGame = new AdministratorAddGameActivity.CheckGame();// this is the Asynctask, which is used to process in background to reduce load on app process
-                checkGame.execute("");
+            public void onClick(View v) {
+
             }
         });
 
 
     }
 
-    public class CheckGame extends AsyncTask<String,String,String>
-    {
+    public class CheckGame extends AsyncTask<String, String, String> {
         String z = "";
         Boolean isSuccess = false;
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
 
         }
 
         @Override
-        protected void onPostExecute(String r)
-        {
+        protected void onPostExecute(String r) {
             //Toast.makeText(MainActivity.this, r, Toast.LENGTH_SHORT).show();
-            if(isSuccess)
-            {
-                Toast.makeText(AdministratorAddGameActivity.this , r , Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(AdministratorAddGameActivity.this, AdministratorProfileActivity.class);
+            if (isSuccess) {
+                Toast.makeText(ConcedeActivity.this, r, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ConcedeActivity.this, AdministratorProfileActivity.class);
                 startActivity(intent);
-            }else{
-                Toast.makeText(AdministratorAddGameActivity.this , r , Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(ConcedeActivity.this, r, Toast.LENGTH_LONG).show();
 
             }
         }
+
         @Override
-        protected String doInBackground(String... params)
-        {
-            String name = etGameName.getText().toString();
-            if(name.trim().equals(""))
-                z = "Please enter game name";
-            else if(name.trim().length()>11){
-                z = "Game name too long!";
-            }
-            else
-            {
-                try
-                {
-                    con = DatabaseConnection.getConnection();        // Connect to database
-                    if (con == null)
-                    {
-                        z = "Check Your Internet Access!";
-                    }
-                    else
-                    {
-                        String query = "insert into igra values (null,'"+name+"')";
-                        Statement stmt = con.createStatement();
-                        int tmp = stmt.executeUpdate(query);
-                        z="Adding successfull!";
-                        isSuccess=true;
-                    }
+        protected String doInBackground(String... params) {
+            try {
+                con = DatabaseConnection.getConnection();        // Connect to database
+                if (con == null) {
+                    z = "Check Your Internet Access!";
+                } else {
+                    String query = "insert into igra values (null,'" + name + "')";
+                    Statement stmt = con.createStatement();
+                    int tmp = stmt.executeUpdate(query);
+                    z = "Conciding successfull!";
+                    isSuccess = true;
                 }
-                catch (Exception ex)
-                {
-                    isSuccess = false;
-                    z = ex.getMessage();
-                }
+            } catch (Exception ex) {
+                isSuccess = false;
+                z = ex.getMessage();
             }
-            return z;
-        }
+           return "hello";
     }
+}
 }

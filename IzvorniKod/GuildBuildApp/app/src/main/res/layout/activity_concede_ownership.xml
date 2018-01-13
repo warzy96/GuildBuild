@@ -24,13 +24,13 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/nicknameToConcede"
-            style="@style/editText_style"
-            android:hint="Enter nickname"
-            android:inputType="textPersonName"
-            android:textColor="@color/colorPrimaryDark"
-            android:textColorHint="@color/hintColor" />
+            <ListView
+                android:id="@+id/memberList"
+                android:layout_width="wrap_content"
+                android:layout_height="380dp"
+
+
+            />
 
 
         <LinearLayout
