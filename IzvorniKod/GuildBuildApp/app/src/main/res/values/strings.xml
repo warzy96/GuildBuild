@@ -8,4 +8,10 @@
     <string name="edit_profile">Edit profile</string>
     <string name="change_avatar">Change avatar</string>
     <string name="add_new_character">Add new character</string>
+    <string name="apply_for_Guild">Apply for guild</string>
+    <string name="see_guild_members">See guild members</string>
+    <string name="see_active_events">See active events</string>
+    <string name="leave_guild">Leave guild</string>
+    <string name="send_form">Send Form</string>
+
 </resources>

@@ -49,6 +49,9 @@ public class HomeActivity extends AppCompatActivity {
         myGuildButton.setClickable(true);
         myGuildButton.setOnClickListener(view -> {
             Intent myGuild = new Intent(HomeActivity.this, GuildDetailsActivity.class);
+            myGuild.putExtra(MainActivity.EXTRA_MESSAGE1, nickname);
+            myGuild.putExtra(MainActivity.EXTRA_MESSAGE2, sifraCeha);
+            myGuild.putExtra(GuildDetailsActivity.EXTRA_MESSAGE3,sifraCeha);
             startActivity(myGuild);
         });
 

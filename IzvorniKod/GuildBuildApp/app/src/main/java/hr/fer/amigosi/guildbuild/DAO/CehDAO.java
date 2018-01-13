@@ -104,6 +104,8 @@ public class CehDAO {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(querry);
 
+            rs.next();
+
             int sifCeh=rs.getInt("sifCeh");
             String naziv=rs.getString("naziv");
             int sifIgre=rs.getInt("sifIgre");
@@ -183,6 +185,25 @@ public class CehDAO {
                 result.add(korisnik);
             }
             return result;
+
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
+
+    public boolean checkIfMemExists(int sifraCeha) throws SQLException{
+        String querry = "SELECT * FROM korisnik WHERE korisnik.sifCeh =" + sifraCeha;
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(querry);
+
+            if(rs.next()){
+                return true;
+            }else{
+                return false;
+            }
 
         }
         catch(SQLException e) {
