@@ -75,9 +75,9 @@ public class ConcedeActivity extends AppCompatActivity {
                 if (con == null) {
                     z = "Check Your Internet Access!";
                 } else {
-                    String query = "insert into igra values (null,'" + name + "')";
+                    //String query = "insert into igra values (null,'" + name + "')";
                     Statement stmt = con.createStatement();
-                    int tmp = stmt.executeUpdate(query);
+                    //int tmp = stmt.executeUpdate(query);
                     z = "Conciding successfull!";
                     isSuccess = true;
                 }
