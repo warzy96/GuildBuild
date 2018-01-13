@@ -114,7 +114,7 @@
                 android:layout_below="@+id/Nick"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="Make america great again! "
+                android:text="Make america great ! "
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="italic"/>
@@ -125,6 +125,18 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:background="#A9A9A9" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/characterList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"></LinearLayout>
+
+            </ScrollView>
 
         </LinearLayout>
     </LinearLayout>
