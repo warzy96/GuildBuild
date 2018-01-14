@@ -16,5 +16,6 @@
     <string name="members">Members</string>
     <string name="give_up_leadership">Give up leadership</string>
     <string name="promote_demote_members">Promote/Demote members</string>
+    <string name="user_requests">User requests</string>
 
 </resources>

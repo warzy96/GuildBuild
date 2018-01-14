@@ -24,34 +24,17 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
-
-        <ListView
-            android:id="@+id/memberList"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="match_parent">
 
+            <LinearLayout
+                android:id="@+id/membersForLeadersLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
 
-            />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <Button
-                android:id="@+id/btnConcede"
-                style="@style/button_style"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:onClick="UserProfile"
-                android:text="Concede ownership" />
-
-        </LinearLayout>
 
     </LinearLayout>
 </android.widget.RelativeLayout>

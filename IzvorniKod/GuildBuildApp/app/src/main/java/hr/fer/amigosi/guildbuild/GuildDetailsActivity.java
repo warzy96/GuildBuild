@@ -101,6 +101,11 @@ public class GuildDetailsActivity extends AppCompatActivity {
             alertDialog.show();
         });
 
+        new IsRequestsButtonVisible().execute();
+        Button requestsButton = findViewById(R.id.JoinRequestsButton);
+        requestsButton.setOnClickListener(View -> {
+            Intent intent = new Intent();
+        });
     }
 
     public class FillNameAndDesc extends AsyncTask<String,String,CehEntity>{
@@ -120,10 +125,12 @@ public class GuildDetailsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(CehEntity cehEntity) {
             guildName.setText(cehEntity.getNaziv());
-            guildName.setTextSize(35);
+            //Overwrites xml text size
+            //guildName.setTextSize(35);
             guildName.setTextColor(Color.WHITE);
             guildDesc.setText(cehEntity.getOpis());
-            guildDesc.setTextSize(35);
+            //Overwrites xml text size
+            //guildDesc.setTextSize(35);
             guildDesc.setTextColor(Color.WHITE);
         }
     }
@@ -200,7 +207,38 @@ public class GuildDetailsActivity extends AppCompatActivity {
         }
     }
 
+    private class IsRequestsButtonVisible extends AsyncTask<Void, Void, KorisnikEntity> {
+        String result = "";
+        boolean success = false;
+        @Override
+        protected KorisnikEntity doInBackground(Void... voids) {
+            KorisnikEntity korisnikEntity = new KorisnikEntity();
+            try {
+                UserDAO userDAO = new UserDAO();
+                korisnikEntity = userDAO.getUser(nadimak);
+                success = true;
+            }
+            catch(Exception e) {
+                result = "Check your internet connection";
+            }
+            return korisnikEntity;
+        }
 
+        @Override
+        protected void onPostExecute(KorisnikEntity korisnikEntity) {
+            if(!success) {
+                Toast.makeText(GuildDetailsActivity.this, result, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                if(!korisnikEntity.getRang().equals(RangConstants.leader)
+                        && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
+                    Button requestsButton = findViewById(R.id.JoinRequestsButton);
+                    requestsButton.setVisibility(View.GONE);
+                }
+            }
+
+        }
+    }
 
     @Override
     public void onBackPressed() {

@@ -1,13 +1,18 @@
 package hr.fer.amigosi.guildbuild;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Connection;
@@ -30,16 +35,10 @@ import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
 public class ConcedeActivity extends AppCompatActivity {
 
-    private ListView ltMemberList;
-    private Button btnConcede;
     //private int sifraCeha;
     KorisnikEntity korisnik;
     private String nickname;
     Connection con;
-
-    //TODO: Napravi listu bez adaptera (textView), concede button uopce ne treba
-    //Svaki TV moze imati onClickListener koji otvara Dialog u kojem se na positiveButton
-    //prepusta vodstvo... trenutni voda -> koordinator, izabrani korisnik -> voda
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,22 +47,6 @@ public class ConcedeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         nickname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
-
-        ltMemberList = (ListView) findViewById(R.id.memberList);
-        btnConcede = (Button) findViewById(R.id.btnConcede);
-
-        btnConcede.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    UserDAO userDAO = new UserDAO();
-                    userDAO.updateUserRank(korisnik.getNadimak(), korisnik.getRang());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.err.print("Neuspjelo" + e.getMessage());
-                }
-            }
-        });
     }
 
     @Override
@@ -72,16 +55,63 @@ public class ConcedeActivity extends AppCompatActivity {
         new ShowMemberList().execute("");
     }
 
+    public class UpdateRanks extends AsyncTask<String, Void, String> {
+        boolean success = false;
+        @Override
+        protected String doInBackground(String... strings) {
+            String result = "";
+            String newLeaderNickname = strings[0];
+            try {
+                UserDAO userDAO = new UserDAO();
+                userDAO.updateUserRank(nickname, RangConstants.coordinator);
+                userDAO.updateUserRank(newLeaderNickname, RangConstants.leader);
+                result = "Successful";
+                success = true;
+            }
+            catch (Exception e) {
+                result = e.getMessage();
+            }
+            return result;
+        }
+    }
+
     public class ShowMemberList extends AsyncTask<String, String, List<KorisnikEntity>> {
         String z = "";
         Boolean isSuccess = false;
 
         protected void onPostExecute(List<KorisnikEntity> members) {
-            ArrayAdapter<KorisnikEntity> adapter = new ArrayAdapter<KorisnikEntity>(ConcedeActivity.this,
-                    android.R.layout.simple_list_item_1, members);
-            ltMemberList.setAdapter(adapter);
+            LinearLayout possibleLeaders = findViewById(R.id.membersForLeadersLayout);
+            possibleLeaders.removeAllViews();
             if (!isSuccess) {
-                Toast.makeText(ConcedeActivity.this, z, Toast.LENGTH_LONG).show();
+                 Toast.makeText(ConcedeActivity.this, z, Toast.LENGTH_LONG).show();
+            }
+            else {
+                for(KorisnikEntity korisnik : members) {
+                    TextView textView = new TextView(ConcedeActivity.this);
+                    textView.setText(korisnik.getNadimak());
+                    textView.setTextSize(35);
+                    textView.setTextColor(Color.WHITE);
+                    textView.setClickable(true);
+                    textView.setOnClickListener(view -> {
+                       AlertDialog.Builder alertDialog = new AlertDialog.Builder(ConcedeActivity.this);
+                       alertDialog.setTitle("Are you sure you want to give the 'Leader' title to this user?");
+                       alertDialog.setCancelable(false);
+                       alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface dialogInterface, int i) {
+                               new UpdateRanks().execute(textView.getText().toString());
+                           }
+                       });
+                       alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface dialogInterface, int i) {
+                               dialogInterface.cancel();
+                           }
+                       });
+                       alertDialog.show();
+                   });
+                    possibleLeaders.addView(textView);
+                }
             }
         }
 

@@ -75,6 +75,7 @@ public class FormApplicationActivity extends AppCompatActivity {
                 form.putExtra(MainActivity.EXTRA_MESSAGE1,nadimak);
                 form.putExtra(GuildDetailsActivity.EXTRA_MESSAGE3,sifraTrazenogCeha);
                 startActivity(form);
+                finish();
             }else{
                 Toast.makeText(FormApplicationActivity.this , s  , Toast.LENGTH_LONG).show();
             }
