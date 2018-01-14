@@ -16,6 +16,58 @@ public class UserDAO {
     public UserDAO() throws Exception{
         connection = DatabaseConnection.getConnection();
     }
+    public KorisnikEntity getUser(String email, String password) throws SQLException{
+        KorisnikEntity korisnikEntity = null;
+        String querry = "SELECT * FROM korisnik WHERE email= '"
+                + email + "' AND lozinka = '"+ password +"' AND statusR ";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(querry);
+            if(rs.next()) {
+                String nadimak = rs.getString("nadimak");
+                String email1 = rs.getString("email");
+                String lozinka =rs.getString("lozinka");
+                boolean statusR = rs.getBoolean("statusR");
+                String rang = rs.getString("rang");
+                int sifCeh = rs.getInt("sifCeh");
+                boolean statusP = rs.getBoolean("statusP");
+                String opis = rs.getString("opis");
+                boolean isAdmin = rs.getBoolean("isAdmin");
+                korisnikEntity = new KorisnikEntity(email1, nadimak, lozinka, statusR, rang, sifCeh, statusP, opis, isAdmin);
+                return korisnikEntity;
+            }
+        }
+        catch (SQLException e) {
+            throw e;
+        }
+        return null;
+    }
+    public KorisnikEntity getUser(String nickname) throws SQLException{
+        KorisnikEntity korisnikEntity = null;
+        String querry = "SELECT * FROM korisnik WHERE nadimak= '"
+                + nickname + "' AND statusR ";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(querry);
+            if(rs.next()) {
+                String nadimak = rs.getString("nadimak");
+                String email1 = rs.getString("email");
+                String lozinka =rs.getString("lozinka");
+                boolean statusR = rs.getBoolean("statusR");
+                String rang = rs.getString("rang");
+                int sifCeh = rs.getInt("sifCeh");
+                boolean statusP = rs.getBoolean("statusP");
+                String opis = rs.getString("opis");
+                boolean isAdmin = rs.getBoolean("isAdmin");
+                korisnikEntity = new KorisnikEntity(email1, nadimak, lozinka, statusR, rang, sifCeh, statusP, opis, isAdmin);
+                return korisnikEntity;
+            }
+        }
+        catch (SQLException e) {
+            throw e;
+        }
+        return  null;
+    }
     public void insertUser(KorisnikEntity korisnik) throws SQLException {
         String querry = "INSERT INTO korisnik VALUES ('"
                 + korisnik.getNadimak() + "', '"
@@ -37,7 +89,7 @@ public class UserDAO {
         }
     }
     public void deleteUser(String nickname) throws SQLException {
-        String querry = "DELETE FROM korisnik WHERE korisnik.nadimak = '" +
+        String querry = "DELETE FROM korisnik WHERE nadimak = '" +
                 nickname + "'";
         try {
             Statement statement = connection.createStatement();
@@ -69,7 +121,7 @@ public class UserDAO {
     }
 
     public List<KorisnikEntity> loadAllRegisteredUsers() throws SQLException{
-        String querry = "SELECT * FROM korisnik WHERE statusR";
+        String querry = "SELECT * FROM korisnik WHERE statusR AND NOT isAdmin";
         List<KorisnikEntity> result = new ArrayList<>();
 
         try{
@@ -122,6 +174,43 @@ public class UserDAO {
             return result;
         }
         catch(Exception e){
+            throw e;
+        }
+    }
+
+    public void updateUsersDescription(String nadimak, String opis) throws SQLException{
+        String querry = "UPDATE korisnik SET opis = '"
+                + opis + "'"
+                + " WHERE nadimak = '" + nadimak + "'";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(querry);
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
+
+    public void updateUserGuild(String nickname, int sifraCeha) throws SQLException {
+        String querry = "UPDATE korisnik SET "
+                + "sifCeh =" + sifraCeha
+                + " WHERE korisnik.nadimak = '" + nickname + "'";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(querry);
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
+    public void updateUserRank(String nickname, String rank) throws SQLException{
+        String querry = "UPDATE korisnik SET rang='" + rank + "'"
+                + " WHERE korisnik.nadimak='" +nickname+"'";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(querry);
+        }
+        catch(SQLException e) {
             throw e;
         }
     }

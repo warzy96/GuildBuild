@@ -13,47 +13,48 @@ import java.util.List;
 
 import hr.fer.amigosi.guildbuild.DAO.CehDAO;
 import hr.fer.amigosi.guildbuild.entities.CehEntity;
+import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
-/**
- *  @author Filip Kerman
- *  @version v1.0 30.12.2017
- */
-public class GuildListActivity extends AppCompatActivity {
-    private LinearLayout guildList;
-    private String nickname;
+public class GuildMembersActivity extends AppCompatActivity {
+
+    private TextView imeCeha;
+    private LinearLayout layout1;
     private int sifraCeha;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guild_list);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_guild_members);
 
-        guildList = findViewById(R.id.guildList);
+        imeCeha = (TextView) findViewById(R.id.GuildNameText2);
+        layout1 = (LinearLayout) findViewById(R.id.guildMembers1);
+
         Intent pastIntent = getIntent();
-        nickname = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
-        sifraCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2, 0);
+        imeCeha.setText(pastIntent.getStringExtra(GuildDetailsActivity.EXTRA_MESSAGE4));
+        imeCeha.setTextSize(35);
+        imeCeha.setTextColor(Color.WHITE);
+        sifraCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
+
+        PopulateGuildMembers populateGuildMembers = new PopulateGuildMembers();
+        populateGuildMembers.execute("");
+
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        new PopulateGuildList().execute();
-    }
-
-    private class PopulateGuildList extends AsyncTask<Void,Void, List<CehEntity>> {
+    private class PopulateGuildMembers extends AsyncTask<String,String, List<KorisnikEntity>> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            guildList.removeAllViews();
+            layout1.removeAllViews();
         }
 
         @Override
-        protected List<CehEntity> doInBackground(Void... voids) {
+        protected List<KorisnikEntity> doInBackground(String... strings) {
             try {
                 CehDAO cehDAO = new CehDAO();
-                List<CehEntity> cehEntityList = cehDAO.getAllGuilds();
-                return cehEntityList;
+                List<KorisnikEntity> korisnikEntityList = cehDAO.getGuildMembers(sifraCeha);
+                return korisnikEntityList;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -62,17 +63,13 @@ public class GuildListActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(List<CehEntity> cehEntityList) {
-            if(cehEntityList.isEmpty()) {
-                Toast.makeText(GuildListActivity.this, "No guilds to show", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-            for(CehEntity cehEntity : cehEntityList) {
-                TextView textView = new TextView(GuildListActivity.this);
-                textView.setText(cehEntity.getNaziv());
+        protected void onPostExecute(List<KorisnikEntity> korisnikEntityList) {
+            for(KorisnikEntity korisnikEntity : korisnikEntityList) {
+                TextView textView = new TextView(GuildMembersActivity.this);
+                textView.setText(korisnikEntity.getNadimak()+ ", " + korisnikEntity.getRang());
                 textView.setTextSize(35);
                 textView.setTextColor(Color.WHITE);
-                textView.setFocusable(false);
+                /*textView.setFocusable(false);
                 textView.setClickable(true);
                 textView.setOnClickListener(view -> {
                     Intent guildDetails = new Intent(GuildListActivity.this, GuildDetailsActivity.class);
@@ -80,8 +77,8 @@ public class GuildListActivity extends AppCompatActivity {
                     guildDetails.putExtra(MainActivity.EXTRA_MESSAGE2, sifraCeha);
                     guildDetails.putExtra(GuildDetailsActivity.EXTRA_MESSAGE3, cehEntity.getSifraCeha());
                     startActivity(guildDetails);
-                });
-                guildList.addView(textView);
+                });*/
+                layout1.addView(textView);
             }
         }
     }

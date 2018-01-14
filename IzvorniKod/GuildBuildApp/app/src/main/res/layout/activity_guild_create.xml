@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="hr.fer.amigosi.guildbuild.RegisterActivity"
-    android:background="@color/colorPrimaryDark">>
+    android:background="@color/colorPrimaryDark">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,25 +33,49 @@
             android:textColorHint="@color/hintColor" />
 
         <EditText
-            android:id="@+id/gameNameCreateGuild"
+            android:id="@+id/guildDescriptionEditText"
             style="@style/editText_style"
-            android:hint="Choose game"
-            android:textColorHint="@color/hintColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Guild description"
             android:inputType="textPersonName"
-            android:textColor="@color/colorPrimaryDark" />
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHint="@color/hintColor" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Game:"
+                android:textColor="@android:color/white"
+                android:textSize="30sp" />
+
+            <Spinner
+                android:id="@+id/gamesSpinnerCreate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
 
             <Button
-                android:id="@+id/btnRegister2"
+                android:id="@+id/createGuildButton"
                 style="@style/button_style"
                 android:layout_weight="1"
-                android:onClick="Home"
-                android:text="Create guild" />
+                android:text="@string/create_guild"
+                android:visibility="visible" />
 
         </LinearLayout>
 

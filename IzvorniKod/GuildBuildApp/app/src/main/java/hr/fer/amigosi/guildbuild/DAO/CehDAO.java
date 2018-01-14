@@ -14,7 +14,7 @@ import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
 public class CehDAO {
     Connection connection = null;
-    public CehDAO() throws Exception{
+    public CehDAO() throws ClassNotFoundException, SQLException{
         connection = DatabaseConnection.getConnection();
     }
     public void insertGuild(CehEntity cehEntity) throws SQLException {
@@ -23,6 +23,21 @@ public class CehDAO {
                 + cehEntity.getNaziv() + "', "
                 + cehEntity.getSifraIgre() + ", '"
                 + cehEntity.getOpis()
+                + "')";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(querry);
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
+    public void insertGuild(String nazivCeha, int sifraIgre, String opisCeha) throws SQLException {
+        String querry = "INSERT INTO ceh VALUES ("
+                + null + ", '"
+                + nazivCeha + "', "
+                + sifraIgre + ", '"
+                + opisCeha
                 + "')";
         try {
             Statement statement = connection.createStatement();
@@ -89,6 +104,8 @@ public class CehDAO {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(querry);
 
+            rs.next();
+
             int sifCeh=rs.getInt("sifCeh");
             String naziv=rs.getString("naziv");
             int sifIgre=rs.getInt("sifIgre");
@@ -98,6 +115,22 @@ public class CehDAO {
 
             return ceh;
 
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
+    public int getGuildNumber(String nazivCeha, int sifraIgre) throws SQLException{
+        String querry = "SELECT * FROM ceh WHERE ceh.naziv='" + nazivCeha
+                + "' AND ceh.sifIgre=" + sifraIgre;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(querry);
+            if(rs.next()) {
+                int sifCeh=rs.getInt("sifCeh");
+                return sifCeh;
+            }
+            return 0;
         }
         catch(SQLException e) {
             throw e;
@@ -152,6 +185,25 @@ public class CehDAO {
                 result.add(korisnik);
             }
             return result;
+
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
+
+    public boolean checkIfMemExists(int sifraCeha) throws SQLException{
+        String querry = "SELECT * FROM korisnik WHERE korisnik.sifCeh =" + sifraCeha;
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(querry);
+
+            if(rs.next()){
+                return true;
+            }else{
+                return false;
+            }
 
         }
         catch(SQLException e) {
