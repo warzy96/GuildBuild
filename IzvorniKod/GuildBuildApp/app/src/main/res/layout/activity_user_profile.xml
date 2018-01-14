@@ -114,7 +114,7 @@
                 android:layout_below="@+id/Nick"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="Make america great ! "
+                android:text=""
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="italic"/>
@@ -124,19 +124,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="30dp"
                 android:background="#A9A9A9" />
 
-            <ScrollView
+            <Button
+                android:id="@+id/myCharactersBtn"
+                style="@style/button_style"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/characterList"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"></LinearLayout>
-
-            </ScrollView>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="EditProfile"
+                android:text="My characters"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
         </LinearLayout>
     </LinearLayout>

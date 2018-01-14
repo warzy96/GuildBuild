@@ -38,7 +38,8 @@ public class UserProfileActivity extends AppCompatActivity {
     private TextView nickTextView;
     private TextView aboutMeTv;
     private String nickNameStr;
-    private LinearLayout characterList;
+    //private LinearLayout characterList;
+    private Button myCharsBtn;
 
 
     @Override
@@ -54,7 +55,19 @@ public class UserProfileActivity extends AppCompatActivity {
         nickTextView.setText(nickNameStr);
 
         aboutMeTv = (TextView) findViewById(R.id.aboutMe);
-        characterList = findViewById(R.id.characterList);
+        //characterList = findViewById(R.id.characterList);
+        myCharsBtn=(Button) findViewById(R.id.myCharactersBtn);
+
+        myCharsBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent myCharsIntent = new Intent(UserProfileActivity.this, MyCharactersActivity.class);
+                myCharsIntent.putExtra(MainActivity.EXTRA_MESSAGE1, nickNameStr);
+                startActivity(myCharsIntent);
+            }
+        });
+
 
         ImageView mIcon = findViewById(R.id.ivProfile);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.mrpresident);                  //kasnije promijenit
@@ -70,6 +83,7 @@ public class UserProfileActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        nickTextView.setText(nickNameStr);
         new CheckClass().execute("");
         //new PopulateCharacterList().execute();
     }
@@ -135,42 +149,42 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     }
 
-    private class PopulateCharacterList extends AsyncTask<Void,Void, List<LikEntity>> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            characterList.removeAllViews();
-        }
-
-        @Override
-        protected List<LikEntity> doInBackground(Void... voids) {
-            try {
-                LikDAO likDAO = new LikDAO();
-                List<LikEntity> likEntityList = likDAO.getAllCharactersForUser(nickNameStr);
-                return likEntityList;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<LikEntity> likEntityList) {
-            if(likEntityList.isEmpty()) {
-                Toast.makeText(UserProfileActivity.this, "No characters to show", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-            for(LikEntity likEntity : likEntityList) {
-                TextView textView = new TextView(UserProfileActivity.this);
-                textView.setText(likEntity.getNadimak() + "  " +likEntity.getLevel());      //popravit
-                textView.setTextSize(20);
-                textView.setTextColor(Color.WHITE);
-                textView.setFocusable(false);
-                textView.setClickable(true);
-                characterList.addView(textView);
-            }
-        }
-    }
+//    private class PopulateCharacterList extends AsyncTask<Void,Void, List<LikEntity>> {
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            characterList.removeAllViews();
+//        }
+//
+//        @Override
+//        protected List<LikEntity> doInBackground(Void... voids) {
+//            try {
+//                LikDAO likDAO = new LikDAO();
+//                List<LikEntity> likEntityList = likDAO.getAllCharactersForUser(nickNameStr);
+//                return likEntityList;
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(List<LikEntity> likEntityList) {
+//            if(likEntityList.isEmpty()) {
+//                Toast.makeText(UserProfileActivity.this, "No characters to show", Toast.LENGTH_SHORT).show();
+//                finish();
+//            }
+//            for(LikEntity likEntity : likEntityList) {
+//                TextView textView = new TextView(UserProfileActivity.this);
+//                textView.setText(likEntity.getNadimak() + "  " +likEntity.getLevel());      //popravit
+//                textView.setTextSize(20);
+//                textView.setTextColor(Color.WHITE);
+//                textView.setFocusable(false);
+//                textView.setClickable(true);
+//                characterList.addView(textView);
+//            }
+//        }
+//    }
 }

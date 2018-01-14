@@ -36,7 +36,9 @@
         <activity
             android:name=".MessagesActivity"
             android:parentActivityName=".UserProfileActivity" />
-        <activity android:name=".EditProfileActivity" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:parentActivityName=".UserProfileActivity"/>
         <activity android:name=".GuildCreateActivity" />
         <activity android:name=".AdministratorProfileActivity" />
         <activity android:name=".AdministratorViewUserReqActivity" />
@@ -45,11 +47,15 @@
         <activity android:name=".AdministratorAddGameActivity" />
         <activity android:name=".AdministratorAddClassActivity" />
         <activity android:name=".AdministratorDelClassActivity" />
-        <activity android:name=".AddNewCharacterActivity" />
+        <activity
+            android:name=".AddNewCharacterActivity"
+            android:parentActivityName=".EditProfileActivity"/>
         <activity android:name=".GuildDetailsActivity" />
         <activity android:name=".SendMessageActivity" />
         <activity android:name=".GuildMembersActivity" />
-        <activity android:name=".FormApplicationActivity"></activity>
+        <activity android:name=".FormApplicationActivity" />
+        <activity android:name=".ConcedeActivity" />
+        <activity android:name=".MyCharactersActivity"></activity>
     </application>
 
 </manifest>

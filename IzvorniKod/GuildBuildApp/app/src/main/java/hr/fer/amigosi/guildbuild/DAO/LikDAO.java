@@ -22,10 +22,10 @@ public class LikDAO {
     public void insertCharacter(LikEntity likEntity) throws SQLException{
         String querry = "INSERT INTO lik VALUES ('"
                 + likEntity.getNadimak() + "', "
-                + likEntity.getLevel() + ", "
-                + likEntity.getSifraKlase() +",'"
-                + likEntity.getCraftingSkills()
-                + "')";
+                + likEntity.getSifraKlase() + ", "
+                + likEntity.getLevel() + ", '"
+                + likEntity.getCraftingSkills() + "', '"
+                + likEntity.getImeLika() + "')";
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(querry);
@@ -51,9 +51,10 @@ public class LikDAO {
     public void updateCharacter(LikEntity likEntity) throws SQLException{
         String querry = "UPDATE lik SET "
                 + "nadimak = '" + likEntity.getNadimak()+ "'"
-                + ", level = " + likEntity.getLevel()
                 + ", sifKlase =" + likEntity.getSifraKlase()
+                + ", lvl = " + likEntity.getLevel()
                 + ", craftingSkills ='" + likEntity.getCraftingSkills() + "'"
+                + ", imeLika ='" + likEntity.getImeLika() + "'"
                 + " WHERE lik.nadimak = '" + likEntity.getNadimak() + "'"
                 + " AND lik.sifKlase = " + likEntity.getSifraKlase();
         try {
@@ -75,11 +76,12 @@ public class LikDAO {
 
             while(rs.next()){
                 String nadimak = rs.getString("nadimak");
-                int level = rs.getInt("level");
                 int sifKlase = rs.getInt("sifKlase");
+                int level = rs.getInt("lvl");
                 String craftingSkills = rs.getString("craftingSkills");
+                String imeLika = rs.getString("imeLika");
 
-                LikEntity lik = new LikEntity(level, sifKlase, craftingSkills, nadimak);
+                LikEntity lik = new LikEntity(level, sifKlase, craftingSkills, nadimak, imeLika);
                 result.add(lik);
             }
             return result;
@@ -91,7 +93,7 @@ public class LikDAO {
     }
 
     public List<LikEntity> getAllCharactersForUser(String nadimakKorisnika) throws SQLException{
-        String querry = "SELECT * FROM lik WHERE lik.nadimak =" + nadimakKorisnika;
+        String querry = "SELECT * FROM lik WHERE lik.nadimak = '" + nadimakKorisnika+ "'";
         List<LikEntity> result = new ArrayList<>();
 
         try {
@@ -100,11 +102,12 @@ public class LikDAO {
 
             while(rs.next()){
                 String nadimak = rs.getString("nadimak");
-                int level = rs.getInt("level");
                 int sifKlase = rs.getInt("sifKlase");
+                int level = rs.getInt("lvl");
                 String craftingSkills = rs.getString("craftingSkills");
+                String imeLika = rs.getString("imeLika");
 
-                LikEntity lik = new LikEntity(level, sifKlase, craftingSkills, nadimak);
+                LikEntity lik = new LikEntity(level, sifKlase, craftingSkills, nadimak, imeLika);
                 result.add(lik);
             }
             return result;

@@ -9,18 +9,20 @@ public class LikEntity {
     private int sifraKlase;
     private String craftingSkills;
     private String nadimak;
+    private String imeLika;
 
     public LikEntity() {
     }
 
 
 
-    public LikEntity(int level, int sifraKlase, String craftingSkills, String nadimak) {
+    public LikEntity(int level, int sifraKlase, String craftingSkills, String nadimak, String imeLika) {
         super();
         this.level = level;
         this.sifraKlase = sifraKlase;
         this.craftingSkills = craftingSkills;
         this.nadimak = nadimak;
+        this.imeLika = imeLika;
     }
 
 
@@ -56,4 +58,8 @@ public class LikEntity {
     public void setNadimak(String nadimak) {
         this.nadimak = nadimak;
     }
+
+    public String getImeLika() { return imeLika; }
+
+    public void setImeLika(String imeLika) { this.imeLika = imeLika; }
 }
