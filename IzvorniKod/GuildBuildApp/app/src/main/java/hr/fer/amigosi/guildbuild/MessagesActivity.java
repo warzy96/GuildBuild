@@ -26,8 +26,8 @@ import hr.fer.amigosi.guildbuild.entities.PorukaEntity;
 public class MessagesActivity extends AppCompatActivity {
 
     private Button btnSendMessage;
-    String nickNameStr;
-
+    private String nickNameStr;
+    private TextView nickname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +35,13 @@ public class MessagesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         nickNameStr = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
         btnSendMessage = (Button) findViewById(R.id.btnSendMessage);
-
         btnSendMessage.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 Intent sendMessage = new Intent(MessagesActivity.this, SendMessageActivity.class);
+                sendMessage.putExtra(MainActivity.EXTRA_MESSAGE1, nickNameStr);
                 startActivity(sendMessage);
             }
         });
@@ -49,6 +49,8 @@ public class MessagesActivity extends AppCompatActivity {
         GetReceivedMessages getReceivedMessages = new GetReceivedMessages();
         getReceivedMessages.execute();
     }
+
+
 
     private class GetReceivedMessages extends AsyncTask<String, String, List<PorukaEntity>>{
 
