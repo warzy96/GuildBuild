@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +22,7 @@ public class GuildMembersActivity extends AppCompatActivity {
     private TextView imeCeha;
     private LinearLayout layout1;
     private int sifraCeha;
-
+    private String nadimak;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +37,11 @@ public class GuildMembersActivity extends AppCompatActivity {
         imeCeha.setTextSize(35);
         imeCeha.setTextColor(Color.WHITE);
         sifraCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
+        nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
 
         PopulateGuildMembers populateGuildMembers = new PopulateGuildMembers();
         populateGuildMembers.execute("");
+
 
     }
 
@@ -65,6 +69,23 @@ public class GuildMembersActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<KorisnikEntity> korisnikEntityList) {
             for(KorisnikEntity korisnikEntity : korisnikEntityList) {
+                if(!korisnikEntity.getRang().equals(RangConstants.leader)) {
+                    Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
+                    giveUpLeadershipButton.setVisibility(View.GONE);
+                    Button promoteDemoteButton = findViewById(R.id.promote_demoteMembersButton);
+                    promoteDemoteButton.setVisibility(View.GONE);
+                }
+                else {
+                    Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
+                    Button promoteDemoteButton = findViewById(R.id.promote_demoteMembersButton);
+                    giveUpLeadershipButton.setOnClickListener(view -> {
+                        Intent intent = new Intent(GuildMembersActivity.this, ConcedeActivity.class);
+                        intent.putExtra(MainActivity.EXTRA_MESSAGE1, nadimak);
+                        startActivity(intent);
+                    });
+
+                    //TODO: Promote/Demote button starts activity
+                }
                 TextView textView = new TextView(GuildMembersActivity.this);
                 textView.setText(korisnikEntity.getNadimak()+ ", " + korisnikEntity.getRang());
                 textView.setTextSize(35);

@@ -156,6 +156,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 Intent guildMembers = new Intent(GuildDetailsActivity.this,GuildMembersActivity.class);
                 guildMembers.putExtra(GuildDetailsActivity.EXTRA_MESSAGE3,sifraTrazenogCeha);
                 guildMembers.putExtra(GuildDetailsActivity.EXTRA_MESSAGE4,imeCeha);
+                guildMembers.putExtra(MainActivity.EXTRA_MESSAGE1, nadimak);
                 startActivity(guildMembers);
             }
         }

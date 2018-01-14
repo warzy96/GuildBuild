@@ -13,5 +13,8 @@
     <string name="see_active_events">See active events</string>
     <string name="leave_guild">Leave guild</string>
     <string name="send_form">Send Form</string>
+    <string name="members">Members</string>
+    <string name="give_up_leadership">Give up leadership</string>
+    <string name="promote_demote_members">Promote/Demote members</string>
 
 </resources>
