@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hr.fer.amigosi.guildbuild.RegisterActivity"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimaryDark"
+    tools:context="hr.fer.amigosi.guildbuild.RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,17 +17,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="cursive"
-            android:text="Concede ownership to other member"
+            android:text="Concede ownership to wanted member"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display3"
             android:textColor="@android:color/background_light"
             android:textSize="30sp"
             android:textStyle="bold" />
 
-            <ListView
-                android:id="@+id/memberList"
-                android:layout_width="wrap_content"
-                android:layout_height="380dp"
+
+        <ListView
+            android:id="@+id/memberList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
 
 
             />
@@ -35,14 +37,17 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
 
             <Button
                 android:id="@+id/btnConcede"
                 style="@style/button_style"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:onClick="UserProfile"
                 android:text="Concede ownership" />
 

@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import hr.fer.amigosi.guildbuild.AdministratorAddGameActivity;
 import hr.fer.amigosi.guildbuild.AdministratorProfileActivity;
@@ -25,6 +27,7 @@ public class ConcedeActivity extends AppCompatActivity {
 
     private ListView ltMemberList;
     private Button btnConcede;
+    private List<String> members = new ArrayList<>();
 
     Connection con;
 
@@ -75,7 +78,9 @@ public class ConcedeActivity extends AppCompatActivity {
                 if (con == null) {
                     z = "Check Your Internet Access!";
                 } else {
-                    //String query = "insert into igra values (null,'" + name + "')";
+
+
+                    String query = "select nadimak from korisnik";
                     Statement stmt = con.createStatement();
                     //int tmp = stmt.executeUpdate(query);
                     z = "Conciding successfull!";
