@@ -44,7 +44,8 @@ public class ConcedeActivity extends AppCompatActivity {
     public void updateRang(KorisnikEntity korisnik) throws SQLException {
         String query = "UPDATE korisnik SET rang = '"
                 + korisnik.getRang()
-                + " WHERE korisnik.nadimak = '" + korisnik.getNadimak() + "';";
+                + " WHERE korisnik.nadimak = '" + korisnik.getNadimak() + "';"
+                + " AND korisnik.sifCeha = " + korisnik.getSifraCeha();;
         try {
             Statement statement = con.createStatement();
             statement.executeUpdate(query);
