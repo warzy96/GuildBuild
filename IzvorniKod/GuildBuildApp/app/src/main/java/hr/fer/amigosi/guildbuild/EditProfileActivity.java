@@ -100,7 +100,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(EditProfileActivity.this, AddNewCharacterActivity.class);
-                intent.putExtra("Nickname", nickname);
+                intent.putExtra(MainActivity.EXTRA_MESSAGE1, nickname);
                 startActivity(intent);
             }
         });

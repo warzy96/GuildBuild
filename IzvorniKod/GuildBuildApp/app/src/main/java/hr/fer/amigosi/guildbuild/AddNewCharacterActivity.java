@@ -44,7 +44,7 @@ public class AddNewCharacterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        nickNameStr = intent.getStringExtra("Nickname");
+        nickNameStr = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
 
         characterName=(EditText) findViewById(R.id.characterName);
         characterLevel=(EditText) findViewById(R.id.characterLevel);
@@ -164,7 +164,7 @@ public class AddNewCharacterActivity extends AppCompatActivity {
                 else
                 {
                     String query = "select * from klasa join igra on klasa.sifIgre = igra.sifIgre " +
-                                    "where igra.naziv = '" + characterGameSpinner.getSelectedItem().toString()+"'";
+                            "where igra.naziv = '" + characterGameSpinner.getSelectedItem().toString()+"'";
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     while(rs.next())
@@ -236,11 +236,11 @@ public class AddNewCharacterActivity extends AppCompatActivity {
             {
                 try
                 {
-                    //Lik nema ime u bazi??
                     LikDAO likDao= new LikDAO();
-                    LikEntity lik = new LikEntity(Integer.parseInt(charLevelStr), klase.get(charClassStr), charCraftSkillStr, nickNameStr);
+                    LikEntity lik = new LikEntity(Integer.parseInt(charLevelStr), klase.get(charClassStr), charCraftSkillStr, nickNameStr, charNameStr);
 
                     likDao.insertCharacter(lik);
+                    z = "Character successfully added!";
                     isSuccess=true;
                 }
                 catch (Exception ex)
