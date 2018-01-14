@@ -102,9 +102,11 @@ public class GuildDetailsActivity extends AppCompatActivity {
         });
 
         new IsRequestsButtonVisible().execute();
+
         Button requestsButton = findViewById(R.id.JoinRequestsButton);
         requestsButton.setOnClickListener(View -> {
-            Intent intent = new Intent();
+            Intent intent = new Intent(GuildDetailsActivity.this, UserRequestsForGuild.class);
+            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraKorisnikovogCeha);
         });
     }
 

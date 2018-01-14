@@ -47,6 +47,19 @@ public class ObrazacDAO {
         }
     }
 
+    public void deleteForm(String nadimak, int sifraCeha) throws SQLException {
+        String querry = "DELETE FROM obrazac WHERE obrazac.nadimak = '" +
+                nadimak+ "' AND obrazac.sifCeha = " +
+                sifraCeha;
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(querry);
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
+
     public void updateForm(ObrazacEntity obrazacEntity) throws SQLException{
         String querry = "UPDATE obrazac SET "
                 + "nadimak = '" + obrazacEntity.getNadimakKorisnika()+ "'"
