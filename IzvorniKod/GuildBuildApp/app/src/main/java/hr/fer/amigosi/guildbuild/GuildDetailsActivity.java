@@ -50,11 +50,6 @@ public class GuildDetailsActivity extends AppCompatActivity {
         btnSeeEvents = (Button) findViewById(R.id.btnSeeEvents);
         btnLeaveGuild = (Button) findViewById(R.id.btnLeaveGuild);
 
-        Intent pastIntent = getIntent();
-        nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
-        sifraKorisnikovogCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2,0);
-        sifraTrazenogCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
-
         if(sifraKorisnikovogCeha==sifraTrazenogCeha){
             btnApply.setVisibility(View.GONE);
         }else{
@@ -253,6 +248,11 @@ public class GuildDetailsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Intent pastIntent = getIntent();
+        nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
+        sifraKorisnikovogCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2,0);
+        sifraTrazenogCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
+
         FillNameAndDesc fillNameAndDesc = new FillNameAndDesc();
         fillNameAndDesc.execute("");
     }
