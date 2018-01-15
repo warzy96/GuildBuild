@@ -17,6 +17,9 @@ public class CehDAO {
     public CehDAO() throws ClassNotFoundException, SQLException{
         connection = DatabaseConnection.getConnection();
     }
+    public void close() throws SQLException {
+        connection.close();
+    }
     public void insertGuild(CehEntity cehEntity) throws SQLException {
         String querry = "INSERT INTO ceh VALUES ("
                 + cehEntity.getSifraCeha() + ", '"

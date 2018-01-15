@@ -17,7 +17,9 @@ public class KlasaDAO {
     public KlasaDAO() throws Exception{
         connection= DatabaseConnection.getConnection();
     }
-
+    public void close() throws SQLException {
+        connection.close();
+    }
     public void insertClass(KlasaEntity klasaEntity) throws SQLException{
         String querry = "INSERT INTO klasa VALUES ("
                 + klasaEntity.getSifraKlase() + ", '"

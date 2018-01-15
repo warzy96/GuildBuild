@@ -18,7 +18,9 @@ public class ObrazacDAO {
     public ObrazacDAO() throws Exception{
         connection = DatabaseConnection.getConnection();
     }
-
+    public void close() throws SQLException {
+        connection.close();
+    }
     public void insertForm(ObrazacEntity obrazacEntity) throws SQLException{
         String querry = "INSERT INTO obrazac VALUES ("
                 + obrazacEntity.getSifraCeha()+ ", '"

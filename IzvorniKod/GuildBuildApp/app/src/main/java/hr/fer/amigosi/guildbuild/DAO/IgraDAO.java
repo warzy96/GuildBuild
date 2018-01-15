@@ -17,6 +17,9 @@ public class IgraDAO {
 
         connection = DatabaseConnection.getConnection();
     }
+    public void close() throws SQLException {
+        connection.close();
+    }
     public void insertGame(IgraEntity igraEntity) throws SQLException {
         String querry = "INSERT INTO igra VALUES ("
                 + igraEntity.getSifraIgre() + ", '"

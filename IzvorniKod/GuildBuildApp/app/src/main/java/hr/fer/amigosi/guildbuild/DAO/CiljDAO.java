@@ -16,6 +16,9 @@ public class CiljDAO {
     public CiljDAO() throws Exception{
         connection = DatabaseConnection.getConnection();
     }
+    public void close() throws SQLException {
+        connection.close();
+    }
     public void insertGoal(CiljEntity ciljEntity) throws SQLException {
         String querry = "INSERT INTO cilj VALUES ("
                 + ciljEntity.getSifraCilja() + ", '"

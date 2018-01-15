@@ -18,7 +18,9 @@ public class LikDAO {
     public LikDAO() throws Exception{
         connection= DatabaseConnection.getConnection();
     }
-
+    public void close() throws SQLException {
+        connection.close();
+    }
     public void insertCharacter(LikEntity likEntity) throws SQLException{
         String querry = "INSERT INTO lik VALUES ('"
                 + likEntity.getNadimak() + "', "

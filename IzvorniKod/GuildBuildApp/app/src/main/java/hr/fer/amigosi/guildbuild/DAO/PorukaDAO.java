@@ -18,7 +18,9 @@ public class PorukaDAO {
     public PorukaDAO() throws Exception {
         connection = DatabaseConnection.getConnection();
     }
-
+    public void close() throws SQLException {
+        connection.close();
+    }
     public void insertMessage(PorukaEntity porukaEntity) throws SQLException {
         String querry = "INSERT INTO poruka VALUES ('"
                 + porukaEntity.getPrimatelj() + "', '"

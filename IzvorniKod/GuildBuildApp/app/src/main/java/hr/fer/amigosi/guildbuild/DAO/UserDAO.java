@@ -16,6 +16,9 @@ public class UserDAO {
     public UserDAO() throws Exception{
         connection = DatabaseConnection.getConnection();
     }
+    public void close() throws SQLException {
+        connection.close();
+    }
     public KorisnikEntity getUser(String email, String password) throws SQLException{
         KorisnikEntity korisnikEntity = null;
         String querry = "SELECT * FROM korisnik WHERE email= '"

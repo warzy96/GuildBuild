@@ -16,6 +16,9 @@ public class DogadajDAO {
     public DogadajDAO() throws Exception{
         connection = DatabaseConnection.getConnection();
     }
+    public void close() throws SQLException {
+        connection.close();
+    }
     public void insertEvent(DogadajEntity dogadajEntity) throws SQLException {
         String querry = "INSERT INTO dogadaj VALUES ("
                 + dogadajEntity.getSifraDogadaja() + ", '"
