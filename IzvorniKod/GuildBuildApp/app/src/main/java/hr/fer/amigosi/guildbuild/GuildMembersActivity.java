@@ -65,11 +65,12 @@ public class GuildMembersActivity extends AppCompatActivity {
             giveUpLeadershipButton.setVisibility(View.GONE);
             promoteDemoteButton.setVisibility(View.GONE);
         }
-        else {
-            giveUpLeadershipButton.setVisibility(View.VISIBLE);
-            promoteDemoteButton.setVisibility(View.VISIBLE);
-        }
         new PopulateGuildMembers().execute("");
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
     private class PopulateGuildMembers extends AsyncTask<String,String, List<KorisnikEntity>> {
@@ -102,21 +103,27 @@ public class GuildMembersActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<KorisnikEntity> korisnikEntityList) {
+            Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
+            Button promoteDemoteButton = findViewById(R.id.promote_demoteMembersButton);
 
+            if(korisnikEntityList == null) {
+                Toast.makeText(GuildMembersActivity.this, "Something went wrong... Try again", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+            //Ako je korisnik sam u Cehu (leader) gumbi nemaju smisla
+            if(korisnikEntityList.size() == 1) {
+                giveUpLeadershipButton.setVisibility(View.GONE);
+                promoteDemoteButton.setVisibility(View.GONE);
+            }
             for(KorisnikEntity korisnikEntity : korisnikEntityList) {
                 if(korisnikEntity.getNadimak().equals(nadimak)) {
                     if(korisnikEntity.getRang().equals(RangConstants.member)) {
-                        Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
                         giveUpLeadershipButton.setVisibility(View.GONE);
-                        Button promoteDemoteButton = findViewById(R.id.promote_demoteMembersButton);
                         promoteDemoteButton.setVisibility(View.GONE);
                     }
                     if (korisnikEntity.getRang().equals(RangConstants.coordinator)){
-                        Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
                         giveUpLeadershipButton.setVisibility(View.GONE);
                     }
-
-
                 }
                 TextView textView = new TextView(GuildMembersActivity.this);
                 textView.setText(korisnikEntity.getNadimak()+ ", " + korisnikEntity.getRang());

@@ -25,6 +25,8 @@ import hr.fer.amigosi.guildbuild.entities.CehEntity;
 
 public class AdministratorDelGuildActivity extends AppCompatActivity {
 
+    //TODO: Kad se brise ceh, svim korisnicima u cehu maknuti rang i sifru ceha
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

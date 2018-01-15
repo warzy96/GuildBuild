@@ -20,6 +20,8 @@ import java.util.List;
 
 public class AdministratorDelClassActivity extends AppCompatActivity {
 
+    //TODO: Kad se brise klasa, obrisi i sve likove za tu klasu
+
     private Spinner gameSpinner;
     private Spinner classSpinner;
     private Button btnDeleteClass;
