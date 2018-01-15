@@ -195,6 +195,37 @@ public class CehDAO {
         }
     }
 
+    public List<KorisnikEntity> getGuildMembersWithoutCurrentMember(int sifraCeha, String nickname) throws SQLException{
+        String querry = "SELECT * FROM korisnik WHERE korisnik.sifCeh =" + sifraCeha;
+        List<KorisnikEntity> result = new ArrayList<>();
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(querry);
+
+            while(rs.next()){
+                String nadimak = rs.getString("nadimak");
+                if(nadimak.equals(nickname)) continue;
+                String email = rs.getString("email");
+                String lozinka =rs.getString("lozinka");
+                boolean statusR = rs.getBoolean("statusR");
+                String rang = rs.getString("rang");
+                int sifCeh = rs.getInt("sifCeh");
+                boolean statusP = rs.getBoolean("statusP");
+                String opis = rs.getString("opis");
+                boolean isAdmin = rs.getBoolean("isAdmin");
+
+                KorisnikEntity korisnik = new KorisnikEntity(email, nadimak, lozinka, statusR, rang, sifCeh, statusP, opis, isAdmin);
+                result.add(korisnik);
+            }
+            return result;
+
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
+
     public boolean checkIfMemExists(int sifraCeha) throws SQLException{
         String querry = "SELECT * FROM korisnik WHERE korisnik.sifCeh =" + sifraCeha;
 

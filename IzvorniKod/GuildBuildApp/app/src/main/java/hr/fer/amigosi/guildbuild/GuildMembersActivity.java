@@ -35,6 +35,20 @@ public class GuildMembersActivity extends AppCompatActivity {
         Intent pastIntent = getIntent();
         imeCeha.setText(pastIntent.getStringExtra(GuildDetailsActivity.EXTRA_MESSAGE4));
         imeCeha.setTextColor(Color.WHITE);
+
+        Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
+        Button promoteDemoteButton = findViewById(R.id.promote_demoteMembersButton);
+        giveUpLeadershipButton.setOnClickListener(view -> {
+            Intent intent = new Intent(GuildMembersActivity.this, ConcedeActivity.class);
+            intent.putExtra(MainActivity.EXTRA_MESSAGE1, nadimak);
+            startActivity(intent);
+        });
+        promoteDemoteButton.setOnClickListener(view -> {
+            Intent intent = new Intent(GuildMembersActivity.this, Promote_demoteActivity.class);
+            intent.putExtra(MainActivity.EXTRA_MESSAGE1, nadimak);
+            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraCeha);
+            startActivity(intent);
+        });
     }
 
     @Override
@@ -89,19 +103,8 @@ public class GuildMembersActivity extends AppCompatActivity {
                         Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
                         giveUpLeadershipButton.setVisibility(View.GONE);
                     }
-                    else {
-                        Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
-                        Button promoteDemoteButton = findViewById(R.id.promote_demoteMembersButton);
-                        giveUpLeadershipButton.setOnClickListener(view -> {
-                            Intent intent = new Intent(GuildMembersActivity.this, ConcedeActivity.class);
-                            intent.putExtra(MainActivity.EXTRA_MESSAGE1, nadimak);
-                            startActivity(intent);
-                        });
-                        //TODO: Promote/Demote button starts activity
-                        promoteDemoteButton.setOnClickListener(view -> {
 
-                        });
-                    }
+
                 }
                 TextView textView = new TextView(GuildMembersActivity.this);
                 textView.setText(korisnikEntity.getNadimak()+ ", " + korisnikEntity.getRang());
