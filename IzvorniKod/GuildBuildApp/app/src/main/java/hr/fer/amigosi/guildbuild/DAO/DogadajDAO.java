@@ -20,8 +20,7 @@ public class DogadajDAO {
         connection.close();
     }
     public void insertEvent(DogadajEntity dogadajEntity) throws SQLException {
-        String querry = "INSERT INTO dogadaj VALUES ("
-                + dogadajEntity.getSifraDogadaja() + ", '"
+        String querry = "INSERT INTO dogadaj VALUES (null, '"
                 + dogadajEntity.getNazivDogadaja() + "', "
                 + dogadajEntity.getSifraCeha() + ", "
                 + dogadajEntity.isIspunjenost() +", "
@@ -63,23 +62,24 @@ public class DogadajDAO {
         }
     }
 
-    public List<DogadajEntity> getAllEventsForGuild(int sifraCeha) throws SQLException{
+    public List<String> getAllEventsForGuild(int sifraCeha) throws SQLException{
         String querry = "SELECT * FROM dogadaj WHERE dogadaj.sifCeh =" + sifraCeha;
-        List<DogadajEntity> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
 
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(querry);
 
             while(rs.next()){
-                int sifDog = rs.getInt("sifDog");
                 String nazivDog = rs.getString("nazivDog");
+                /*int sifDog = rs.getInt("sifDog");
+
                 int sifCeh = rs.getInt("sifCeh");
                 boolean ispunjen = rs.getBoolean("ispunjen");
-                boolean vidljiv = rs.getBoolean("vidljiv");
+                boolean vidljiv = rs.getBoolean("vidljiv");*/
 
-                DogadajEntity dogadaj = new DogadajEntity(sifDog, nazivDog, sifCeh, ispunjen, vidljiv);
-                result.add(dogadaj);
+                //DogadajEntity dogadaj = new DogadajEntity(sifDog, nazivDog, sifCeh, ispunjen, vidljiv);
+                result.add(nazivDog);
             }
             return result;
         }
@@ -136,6 +136,29 @@ public class DogadajDAO {
                 result.add(dogadaj);
             }
             return result;
+        }
+        catch(SQLException e)
+        {
+            throw e;
+        }
+    }
+
+    public DogadajEntity getEvent(String nazivDogadaja, int sifraCeha) throws  SQLException{
+        String querry = "SELECT * FROM dogadaj WHERE dogadaj.nazivDog ='" + nazivDogadaja
+                +"' AND dogadaj.sifCeh="+  sifraCeha;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(querry);
+
+            rs.next();
+                int sifDog = rs.getInt("sifDog");
+                String nazivDog = rs.getString("nazivDog");
+                int sifCeh = rs.getInt("sifCeh");
+                boolean ispunjen = rs.getBoolean("ispunjen");
+                boolean vidljiv = rs.getBoolean("vidljiv");
+
+                DogadajEntity dogadaj = new DogadajEntity(sifDog, nazivDog, sifCeh, ispunjen, vidljiv);
+                return dogadaj;
         }
         catch(SQLException e)
         {

@@ -20,8 +20,7 @@ public class CiljDAO {
         connection.close();
     }
     public void insertGoal(CiljEntity ciljEntity) throws SQLException {
-        String querry = "INSERT INTO cilj VALUES ("
-                + ciljEntity.getSifraCilja() + ", '"
+        String querry = "INSERT INTO cilj VALUES (null , '"
                 + ciljEntity.getNazivCilja() + "', "
                 + ciljEntity.getSifraDogadaja() + ", "
                 + ciljEntity.isIspunjenost()
@@ -86,25 +85,57 @@ public class CiljDAO {
         }
     }
 
-    public CiljEntity getGoal(int sifraCilja) throws SQLException{
-        String querry = "SELECT * FROM cilj WHERE cilj.sifCilja =" + sifraCilja;
+    public CiljEntity getGoal(String nazivCiljaa) throws SQLException{
+        String querry = "SELECT * FROM cilj WHERE cilj.nazivCilja ='" + nazivCiljaa+"'";
 
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(querry);
 
-            int sifCilja = rs.getInt("sifCilja");
-            String nazivCilja = rs.getString("nazivCilja");
-            int sifDog = rs.getInt("sifDog");
-            boolean ispunjen = rs.getBoolean("ispunjen");
+            if(rs.next()) {
 
-            CiljEntity cilj = new CiljEntity(sifDog, sifCilja, nazivCilja, ispunjen);
+                int sifCilja = rs.getInt("sifCilja");
+                String nazivCilja = rs.getString("nazivCilja");
+                int sifDog = rs.getInt("sifDog");
+                boolean ispunjen = rs.getBoolean("ispunjen");
 
-            return cilj;
+                CiljEntity cilj = new CiljEntity(sifDog, sifCilja, nazivCilja, ispunjen);
+
+                return cilj;
+            }
+            return null;
         }
         catch(SQLException e)
         {
             throw e;
         }
     }
+
+    public List<String> getAllGoalsForGuild(int sifraCeha) throws SQLException{
+        String querry = "SELECT cilj.nazivCilja FROM cilj,dogadaj WHERE cilj.sifDog = dogadaj.sifDog AND" +
+                " dogadaj.sifCeh = " + sifraCeha;
+        List<String> result = new ArrayList<>();
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(querry);
+
+            while(rs.next()) {
+                //int sifCilja = rs.getInt("sifCilja");
+                String nazivCilja = rs.getString("nazivCilja");
+                //int sifDog = rs.getInt("sifDog");
+                //boolean ispunjen = rs.getBoolean("ispunjen");
+
+                //CiljEntity cilj = new CiljEntity(sifDog, sifCilja, nazivCilja, ispunjen);
+                result.add(nazivCilja);
+            }
+            return result;
+        }
+        catch(SQLException e)
+        {
+            throw e;
+        }
+    }
+
+
 }
