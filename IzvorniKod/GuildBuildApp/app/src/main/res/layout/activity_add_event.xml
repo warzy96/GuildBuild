@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="hr.fer.amigosi.guildbuild.AddEventActivity"
+    android:background="@color/colorPrimaryDark">>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="cursive"
+            android:text="@string/add_event"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+            android:textColor="@android:color/background_light"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/eventToAdd"
+            style="@style/editText_style"
+            android:hint="Event name"
+            android:inputType="textPersonName"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHint="@color/hintColor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/btnAddEvent1"
+                style="@style/button_style"
+                android:layout_weight="1"
+                android:text="@string/add_event" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.widget.RelativeLayout>

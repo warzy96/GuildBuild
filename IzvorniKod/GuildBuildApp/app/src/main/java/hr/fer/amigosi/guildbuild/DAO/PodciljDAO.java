@@ -17,8 +17,7 @@ public class PodciljDAO {
         connection = DatabaseConnection.getConnection();
     }
     public void insertSubgoal(PodciljEntity podciljEntity) throws SQLException {
-        String querry = "INSERT INTO podcilj VALUES ("
-                + podciljEntity.getSifraPodcilja() + ", '"
+        String querry = "INSERT INTO podcilj VALUES (null, '"
                 + podciljEntity.getNazivPodcilja() + "', "
                 + podciljEntity.getSifraCilja() + ", "
                 + podciljEntity.isIspunjenost()

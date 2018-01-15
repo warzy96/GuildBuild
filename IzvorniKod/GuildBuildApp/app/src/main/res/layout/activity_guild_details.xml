@@ -7,107 +7,162 @@
     tools:context="hr.fer.amigosi.guildbuild.GuildDetailsActivity"
     android:background="@color/colorPrimaryDark">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/GuildNameText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="cursive"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="60sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/GuildOpis"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="cursive"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnApply"
-                style="@style/button_style"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/apply_for_Guild"
-                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnSeeGuildMem"
-                style="@style/button_style"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/see_guild_members"
-                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/JoinRequestsButton"
-                style="@style/button_style"
+            <TextView
+                android:id="@+id/GuildNameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/user_requests" />
-        </LinearLayout>
+                android:fontFamily="cursive"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="60sp"
+                android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnSeeEvents"
-                style="@style/button_style"
+            <TextView
+                android:id="@+id/GuildOpis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/see_active_events"
-                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
-        </LinearLayout>
+                android:fontFamily="cursive"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnLeaveGuild"
-                style="@style/button_style"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/leave_guild"
-                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnApply"
+                    style="@style/button_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/apply_for_Guild"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnSeeGuildMem"
+                    style="@style/button_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/see_guild_members"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/JoinRequestsButton"
+                    style="@style/button_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_requests" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnSeeEvents"
+                    style="@style/button_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/see_active_events"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnLeaveGuild"
+                    style="@style/button_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/leave_guild"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnAddEvent"
+                    style="@style/button_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/add_event"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnAddGoal"
+                    style="@style/button_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/add_goal"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnAddSubgoal"
+                    style="@style/button_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/add_subgoal"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
+    </ScrollView>
 
-    </LinearLayout>
+
 
 
 </RelativeLayout>
