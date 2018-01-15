@@ -24,7 +24,6 @@ public class MyCharactersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_characters);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         nickName = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
