@@ -17,5 +17,8 @@
     <string name="give_up_leadership">Give up leadership</string>
     <string name="promote_demote_members">Promote/Demote members</string>
     <string name="user_requests">User requests</string>
+    <string name="add_event">Add event</string>
+    <string name="add_goal">Add goal</string>
+    <string name="add_subgoal">Add subgoal</string>
 
 </resources>

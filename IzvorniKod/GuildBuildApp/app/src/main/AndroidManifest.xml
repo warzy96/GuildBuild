@@ -91,7 +91,10 @@
         <activity
             android:name=".UserRequestsForGuild"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".Promote_demoteActivity"></activity>
+        <activity android:name=".Promote_demoteActivity" />
+        <activity android:name=".AddEventActivity" />
+        <activity android:name=".AddGoalActivity" />
+        <activity android:name=".AddSubgoalActivity"></activity>
     </application>
 
 </manifest>

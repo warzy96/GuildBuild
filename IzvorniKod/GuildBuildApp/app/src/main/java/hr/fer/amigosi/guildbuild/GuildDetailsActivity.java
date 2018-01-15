@@ -103,6 +103,30 @@ public class GuildDetailsActivity extends AppCompatActivity {
             intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraKorisnikovogCeha);
             startActivity(intent);
         });
+
+        new IsNewEventButtonVisible().execute();
+        Button newEventButton = findViewById(R.id.btnAddEvent);
+        newEventButton.setOnClickListener(View -> {
+            Intent intent = new Intent(GuildDetailsActivity.this, AddEventActivity.class);
+            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraKorisnikovogCeha);
+            startActivity(intent);
+        });
+
+        new IsNewGoalButtonVisible().execute();
+        Button newGoalButton = findViewById(R.id.btnAddGoal);
+        newGoalButton.setOnClickListener(View -> {
+            Intent intent = new Intent(GuildDetailsActivity.this, AddGoalActivity.class);
+            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraKorisnikovogCeha);
+            startActivity(intent);
+        });
+
+        new IsNewSubgoalButtonVisible().execute();
+        Button newSubgoalButton = findViewById(R.id.btnAddSubgoal);
+        newSubgoalButton.setOnClickListener(View -> {
+            Intent intent = new Intent(GuildDetailsActivity.this, AddSubgoalActivity.class);
+            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraKorisnikovogCeha);
+            startActivity(intent);
+        });
     }
 
     public class FillNameAndDesc extends AsyncTask<String,String,CehEntity>{
@@ -234,6 +258,103 @@ public class GuildDetailsActivity extends AppCompatActivity {
                         && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
                     Button requestsButton = findViewById(R.id.JoinRequestsButton);
                     requestsButton.setVisibility(View.GONE);
+                }
+            }
+
+        }
+    }
+
+    private class IsNewEventButtonVisible extends AsyncTask<Void, Void, KorisnikEntity> {
+        String result = "";
+        boolean success = false;
+        @Override
+        protected KorisnikEntity doInBackground(Void... voids) {
+            KorisnikEntity korisnikEntity = new KorisnikEntity();
+            try {
+                UserDAO userDAO = new UserDAO();
+                korisnikEntity = userDAO.getUser(nadimak);
+                success = true;
+            }
+            catch(Exception e) {
+                result = "Check your internet connection";
+            }
+            return korisnikEntity;
+        }
+
+        @Override
+        protected void onPostExecute(KorisnikEntity korisnikEntity) {
+            if(!success) {
+                Toast.makeText(GuildDetailsActivity.this, result, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                if(!korisnikEntity.getRang().equals(RangConstants.leader)
+                        && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
+                    Button newEventButton = findViewById(R.id.btnAddEvent);
+                    newEventButton.setVisibility(View.GONE);
+                }
+            }
+
+        }
+    }
+
+    private class IsNewGoalButtonVisible extends AsyncTask<Void, Void, KorisnikEntity> {
+        String result = "";
+        boolean success = false;
+        @Override
+        protected KorisnikEntity doInBackground(Void... voids) {
+            KorisnikEntity korisnikEntity = new KorisnikEntity();
+            try {
+                UserDAO userDAO = new UserDAO();
+                korisnikEntity = userDAO.getUser(nadimak);
+                success = true;
+            }
+            catch(Exception e) {
+                result = "Check your internet connection";
+            }
+            return korisnikEntity;
+        }
+
+        @Override
+        protected void onPostExecute(KorisnikEntity korisnikEntity) {
+            if(!success) {
+                Toast.makeText(GuildDetailsActivity.this, result, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                if(!korisnikEntity.getRang().equals(RangConstants.leader)) {
+                    Button newEventButton = findViewById(R.id.btnAddGoal);
+                    newEventButton.setVisibility(View.GONE);
+                }
+            }
+
+        }
+    }
+
+    private class IsNewSubgoalButtonVisible extends AsyncTask<Void, Void, KorisnikEntity> {
+        String result = "";
+        boolean success = false;
+        @Override
+        protected KorisnikEntity doInBackground(Void... voids) {
+            KorisnikEntity korisnikEntity = new KorisnikEntity();
+            try {
+                UserDAO userDAO = new UserDAO();
+                korisnikEntity = userDAO.getUser(nadimak);
+                success = true;
+            }
+            catch(Exception e) {
+                result = "Check your internet connection";
+            }
+            return korisnikEntity;
+        }
+
+        @Override
+        protected void onPostExecute(KorisnikEntity korisnikEntity) {
+            if(!success) {
+                Toast.makeText(GuildDetailsActivity.this, result, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                if(!korisnikEntity.getRang().equals(RangConstants.coordinator)) {
+                    Button newEventButton = findViewById(R.id.btnAddSubgoal);
+                    newEventButton.setVisibility(View.GONE);
                 }
             }
 
