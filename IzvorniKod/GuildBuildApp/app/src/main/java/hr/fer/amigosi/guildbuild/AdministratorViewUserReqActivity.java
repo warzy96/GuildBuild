@@ -31,6 +31,12 @@ public class AdministratorViewUserReqActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_administrator_view_user_req);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         GetUnregisteredUsers getUnregisteredUsers = new GetUnregisteredUsers();
         getUnregisteredUsers.execute();
     }

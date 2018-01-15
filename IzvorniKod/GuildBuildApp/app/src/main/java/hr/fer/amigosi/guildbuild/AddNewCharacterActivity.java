@@ -39,7 +39,6 @@ public class AddNewCharacterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_character);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         nickNameStr = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);

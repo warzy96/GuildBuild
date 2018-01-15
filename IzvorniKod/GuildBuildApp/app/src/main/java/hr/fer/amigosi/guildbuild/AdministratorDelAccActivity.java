@@ -30,10 +30,13 @@ public class AdministratorDelAccActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_administrator_del_acc);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         GetRegisteredUsers getRegisteredUsers = new GetRegisteredUsers();
         getRegisteredUsers.execute();
-
     }
 
     private class GetRegisteredUsers extends AsyncTask<String, String, List<KorisnikEntity>> {
