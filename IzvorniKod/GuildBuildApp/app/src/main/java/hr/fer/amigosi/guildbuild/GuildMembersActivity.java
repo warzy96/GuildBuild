@@ -31,20 +31,17 @@ public class GuildMembersActivity extends AppCompatActivity {
 
         imeCeha = (TextView) findViewById(R.id.GuildNameText2);
         layout1 = (LinearLayout) findViewById(R.id.guildMembers1);
-
         Intent pastIntent = getIntent();
         imeCeha.setText(pastIntent.getStringExtra(GuildDetailsActivity.EXTRA_MESSAGE4));
-        //Overwrites text size defined in xml
-        //imeCeha.setTextSize(35);
         imeCeha.setTextColor(Color.WHITE);
-        sifraCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
-        nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Intent pastIntent = getIntent();
+        sifraCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
+        nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
         new PopulateGuildMembers().execute("");
     }
 
@@ -93,6 +90,9 @@ public class GuildMembersActivity extends AppCompatActivity {
                             startActivity(intent);
                         });
                         //TODO: Promote/Demote button starts activity
+                        promoteDemoteButton.setOnClickListener(view -> {
+
+                        });
                     }
                 }
                 TextView textView = new TextView(GuildMembersActivity.this);

@@ -10,10 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.mysql.jdbc.StringUtils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -223,7 +220,7 @@ public class AddNewCharacterActivity extends AppCompatActivity {
             else if(charLevelStr.trim().equals("")){
                 z = "Please enter character's level.";
             }
-            else if(!StringUtils.isStrictlyNumeric(charLevelStr)){
+            else if(!charLevelStr.matches("[0-9]+")){
                 z="Level must be an integer!";
             }
             else if(charCraftSkillStr.equals("")){

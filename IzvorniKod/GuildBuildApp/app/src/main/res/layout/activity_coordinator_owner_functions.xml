@@ -26,36 +26,6 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/nicknameTextFunctions"
-            style="@style/editText_style"
-            android:hint="Enter user's nickname"
-            android:inputType="textPersonName"
-            android:textColor="@color/colorPrimaryDark"
-            android:textColorHint="@color/hintColor" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="103dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnDegrade"
-                style="@style/button_style"
-                android:layout_weight="1"
-                android:onClick="Home"
-                android:text="Degrade"
-                android:textAlignment="center" />
-
-            <Button
-                android:id="@+id/btnPromote"
-                style="@style/button_style"
-                android:layout_weight="1"
-                android:onClick="Home"
-                android:text="Promote" />
-
-        </LinearLayout>
 
     </LinearLayout>
 </android.widget.RelativeLayout>
