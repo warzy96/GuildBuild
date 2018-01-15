@@ -65,14 +65,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /*@Override
-    public void onBackPressed() {
-
-    }*/
-
     @Override
     protected void onResume() {
         super.onResume();
+        etEmail.setText("");
+        etPassword.setText("");
+        etEmail.clearFocus();
+        etPassword.clearFocus();
     }
 
     public void Register(View view){

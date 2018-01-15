@@ -121,8 +121,7 @@ public class AdministratorAddClassActivity extends AppCompatActivity {
             if(isSuccess)
             {
                 Toast.makeText(AdministratorAddClassActivity.this , r , Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(AdministratorAddClassActivity.this, AdministratorProfileActivity.class);
-                startActivity(intent);
+                finish();
             }else{
                 Toast.makeText(AdministratorAddClassActivity.this , r , Toast.LENGTH_LONG).show();
 

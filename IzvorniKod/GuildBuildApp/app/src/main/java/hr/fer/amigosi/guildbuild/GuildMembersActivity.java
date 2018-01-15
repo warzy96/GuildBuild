@@ -24,6 +24,7 @@ public class GuildMembersActivity extends AppCompatActivity {
     private TextView imeCeha;
     private LinearLayout layout1;
     private int sifraCeha;
+    private int sifraTrazenogCeha;
     private String nadimak;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +56,19 @@ public class GuildMembersActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Intent pastIntent = getIntent();
-        sifraCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
+        sifraTrazenogCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
+        sifraCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2, 0);
         nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
+        Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
+        Button promoteDemoteButton = findViewById(R.id.promote_demoteMembersButton);
+        if(sifraCeha != sifraTrazenogCeha) {
+            giveUpLeadershipButton.setVisibility(View.GONE);
+            promoteDemoteButton.setVisibility(View.GONE);
+        }
+        else {
+            giveUpLeadershipButton.setVisibility(View.VISIBLE);
+            promoteDemoteButton.setVisibility(View.VISIBLE);
+        }
         new PopulateGuildMembers().execute("");
     }
 
@@ -72,7 +84,7 @@ public class GuildMembersActivity extends AppCompatActivity {
         protected List<KorisnikEntity> doInBackground(String... strings) {
             try {
                 CehDAO cehDAO = new CehDAO();
-                List<KorisnikEntity> korisnikEntityList = cehDAO.getGuildMembers(sifraCeha);
+                List<KorisnikEntity> korisnikEntityList = cehDAO.getGuildMembers(sifraTrazenogCeha);
                 return korisnikEntityList;
             } catch (Exception e) {
                 e.printStackTrace();

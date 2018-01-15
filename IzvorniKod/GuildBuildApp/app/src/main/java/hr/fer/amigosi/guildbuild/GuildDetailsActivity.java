@@ -158,11 +158,6 @@ public class GuildDetailsActivity extends AppCompatActivity {
     private class CheckMembers extends AsyncTask<String, String, Boolean> {
 
         @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
         protected Boolean doInBackground(String... strings) {
             try {
                 CehDAO cehDAO = new CehDAO();
@@ -184,6 +179,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 guildMembers.putExtra(GuildDetailsActivity.EXTRA_MESSAGE3,sifraTrazenogCeha);
                 guildMembers.putExtra(GuildDetailsActivity.EXTRA_MESSAGE4,imeCeha);
                 guildMembers.putExtra(MainActivity.EXTRA_MESSAGE1, nadimak);
+                guildMembers.putExtra(MainActivity.EXTRA_MESSAGE2, sifraKorisnikovogCeha);
                 startActivity(guildMembers);
             }
         }
