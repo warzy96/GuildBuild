@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import hr.fer.amigosi.guildbuild.DAO.ObrazacDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
@@ -108,6 +109,8 @@ public class AdministratorDelAccActivity extends AppCompatActivity {
             try {
                 UserDAO userDAO = new UserDAO();
                 userDAO.deleteUser(korisnikEntity.getNadimak());
+                ObrazacDAO obrazacDAO = new ObrazacDAO();
+                obrazacDAO.deleteForm(korisnikEntity.getNadimak());
                 return "Removed successfully";
             } catch (Exception e) {
                 e.printStackTrace();
