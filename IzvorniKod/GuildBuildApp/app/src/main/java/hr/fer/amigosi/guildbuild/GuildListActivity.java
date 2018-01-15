@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuild.DAO.CehDAO;
@@ -55,6 +56,13 @@ public class GuildListActivity extends AppCompatActivity {
                 return cehEntityList;
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+            finally {
+                try {
+                    CehDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
 
             return null;

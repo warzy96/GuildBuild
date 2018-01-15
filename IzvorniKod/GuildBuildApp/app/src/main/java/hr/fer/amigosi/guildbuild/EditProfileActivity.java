@@ -122,7 +122,13 @@ public class EditProfileActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
+            finally {
+                try {
+                    UserDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
             return null;
         }
 
@@ -172,6 +178,13 @@ public class EditProfileActivity extends AppCompatActivity {
             } catch (Exception e) {
                 success = false;
                 message = e.getMessage();
+            }
+            finally {
+                try {
+                    UserDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
 
             return message;

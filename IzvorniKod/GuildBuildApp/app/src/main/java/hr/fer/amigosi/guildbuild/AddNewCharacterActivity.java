@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -244,6 +245,13 @@ public class AddNewCharacterActivity extends AppCompatActivity {
                 {
                     isSuccess = false;
                     z = ex.getMessage();
+                }
+                finally {
+                    try {
+                        LikDAO.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             return z;

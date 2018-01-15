@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.sql.SQLException;
+
 import hr.fer.amigosi.guildbuild.DAO.ObrazacDAO;
 import hr.fer.amigosi.guildbuild.entities.ObrazacEntity;
 
@@ -63,6 +65,13 @@ public class FormApplicationActivity extends AppCompatActivity {
                 {
                     isSuccess = false;
                     z = ex.getMessage();
+                }
+                finally {
+                    try {
+                        ObrazacDAO.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             return z;

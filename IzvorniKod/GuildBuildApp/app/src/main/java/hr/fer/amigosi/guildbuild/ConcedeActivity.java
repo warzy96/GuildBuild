@@ -71,6 +71,13 @@ public class ConcedeActivity extends AppCompatActivity {
             catch (Exception e) {
                 result = e.getMessage();
             }
+            finally {
+                try {
+                    UserDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
             return result;
         }
     }
@@ -132,6 +139,14 @@ public class ConcedeActivity extends AppCompatActivity {
             } catch (Exception ex) {
                 isSuccess = false;
                 z = ex.getMessage();
+            }
+            finally {
+                try {
+                    UserDAO.close();
+                    CehDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
            return members;
         }

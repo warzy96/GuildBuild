@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class AdministratorProfileActivity extends AppCompatActivity {
@@ -129,6 +130,14 @@ public class AdministratorProfileActivity extends AppCompatActivity {
                 isSuccess = false;
                 z = ex.getMessage();
             }
+            finally {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
             return z;
         }
     }
@@ -175,6 +184,13 @@ public class AdministratorProfileActivity extends AppCompatActivity {
             } catch (Exception ex) {
                 isSuccess = false;
                 z = ex.getMessage();
+            }
+            finally {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
             return z;
         }

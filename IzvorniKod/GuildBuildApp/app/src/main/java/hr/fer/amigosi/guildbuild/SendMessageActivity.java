@@ -110,6 +110,7 @@ public class SendMessageActivity extends AppCompatActivity {
 
 
                     }
+                    connection.close();
 
                 }catch (Exception ex){
                     isSuccess = false;

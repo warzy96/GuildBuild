@@ -12,11 +12,11 @@ import hr.fer.amigosi.guildbuild.entities.DogadajEntity;
  */
 
 public class DogadajDAO {
-    Connection connection = null;
+    static Connection connection = null;
     public DogadajDAO() throws Exception{
         connection = DatabaseConnection.getConnection();
     }
-    public void close() throws SQLException {
+    public static void close() throws SQLException {
         connection.close();
     }
     public void insertEvent(DogadajEntity dogadajEntity) throws SQLException {

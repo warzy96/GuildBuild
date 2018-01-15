@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -75,8 +76,7 @@ public class UserProfileActivity extends AppCompatActivity {
         mDrawable.setCircular(true);
         mIcon.setImageDrawable(mDrawable);
 
-        CheckClass checkClass = new CheckClass();// this is the Asynctask, which is used to process in background to reduce load on app process
-        checkClass.execute("");
+
 
     }
 
@@ -85,7 +85,6 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onResume();
         nickTextView.setText(nickNameStr);
         new CheckClass().execute("");
-        //new PopulateCharacterList().execute();
     }
 
     public void Messages(View view){
@@ -144,47 +143,16 @@ public class UserProfileActivity extends AppCompatActivity {
                 isSuccess = false;
                 z = ex.getMessage();
             }
+            finally {
+                try {
+                    UserDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
 
             return z;
         }
     }
 
-//    private class PopulateCharacterList extends AsyncTask<Void,Void, List<LikEntity>> {
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            characterList.removeAllViews();
-//        }
-//
-//        @Override
-//        protected List<LikEntity> doInBackground(Void... voids) {
-//            try {
-//                LikDAO likDAO = new LikDAO();
-//                List<LikEntity> likEntityList = likDAO.getAllCharactersForUser(nickNameStr);
-//                return likEntityList;
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(List<LikEntity> likEntityList) {
-//            if(likEntityList.isEmpty()) {
-//                Toast.makeText(UserProfileActivity.this, "No characters to show", Toast.LENGTH_SHORT).show();
-//                finish();
-//            }
-//            for(LikEntity likEntity : likEntityList) {
-//                TextView textView = new TextView(UserProfileActivity.this);
-//                textView.setText(likEntity.getNadimak() + "  " +likEntity.getLevel());      //popravit
-//                textView.setTextSize(20);
-//                textView.setTextColor(Color.WHITE);
-//                textView.setFocusable(false);
-//                textView.setClickable(true);
-//                characterList.addView(textView);
-//            }
-//        }
-//    }
 }

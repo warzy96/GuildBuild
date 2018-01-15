@@ -13,12 +13,12 @@ import hr.fer.amigosi.guildbuild.entities.ObrazacEntity;
 
 public class ObrazacDAO {
 
-    Connection connection = null;
+    static Connection connection = null;
 
     public ObrazacDAO() throws Exception{
         connection = DatabaseConnection.getConnection();
     }
-    public void close() throws SQLException {
+    public static void close() throws SQLException {
         connection.close();
     }
     public void insertForm(ObrazacEntity obrazacEntity) throws SQLException{

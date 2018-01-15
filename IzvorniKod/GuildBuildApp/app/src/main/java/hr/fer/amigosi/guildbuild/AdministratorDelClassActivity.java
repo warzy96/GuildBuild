@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -213,6 +214,11 @@ public class AdministratorDelClassActivity extends AppCompatActivity {
                 } catch (Exception ex) {
                     isSuccess = false;
                     z = ex.getMessage();
+                }
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
             return z;

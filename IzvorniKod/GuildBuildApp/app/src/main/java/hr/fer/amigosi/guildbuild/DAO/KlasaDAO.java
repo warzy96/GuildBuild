@@ -12,12 +12,12 @@ import hr.fer.amigosi.guildbuild.entities.KlasaEntity;
  */
 
 public class KlasaDAO {
-    Connection connection = null;
+    static Connection connection = null;
 
     public KlasaDAO() throws Exception{
         connection= DatabaseConnection.getConnection();
     }
-    public void close() throws SQLException {
+    public static void close() throws SQLException {
         connection.close();
     }
     public void insertClass(KlasaEntity klasaEntity) throws SQLException{

@@ -15,10 +15,12 @@ import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuild.DAO.CehDAO;
+import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.entities.CehEntity;
 
 public class AdministratorDelGuildActivity extends AppCompatActivity {
@@ -100,6 +102,13 @@ public class AdministratorDelGuildActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
                 return "Removing user unsuccessful";
+            }
+            finally {
+                try {
+                    CehDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
         @Override

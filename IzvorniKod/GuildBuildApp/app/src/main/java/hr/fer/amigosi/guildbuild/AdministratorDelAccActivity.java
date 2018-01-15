@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -47,6 +48,13 @@ public class AdministratorDelAccActivity extends AppCompatActivity {
             catch (Exception e) {
                 e.printStackTrace();
                 return null;
+            }
+            finally {
+                try {
+                    UserDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -101,6 +109,13 @@ public class AdministratorDelAccActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
                 return "Removing user unsuccessful";
+            }
+            finally {
+                try {
+                    UserDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
         @Override

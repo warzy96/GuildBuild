@@ -135,6 +135,14 @@ public class GuildCreateActivity extends AppCompatActivity{
                 e.printStackTrace();
                 result = e.getMessage();
             }
+            finally {
+                try {
+                    UserDAO.close();
+                    CehDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
             return null;
         }
 

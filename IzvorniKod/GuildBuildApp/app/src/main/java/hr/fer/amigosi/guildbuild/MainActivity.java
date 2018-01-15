@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
                             isSuccess = false;
                         }
                     }
+                    connection.close();
                 }
                 catch (Exception ex)
                 {

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class AdministratorAddGameActivity extends AppCompatActivity {
@@ -98,6 +99,14 @@ public class AdministratorAddGameActivity extends AppCompatActivity {
                     isSuccess = false;
                     z = ex.getMessage();
                 }
+                finally {
+                    try {
+                        con.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+
             }
             return z;
         }

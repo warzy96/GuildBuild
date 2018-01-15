@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuild.DAO.PorukaDAO;
@@ -64,6 +65,13 @@ public class MessagesActivity extends AppCompatActivity {
             catch (Exception e) {
                 e.printStackTrace();
                 return null;
+            }
+            finally {
+                try {
+                    PorukaDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
 

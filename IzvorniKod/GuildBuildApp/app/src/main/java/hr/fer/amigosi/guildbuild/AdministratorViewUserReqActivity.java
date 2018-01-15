@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
@@ -113,6 +114,13 @@ public class AdministratorViewUserReqActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            finally {
+                try {
+                    UserDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
             return "Adding user unsuccessful";
         }
 
@@ -135,6 +143,13 @@ public class AdministratorViewUserReqActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
                 return "Removing user unsuccessful";
+            }
+            finally {
+                try {
+                    UserDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
         @Override

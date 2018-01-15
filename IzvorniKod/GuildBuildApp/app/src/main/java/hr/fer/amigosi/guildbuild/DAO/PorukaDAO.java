@@ -13,12 +13,12 @@ import hr.fer.amigosi.guildbuild.entities.PorukaEntity;
 
 public class PorukaDAO {
 
-    Connection connection = null;
+    static Connection connection = null;
 
     public PorukaDAO() throws Exception {
         connection = DatabaseConnection.getConnection();
     }
-    public void close() throws SQLException {
+    public static void close() throws SQLException {
         connection.close();
     }
     public void insertMessage(PorukaEntity porukaEntity) throws SQLException {

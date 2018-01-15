@@ -13,12 +13,12 @@ import hr.fer.amigosi.guildbuild.entities.LikEntity;
 
 public class LikDAO {
 
-    Connection connection = null;
+    static Connection connection = null;
 
     public LikDAO() throws Exception{
         connection= DatabaseConnection.getConnection();
     }
-    public void close() throws SQLException {
+    public static void close() throws SQLException {
         connection.close();
     }
     public void insertCharacter(LikEntity likEntity) throws SQLException{

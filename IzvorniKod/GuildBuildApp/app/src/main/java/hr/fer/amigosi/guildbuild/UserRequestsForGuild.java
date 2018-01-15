@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +73,13 @@ public class UserRequestsForGuild extends AppCompatActivity {
             catch (Exception e) {
                 return e.getMessage();
             }
+            finally {
+                try {
+                    ObrazacDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         @Override
@@ -98,6 +106,13 @@ public class UserRequestsForGuild extends AppCompatActivity {
             }
             catch(Exception e) {
 
+            }
+            finally {
+                try {
+                    ObrazacDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
             return obrasci;
         }

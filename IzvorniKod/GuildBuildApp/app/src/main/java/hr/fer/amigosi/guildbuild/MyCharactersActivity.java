@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuild.DAO.LikDAO;
@@ -52,6 +53,13 @@ public class MyCharactersActivity extends AppCompatActivity {
                 return likEntityList;
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+            finally {
+                try {
+                    LikDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
 
             return null;

@@ -12,11 +12,11 @@ import hr.fer.amigosi.guildbuild.entities.PodciljEntity;
  */
 
 public class PodciljDAO {
-    Connection connection = null;
+    static Connection connection = null;
     public PodciljDAO() throws Exception{
         connection = DatabaseConnection.getConnection();
     }
-    public void close() throws SQLException {
+    public static void close() throws SQLException {
         connection.close();
     }
     public void insertSubgoal(PodciljEntity podciljEntity) throws SQLException {
