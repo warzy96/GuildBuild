@@ -47,11 +47,14 @@ public class MessagesActivity extends AppCompatActivity {
             }
         });
 
-        GetReceivedMessages getReceivedMessages = new GetReceivedMessages();
-        getReceivedMessages.execute();
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new GetReceivedMessages().execute();
+    }
 
     private class GetReceivedMessages extends AsyncTask<String, String, List<PorukaEntity>>{
 

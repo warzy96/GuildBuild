@@ -127,7 +127,7 @@ public class SendMessageActivity extends AppCompatActivity {
                 Intent intent = new Intent(SendMessageActivity.this, MessagesActivity.class);
                 startActivity(intent);
             }else{
-                Toast.makeText(SendMessageActivity.this, s, Toast.LENGTH_LONG);
+                Toast.makeText(SendMessageActivity.this, s, Toast.LENGTH_LONG).show();
             }
         }
     }
