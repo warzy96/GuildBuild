@@ -61,8 +61,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
             btnLeaveGuild.setVisibility(View.GONE);
         }
 
-        FillNameAndDesc fillNameAndDesc = new FillNameAndDesc();
-        fillNameAndDesc.execute("");
+
 
         btnApply.setOnClickListener(view -> {
             if(sifraKorisnikovogCeha!=0){
@@ -107,6 +106,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
         requestsButton.setOnClickListener(View -> {
             Intent intent = new Intent(GuildDetailsActivity.this, UserRequestsForGuild.class);
             intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraKorisnikovogCeha);
+            startActivity(intent);
         });
     }
 
@@ -126,6 +126,9 @@ public class GuildDetailsActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(CehEntity cehEntity) {
+
+            //TODO: Throws NullPointerException zbog CehEntity.getNaziv() [cehEntity je null]
+            //Samo kad se s GuildListActivity dolazi na GuildDetailsActivity
             guildName.setText(cehEntity.getNaziv());
             //Overwrites xml text size
             //guildName.setTextSize(35);
@@ -245,5 +248,12 @@ public class GuildDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FillNameAndDesc fillNameAndDesc = new FillNameAndDesc();
+        fillNameAndDesc.execute("");
     }
 }

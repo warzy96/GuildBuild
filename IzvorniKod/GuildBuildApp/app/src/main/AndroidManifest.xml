@@ -22,41 +22,60 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:name=".UserProfileActivity"
             android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".RegisterActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".HomeActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".GuildListActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".MessagesActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:parentActivityName=".UserProfileActivity" />
         <activity
             android:name=".EditProfileActivity"
             android:parentActivityName=".UserProfileActivity" />
-        <activity android:name=".GuildCreateActivity" />
-        <activity android:name=".AdministratorProfileActivity" />
-        <activity android:name=".AdministratorViewUserReqActivity" />
-        <activity android:name=".AdministratorDelAccActivity" />
-        <activity android:name=".AdministratorDelGuildActivity" />
-        <activity android:name=".AdministratorAddGameActivity" />
-        <activity android:name=".AdministratorAddClassActivity" />
-        <activity android:name=".AdministratorDelClassActivity" />
+        <activity android:name=".GuildCreateActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".AdministratorProfileActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".AdministratorViewUserReqActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".AdministratorDelAccActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".AdministratorDelGuildActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".AdministratorAddGameActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".AdministratorAddClassActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".AdministratorDelClassActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".AddNewCharacterActivity"
             android:parentActivityName=".EditProfileActivity" />
-        <activity android:name=".GuildDetailsActivity" />
-        <activity android:name=".SendMessageActivity" />
-        <activity android:name=".GuildMembersActivity" />
-        <activity android:name=".FormApplicationActivity" />
-        <activity android:name=".ConcedeActivity" />
-        <activity android:name=".MyCharactersActivity" />
-        <activity android:name=".UserRequestsForGuild"></activity>
+        <activity android:name=".GuildDetailsActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".SendMessageActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".GuildMembersActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".FormApplicationActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".ConcedeActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".MyCharactersActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".UserRequestsForGuild"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
 
 </manifest>

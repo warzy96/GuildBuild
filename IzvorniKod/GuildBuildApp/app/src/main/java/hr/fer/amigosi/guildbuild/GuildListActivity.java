@@ -26,7 +26,6 @@ public class GuildListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guild_list);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         guildList = findViewById(R.id.guildList);
         Intent pastIntent = getIntent();

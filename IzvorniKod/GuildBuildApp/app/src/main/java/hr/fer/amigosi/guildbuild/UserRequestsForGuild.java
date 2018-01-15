@@ -41,6 +41,7 @@ public class UserRequestsForGuild extends AppCompatActivity {
             try {
                 UserDAO userDAO = new UserDAO();
                 userDAO.updateUserGuild(userNickname, sifraCeha);
+                userDAO.updateUserRank(userNickname, RangConstants.member);
                 ObrazacDAO obrazacDAO = new ObrazacDAO();
                 obrazacDAO.deleteForm(userNickname, sifraCeha);
                 return "User added successfully";
@@ -106,6 +107,7 @@ public class UserRequestsForGuild extends AppCompatActivity {
             if(obrazacEntities.isEmpty()) {
                 Toast.makeText(UserRequestsForGuild.this, "No user requests to show",
                         Toast.LENGTH_SHORT).show();
+                finish();
             }
             else {
                 LinearLayout linearLayout = findViewById(R.id.ObrasciLayout);
@@ -122,6 +124,7 @@ public class UserRequestsForGuild extends AppCompatActivity {
                     opisTextView.setText(obrazacEntity.getPoruka());
                     opisTextView.setTextColor(Color.WHITE);
 
+                    userLayout.setOrientation(LinearLayout.VERTICAL);
                     userLayout.addView(nicknameTextView);
                     userLayout.addView(opisTextView);
                     userLayout.setOnClickListener(View -> {

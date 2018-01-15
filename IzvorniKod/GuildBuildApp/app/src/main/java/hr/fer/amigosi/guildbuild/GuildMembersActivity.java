@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuild.DAO.CehDAO;
+import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.entities.CehEntity;
 import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
@@ -23,7 +24,6 @@ public class GuildMembersActivity extends AppCompatActivity {
     private LinearLayout layout1;
     private int sifraCeha;
     private String nadimak;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,15 +34,18 @@ public class GuildMembersActivity extends AppCompatActivity {
 
         Intent pastIntent = getIntent();
         imeCeha.setText(pastIntent.getStringExtra(GuildDetailsActivity.EXTRA_MESSAGE4));
-        imeCeha.setTextSize(35);
+        //Overwrites text size defined in xml
+        //imeCeha.setTextSize(35);
         imeCeha.setTextColor(Color.WHITE);
         sifraCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
         nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
 
-        PopulateGuildMembers populateGuildMembers = new PopulateGuildMembers();
-        populateGuildMembers.execute("");
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new PopulateGuildMembers().execute("");
     }
 
     private class PopulateGuildMembers extends AsyncTask<String,String, List<KorisnikEntity>> {
@@ -68,37 +71,34 @@ public class GuildMembersActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<KorisnikEntity> korisnikEntityList) {
-            for(KorisnikEntity korisnikEntity : korisnikEntityList) {
-                if(!korisnikEntity.getRang().equals(RangConstants.leader)) {
-                    Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
-                    giveUpLeadershipButton.setVisibility(View.GONE);
-                    Button promoteDemoteButton = findViewById(R.id.promote_demoteMembersButton);
-                    promoteDemoteButton.setVisibility(View.GONE);
-                }
-                else {
-                    Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
-                    Button promoteDemoteButton = findViewById(R.id.promote_demoteMembersButton);
-                    giveUpLeadershipButton.setOnClickListener(view -> {
-                        Intent intent = new Intent(GuildMembersActivity.this, ConcedeActivity.class);
-                        intent.putExtra(MainActivity.EXTRA_MESSAGE1, nadimak);
-                        startActivity(intent);
-                    });
 
-                    //TODO: Promote/Demote button starts activity
+            for(KorisnikEntity korisnikEntity : korisnikEntityList) {
+                if(korisnikEntity.getNadimak().equals(nadimak)) {
+                    if(korisnikEntity.getRang().equals(RangConstants.member)) {
+                        Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
+                        giveUpLeadershipButton.setVisibility(View.GONE);
+                        Button promoteDemoteButton = findViewById(R.id.promote_demoteMembersButton);
+                        promoteDemoteButton.setVisibility(View.GONE);
+                    }
+                    if (korisnikEntity.getRang().equals(RangConstants.coordinator)){
+                        Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
+                        giveUpLeadershipButton.setVisibility(View.GONE);
+                    }
+                    else {
+                        Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
+                        Button promoteDemoteButton = findViewById(R.id.promote_demoteMembersButton);
+                        giveUpLeadershipButton.setOnClickListener(view -> {
+                            Intent intent = new Intent(GuildMembersActivity.this, ConcedeActivity.class);
+                            intent.putExtra(MainActivity.EXTRA_MESSAGE1, nadimak);
+                            startActivity(intent);
+                        });
+                        //TODO: Promote/Demote button starts activity
+                    }
                 }
                 TextView textView = new TextView(GuildMembersActivity.this);
                 textView.setText(korisnikEntity.getNadimak()+ ", " + korisnikEntity.getRang());
                 textView.setTextSize(35);
                 textView.setTextColor(Color.WHITE);
-                /*textView.setFocusable(false);
-                textView.setClickable(true);
-                textView.setOnClickListener(view -> {
-                    Intent guildDetails = new Intent(GuildListActivity.this, GuildDetailsActivity.class);
-                    guildDetails.putExtra(MainActivity.EXTRA_MESSAGE1, nickname);
-                    guildDetails.putExtra(MainActivity.EXTRA_MESSAGE2, sifraCeha);
-                    guildDetails.putExtra(GuildDetailsActivity.EXTRA_MESSAGE3, cehEntity.getSifraCeha());
-                    startActivity(guildDetails);
-                });*/
                 layout1.addView(textView);
             }
         }
