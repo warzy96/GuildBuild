@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
+import hr.fer.amigosi.guildbuild.DAO.VoteDAO;
 import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
 /**
@@ -83,7 +84,10 @@ public class MainActivity extends AppCompatActivity {
     {
         String z = "";
         Boolean isSuccess = false;
-
+        Boolean isVoteActivity = true;
+        Boolean isKoordinator = false;
+        String nadimak;
+        int sifraCeha;
 
         @Override
         protected void onPostExecute(String r)
@@ -96,12 +100,20 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, AdministratorProfileActivity.class);
                     startActivity(intent);
                 }
+
                 else{
-                    Toast.makeText(MainActivity.this , "Login Successful" , Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    intent.putExtra(EXTRA_MESSAGE1, korisnikEntity.getNadimak());
-                    intent.putExtra(EXTRA_MESSAGE2, korisnikEntity.getSifraCeha());
-                    startActivity(intent);
+                        if(!isVoteActivity && isKoordinator){
+                            Intent intenterino = new Intent(MainActivity.this, VoteActivity.class);
+                            intenterino.putExtra(EXTRA_MESSAGE1, nadimak);
+                            intenterino.putExtra(EXTRA_MESSAGE2, sifraCeha);
+                            startActivity(intenterino);
+                        }else {
+                        Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        intent.putExtra(EXTRA_MESSAGE1, korisnikEntity.getNadimak());
+                        intent.putExtra(EXTRA_MESSAGE2, korisnikEntity.getSifraCeha());
+                        startActivity(intent);
+                 }
                 }
             }else{
                 Toast.makeText(MainActivity.this , r , Toast.LENGTH_LONG).show();
@@ -119,26 +131,25 @@ public class MainActivity extends AppCompatActivity {
             {
                 try
                 {
-                    Connection connection = DatabaseConnection.getConnection();
-                    if (connection == null)
-                    {
-                        z = "Check Your Internet Access!";
-                    }
-                    else
-                    {
+
                         UserDAO userDAO = new UserDAO();
                         korisnikEntity = userDAO.getUser(etEmaill, passwordd);
                         if(korisnikEntity != null) {
                             z = "Login successful";
                             isSuccess = true;
+                            isVoteActivity = userDAO.checkIfGuildHasALeader(korisnikEntity.getSifraCeha());
+                            if(korisnikEntity.getRang() != null){
+                                isKoordinator = korisnikEntity.getRang().equals(RangConstants.coordinator);
+                            }
+                            nadimak = korisnikEntity.getNadimak();
+                            sifraCeha = korisnikEntity.getSifraCeha();
                         }
                         else
                         {
                             z = "Invalid Credentials!";
                             isSuccess = false;
                         }
-                    }
-                    connection.close();
+                        UserDAO.close();
                 }
                 catch (Exception ex)
                 {

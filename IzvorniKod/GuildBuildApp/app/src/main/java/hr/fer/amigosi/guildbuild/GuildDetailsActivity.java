@@ -16,6 +16,7 @@ import java.util.List;
 
 import hr.fer.amigosi.guildbuild.DAO.CehDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
+import hr.fer.amigosi.guildbuild.DAO.VoteDAO;
 import hr.fer.amigosi.guildbuild.entities.CehEntity;
 import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
@@ -50,7 +51,16 @@ public class GuildDetailsActivity extends AppCompatActivity {
         btnSeeEvents = (Button) findViewById(R.id.btnSeeEvents);
         btnLeaveGuild = (Button) findViewById(R.id.btnLeaveGuild);
 
+        Intent pastIntent = getIntent();
+        nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
+        sifraKorisnikovogCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2,0);
+        sifraTrazenogCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
 
+        if(sifraKorisnikovogCeha==sifraTrazenogCeha){
+            btnApply.setVisibility(View.GONE);
+        }else{
+            btnLeaveGuild.setVisibility(View.GONE);
+        }
 
 
 
@@ -196,6 +206,14 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 }
                 UserDAO userDAO = new UserDAO();
                 KorisnikEntity korisnikEntity = userDAO.getUser(nadimak);
+
+
+                if(korisnikEntity.getRang().equals(RangConstants.leader)){
+                    VoteDAO voteDAO = new VoteDAO();
+                    voteDAO.insertAllCoordinatorsFromGuildIntoVote(korisnikEntity.getSifraCeha());
+
+                }
+
                 korisnikEntity.setSifraCeha(0);
                 korisnikEntity.setRang(null);
                 korisnikEntity.setStatusPrijave(false);

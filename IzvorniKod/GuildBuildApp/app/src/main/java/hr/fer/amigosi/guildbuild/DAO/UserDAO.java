@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuild.DatabaseConnection;
+import hr.fer.amigosi.guildbuild.RangConstants;
 import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
 /**
@@ -181,6 +182,7 @@ public class UserDAO {
         }
     }
 
+
     public void updateUsersDescription(String nadimak, String opis) throws SQLException{
         String querry = "UPDATE korisnik SET opis = '"
                 + opis + "'"
@@ -214,6 +216,74 @@ public class UserDAO {
             statement.executeUpdate(querry);
         }
         catch(SQLException e) {
+            throw e;
+        }
+    }
+
+    public boolean checkIfGuildHasALeader(int sifraCeha) throws SQLException{
+
+        if(sifraCeha == 0){
+            return true;
+        }
+        String query = "SELECT * FROM korisnik WHERE korisnik.sifCeh ="+sifraCeha
+                + " AND korisnik.rang = 'leader'";
+
+        try{
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            if(!rs.next()){
+                return false;
+            }
+            else{
+                return true;
+            }
+
+        }catch (SQLException e){
+            throw e;
+        }
+    }
+
+
+    public List<KorisnikEntity> loadAllCoordinators(int sifraCeha) throws SQLException{
+        String query = "SELECT * FROM korisnik WHERE korisnik.sifCeh = " + sifraCeha + " AND korisnik.rang = '"
+                + RangConstants.coordinator + "'";
+        List<KorisnikEntity> result = new ArrayList<>();
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                    String nadimak = rs.getString("nadimak");
+                    String email = rs.getString("email");
+                    String lozinka = rs.getString("lozinka");
+                    boolean statusR = rs.getBoolean("statusR");
+                    String rang = rs.getString("rang");
+                    int sifCeh = rs.getInt("sifCeh");
+                    boolean statusP = rs.getBoolean("statusP");
+                    String opis = rs.getString("opis");
+                    boolean isAdmin = rs.getBoolean("isAdmin");
+
+                    KorisnikEntity korisnik = new KorisnikEntity(email, nadimak, lozinka, statusR, rang, sifCeh, statusP, opis, isAdmin);
+                    result.add(korisnik);
+
+            }
+            return result;
+        }catch(SQLException e){
+            throw e;
+        }
+
+    }
+
+    public void setLeader(String nickname) throws SQLException{
+        String query = "UPDATE korisnik SET korisnik.rang = '"
+                + RangConstants.leader + "' WHERE korisnik.nadimak = '" + nickname +"'";
+
+        try{
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+        }catch(SQLException e){
             throw e;
         }
     }

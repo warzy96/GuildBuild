@@ -78,6 +78,9 @@ public class SendMessageActivity extends AppCompatActivity {
                     || etMessagee.trim().length()>500){
                 tmp = "Please insert smaller data!";
             }
+            else if(etRecipientt.trim().equals(nicknameStr)){
+                tmp = "You can't send message to yourself!";
+            }
 
             else{
                 try{

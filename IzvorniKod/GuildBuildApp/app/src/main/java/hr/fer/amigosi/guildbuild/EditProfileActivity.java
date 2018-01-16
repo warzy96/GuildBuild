@@ -23,6 +23,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
+import hr.fer.amigosi.guildbuild.DAO.VoteDAO;
+import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
+import hr.fer.amigosi.guildbuild.entities.VoteEntity;
 
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -116,6 +119,13 @@ public class EditProfileActivity extends AppCompatActivity {
                     message = "Check Your Internet Access!";
                 }
                 UserDAO userDAO = new UserDAO();
+
+                KorisnikEntity korisnikEntity = userDAO.getUser(nickname);
+                if(korisnikEntity.getRang().equals(RangConstants.leader)){
+                    VoteDAO voteDAO = new VoteDAO();
+                    voteDAO.insertAllCoordinatorsFromGuildIntoVote(korisnikEntity.getSifraCeha());
+                }
+
                 userDAO.deleteUser(nickname);
                 message = "Delete successful";
                 success = true;
@@ -125,6 +135,7 @@ public class EditProfileActivity extends AppCompatActivity {
             finally {
                 try {
                     UserDAO.close();
+                    VoteDAO.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
