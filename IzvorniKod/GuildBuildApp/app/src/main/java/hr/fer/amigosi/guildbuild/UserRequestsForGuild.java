@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -133,6 +134,7 @@ public class UserRequestsForGuild extends AppCompatActivity {
                     nicknameTextView.setTextColor(Color.WHITE);
                     nicknameTextView.setText(obrazacEntity.getNadimakKorisnika());
                     nicknameTextView.setTextSize(35);
+                    nicknameTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
                     TextView opisTextView = new TextView(UserRequestsForGuild.this);
                     opisTextView.setTextSize(20);

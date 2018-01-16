@@ -196,7 +196,6 @@ public class AddNewCharacterActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String r)
         {
-            //Toast.makeText(MainActivity.this, r, Toast.LENGTH_SHORT).show();
             if(isSuccess)
             {
                 Toast.makeText(AddNewCharacterActivity.this , r , Toast.LENGTH_LONG).show();

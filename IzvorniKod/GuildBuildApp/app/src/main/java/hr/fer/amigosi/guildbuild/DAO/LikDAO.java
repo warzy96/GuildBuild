@@ -120,4 +120,15 @@ public class LikDAO {
         }
     }
 
+    public void deleteCharactersForClass(int sifraKlase) throws SQLException{
+        String querry = "DELETE FROM lik WHERE lik.sifKlase= " + sifraKlase;
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(querry);
+        }
+        catch(SQLException e)
+        {
+            throw e;
+        }
+    }
 }

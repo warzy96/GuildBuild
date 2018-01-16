@@ -160,15 +160,9 @@ public class GuildDetailsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(CehEntity cehEntity) {
 
-            //TODO: Throws NullPointerException zbog CehEntity.getNaziv() [cehEntity je null]
-            //Samo kad se s GuildListActivity dolazi na GuildDetailsActivity
             guildName.setText(cehEntity.getNaziv());
-            //Overwrites xml text size
-            //guildName.setTextSize(35);
             guildName.setTextColor(Color.WHITE);
             guildDesc.setText(cehEntity.getOpis());
-            //Overwrites xml text size
-            //guildDesc.setTextSize(35);
             guildDesc.setTextColor(Color.WHITE);
         }
     }

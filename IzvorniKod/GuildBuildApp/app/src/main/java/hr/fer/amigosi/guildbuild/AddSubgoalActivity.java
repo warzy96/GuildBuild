@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,6 +103,13 @@ public class AddSubgoalActivity extends AppCompatActivity {
                 {
                     isSuccess = false;
                     z = ex.getMessage();
+                }
+                finally {
+                    try {
+                        CiljDAO.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             return z;
