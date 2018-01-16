@@ -65,7 +65,7 @@ public class ConcedeActivity extends AppCompatActivity {
                 UserDAO userDAO = new UserDAO();
                 userDAO.updateUserRank(nickname, RangConstants.coordinator);
                 userDAO.updateUserRank(newLeaderNickname, RangConstants.leader);
-                result = "Successful";
+                result = "Success";
                 success = true;
             }
             catch (Exception e) {
@@ -79,6 +79,14 @@ public class ConcedeActivity extends AppCompatActivity {
                 }
             }
             return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(ConcedeActivity.this, s, Toast.LENGTH_SHORT).show();
+            if(success) {
+                finish();
+            }
         }
     }
 
@@ -94,6 +102,7 @@ public class ConcedeActivity extends AppCompatActivity {
             }
             else {
                 for(KorisnikEntity korisnik : members) {
+                    if(korisnik.getRang().equals(RangConstants.leader)) continue;
                     TextView textView = new TextView(ConcedeActivity.this);
                     textView.setText(korisnik.getNadimak());
                     textView.setTextSize(35);
@@ -144,6 +153,7 @@ public class ConcedeActivity extends AppCompatActivity {
                 try {
                     UserDAO.close();
                     CehDAO.close();
+                    con.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

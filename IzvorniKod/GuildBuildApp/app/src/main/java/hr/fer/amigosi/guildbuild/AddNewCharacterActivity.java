@@ -200,8 +200,7 @@ public class AddNewCharacterActivity extends AppCompatActivity {
             if(isSuccess)
             {
                 Toast.makeText(AddNewCharacterActivity.this , r , Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(AddNewCharacterActivity.this, EditProfileActivity.class);
-                startActivity(intent);
+                finish();
             }else{
                 Toast.makeText(AddNewCharacterActivity.this , r , Toast.LENGTH_LONG).show();
 

@@ -168,11 +168,6 @@ public class GuildDetailsActivity extends AppCompatActivity {
     private class CheckMembers extends AsyncTask<String, String, Boolean> {
 
         @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
         protected Boolean doInBackground(String... strings) {
             try {
                 CehDAO cehDAO = new CehDAO();
@@ -194,6 +189,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 guildMembers.putExtra(GuildDetailsActivity.EXTRA_MESSAGE3,sifraTrazenogCeha);
                 guildMembers.putExtra(GuildDetailsActivity.EXTRA_MESSAGE4,imeCeha);
                 guildMembers.putExtra(MainActivity.EXTRA_MESSAGE1, nadimak);
+                guildMembers.putExtra(MainActivity.EXTRA_MESSAGE2, sifraKorisnikovogCeha);
                 startActivity(guildMembers);
             }
         }
@@ -387,7 +383,11 @@ public class GuildDetailsActivity extends AppCompatActivity {
         nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
         sifraKorisnikovogCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2,0);
         sifraTrazenogCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
-
+        if(sifraKorisnikovogCeha==sifraTrazenogCeha){
+            btnApply.setVisibility(View.GONE);
+        }else{
+            btnLeaveGuild.setVisibility(View.GONE);
+        }
         FillNameAndDesc fillNameAndDesc = new FillNameAndDesc();
         fillNameAndDesc.execute("");
     }

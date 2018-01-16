@@ -60,8 +60,7 @@ public class AdministratorAddGameActivity extends AppCompatActivity {
             if(isSuccess)
             {
                 Toast.makeText(AdministratorAddGameActivity.this , r , Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(AdministratorAddGameActivity.this, AdministratorProfileActivity.class);
-                startActivity(intent);
+                finish();
             }else{
                 Toast.makeText(AdministratorAddGameActivity.this , r , Toast.LENGTH_LONG).show();
 

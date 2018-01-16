@@ -61,6 +61,17 @@ public class ObrazacDAO {
             throw e;
         }
     }
+    public void deleteForm(String nadimak) throws SQLException {
+        String querry = "DELETE FROM obrazac WHERE obrazac.nadimak = '" +
+                nadimak + "'";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(querry);
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
 
     public void updateForm(ObrazacEntity obrazacEntity) throws SQLException{
         String querry = "UPDATE obrazac SET "
