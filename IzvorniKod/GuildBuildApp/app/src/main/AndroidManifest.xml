@@ -95,7 +95,10 @@
         <activity android:name=".AddEventActivity" />
         <activity android:name=".AddGoalActivity" />
         <activity android:name=".AddSubgoalActivity" />
-        <activity android:name=".VoteActivity"></activity>
+        <activity android:name=".VoteActivity" />
+        <activity android:name=".EventsListActivity" />
+        <activity android:name=".GoalsListActivity" />
+        <activity android:name=".SubgoalsListActivity"></activity>
     </application>
 
 </manifest>

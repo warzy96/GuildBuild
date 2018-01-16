@@ -137,5 +137,17 @@ public class CiljDAO {
         }
     }
 
+    public void setGoalFinished(String nazivCilja) throws SQLException {
+        String querry = "UPDATE cilj SET "
+                +"ispunjen = true "
+                + " WHERE cilj.nazivCilja = '" + nazivCilja+"'";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(querry);
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
 
 }

@@ -130,17 +130,21 @@ public class AddGoalActivity extends AppCompatActivity {
         protected List<String> doInBackground(String... params)
         {
             String z="";
-            List<String> result = new ArrayList<>();
+            List<DogadajEntity> result = new ArrayList<>();
+            List<String> imena = new ArrayList<>();
             try
             {
                 DogadajDAO dogadajDAO = new DogadajDAO();
                 result = dogadajDAO.getAllEventsForGuild(sifraKorisnikovogCeha);
+                for(DogadajEntity dogadajEntity : result){
+                    imena.add(dogadajEntity.getNazivDogadaja());
+                }
             }
             catch (Exception ex)
             {
                 z = ex.getMessage();
             }
-            return result;
+            return imena;
         }
     }
 
