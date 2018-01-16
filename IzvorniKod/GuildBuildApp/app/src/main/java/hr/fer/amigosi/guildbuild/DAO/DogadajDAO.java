@@ -62,9 +62,9 @@ public class DogadajDAO {
         }
     }
 
-    public List<String> getAllEventsForGuild(int sifraCeha) throws SQLException{
+    public List<DogadajEntity> getAllEventsForGuild(int sifraCeha) throws SQLException{
         String querry = "SELECT * FROM dogadaj WHERE dogadaj.sifCeh =" + sifraCeha;
-        List<String> result = new ArrayList<>();
+        List<DogadajEntity> result = new ArrayList<>();
 
         try {
             Statement statement = connection.createStatement();
@@ -72,14 +72,14 @@ public class DogadajDAO {
 
             while(rs.next()){
                 String nazivDog = rs.getString("nazivDog");
-                /*int sifDog = rs.getInt("sifDog");
+                int sifDog = rs.getInt("sifDog");
 
                 int sifCeh = rs.getInt("sifCeh");
                 boolean ispunjen = rs.getBoolean("ispunjen");
-                boolean vidljiv = rs.getBoolean("vidljiv");*/
+                boolean vidljiv = rs.getBoolean("vidljiv");
 
-                //DogadajEntity dogadaj = new DogadajEntity(sifDog, nazivDog, sifCeh, ispunjen, vidljiv);
-                result.add(nazivDog);
+                DogadajEntity dogadaj = new DogadajEntity(sifDog, nazivDog, sifCeh, ispunjen, vidljiv);
+                result.add(dogadaj);
             }
             return result;
         }
@@ -162,6 +162,19 @@ public class DogadajDAO {
         }
         catch(SQLException e)
         {
+            throw e;
+        }
+    }
+
+    public void setEventFinished(String nazivDog) throws SQLException {
+        String querry = "UPDATE dogadaj SET "
+                +"ispunjen = true "
+                + " WHERE dogadaj.nazivDog = '" + nazivDog+"'";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(querry);
+        }
+        catch(SQLException e) {
             throw e;
         }
     }

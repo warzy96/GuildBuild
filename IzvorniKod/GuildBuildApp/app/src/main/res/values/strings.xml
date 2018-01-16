@@ -20,5 +20,8 @@
     <string name="add_event">Add event</string>
     <string name="add_goal">Add goal</string>
     <string name="add_subgoal">Add subgoal</string>
+    <string name="Events">Events</string>
+    <string name="Goals">Goals</string>
+    <string name="Subgoals">Subgoals</string>
 
 </resources>

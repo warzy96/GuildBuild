@@ -67,6 +67,8 @@ public class PodciljDAO {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(querry);
 
+            rs.next();
+
             int sifPodcilja = rs.getInt("sifPodcilja");
             String nazivPodcilja = rs.getString("nazivPodcilja");
             int sifCilja = rs.getInt("sifCilja");
@@ -105,5 +107,45 @@ public class PodciljDAO {
         {
             throw e;
         }
+    }
+
+    public void updateGoalsAndEvents() throws SQLException{
+        String query1 = "SELECT distinct cilj.nazivCilja \n" +
+                "FROM cilj \n" +
+                "\tJOIN podcilj ON cilj.sifCilja=podcilj.sifCilja \n" +
+                "where (select count(*) from podcilj where podcilj.sifCilja=cilj.sifCilja)=(select count(*) from podcilj where ispunjen and podcilj.sifCilja=cilj.sifCilja)";
+        try{
+            CiljDAO ciljDAO = new CiljDAO();
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query1);
+
+            while(rs.next()){
+                String nazivCilja = rs.getString("nazivCilja");
+                ciljDAO.setGoalFinished(nazivCilja);
+            }
+        }catch(Exception e){
+        }finally {
+            CiljDAO.close();
+        }
+
+        String query2 = "sELECT distinct dogadaj.nazivDog \n" +
+                "FROM dogadaj \n" +
+                "\tJOIN cilj ON dogadaj.sifDog=cilj.sifDog\n" +
+                "where (select count(*) from cilj where dogadaj.sifDog=cilj.sifDog)=(select count(*) from cilj where ispunjen and dogadaj.sifDog=cilj.sifDog)";
+        try{
+            DogadajDAO dogadajDAO = new DogadajDAO();
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query2);
+
+            while(rs.next()){
+                String nazivDog = rs.getString("nazivDog");
+                dogadajDAO.setEventFinished(nazivDog);
+            }
+
+        }catch(Exception e){
+        }finally {
+            CiljDAO.close();
+        }
+
     }
 }
