@@ -3,11 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GuildBuildApp.iml" filepath="$PROJECT_DIR$/GuildBuildApp.iml" />
-      <module fileurl="file://C:\Filip\Faks\5. semestar\OPP\Projekt\Amigosi\IzvorniKod\GuildBuildApp\GuildBuildApp.iml" filepath="C:\Filip\Faks\5. semestar\OPP\Projekt\Amigosi\IzvorniKod\GuildBuildApp\GuildBuildApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Filip\Faks\5. semestar\OPP\Projekt\Amigosi\IzvorniKod\GuildBuildApp\app\app.iml" filepath="C:\Filip\Faks\5. semestar\OPP\Projekt\Amigosi\IzvorniKod\GuildBuildApp\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mysql-connector-java-5.1.45-bin/mysql-connector-java-5.1.45-bin.iml" filepath="$PROJECT_DIR$/mysql-connector-java-5.1.45-bin/mysql-connector-java-5.1.45-bin.iml" />
-      <module fileurl="file://C:\Filip\Faks\5. semestar\OPP\Projekt\Amigosi\IzvorniKod\GuildBuildApp\mysql-connector-java-5.1.45-bin\mysql-connector-java-5.1.45-bin.iml" filepath="C:\Filip\Faks\5. semestar\OPP\Projekt\Amigosi\IzvorniKod\GuildBuildApp\mysql-connector-java-5.1.45-bin\mysql-connector-java-5.1.45-bin.iml" />
     </modules>
   </component>
 </project>
