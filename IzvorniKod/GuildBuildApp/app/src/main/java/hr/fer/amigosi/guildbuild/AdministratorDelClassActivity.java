@@ -18,9 +18,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdministratorDelClassActivity extends AppCompatActivity {
+import hr.fer.amigosi.guildbuild.DAO.KlasaDAO;
+import hr.fer.amigosi.guildbuild.DAO.LikDAO;
 
-    //TODO: Kad se brise klasa, obrisi i sve likove za tu klasu
+public class AdministratorDelClassActivity extends AppCompatActivity {
 
     private Spinner gameSpinner;
     private Spinner classSpinner;
@@ -208,6 +209,10 @@ public class AdministratorDelClassActivity extends AppCompatActivity {
                         ResultSet rs = stmt.executeQuery(query);
                         rs.next();
                         int sifIgre = rs.getInt("sifIgre");
+                        KlasaDAO klasaDAO = new KlasaDAO();
+                        int sifraKlase = klasaDAO.getSifraKlase(className, sifIgre);
+                        LikDAO likDAO = new LikDAO();
+                        likDAO.deleteCharactersForClass(sifraKlase);
                         query = "delete from klasa where naziv ='" + className + "' and sifIgre=" + sifIgre;
                         stmt.executeUpdate(query);
                         isSuccess = true;
@@ -219,6 +224,7 @@ public class AdministratorDelClassActivity extends AppCompatActivity {
                 }
                 try {
                     con.close();
+                    KlasaDAO.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

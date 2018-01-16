@@ -152,15 +152,9 @@ public class GuildDetailsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(CehEntity cehEntity) {
 
-            //TODO: Throws NullPointerException zbog CehEntity.getNaziv() [cehEntity je null]
-            //Samo kad se s GuildListActivity dolazi na GuildDetailsActivity
             guildName.setText(cehEntity.getNaziv());
-            //Overwrites xml text size
-            //guildName.setTextSize(35);
             guildName.setTextColor(Color.WHITE);
             guildDesc.setText(cehEntity.getOpis());
-            //Overwrites xml text size
-            //guildDesc.setTextSize(35);
             guildDesc.setTextColor(Color.WHITE);
         }
     }
@@ -264,9 +258,15 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 Toast.makeText(GuildDetailsActivity.this, result, Toast.LENGTH_SHORT).show();
             }
             else {
-                if(!korisnikEntity.getRang().equals(RangConstants.leader)
-                        && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
-                    Button requestsButton = findViewById(R.id.JoinRequestsButton);
+                Button requestsButton = findViewById(R.id.JoinRequestsButton);
+
+                if(sifraKorisnikovogCeha == sifraTrazenogCeha) {
+                    if(!korisnikEntity.getRang().equals(RangConstants.leader)
+                            && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
+                        requestsButton.setVisibility(View.GONE);
+                    }
+                }
+                else {
                     requestsButton.setVisibility(View.GONE);
                 }
             }
@@ -297,9 +297,14 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 Toast.makeText(GuildDetailsActivity.this, result, Toast.LENGTH_SHORT).show();
             }
             else {
-                if(!korisnikEntity.getRang().equals(RangConstants.leader)
-                        && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
-                    Button newEventButton = findViewById(R.id.btnAddEvent);
+                Button newEventButton = findViewById(R.id.btnAddEvent);
+                if(sifraKorisnikovogCeha == sifraTrazenogCeha) {
+                    if(!korisnikEntity.getRang().equals(RangConstants.leader)
+                            && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
+                        newEventButton.setVisibility(View.GONE);
+                    }
+                }
+                else {
                     newEventButton.setVisibility(View.GONE);
                 }
             }
@@ -330,8 +335,13 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 Toast.makeText(GuildDetailsActivity.this, result, Toast.LENGTH_SHORT).show();
             }
             else {
-                if(!korisnikEntity.getRang().equals(RangConstants.leader)) {
-                    Button newEventButton = findViewById(R.id.btnAddGoal);
+                Button newEventButton = findViewById(R.id.btnAddGoal);
+                if(sifraKorisnikovogCeha == sifraTrazenogCeha) {
+                    if(!korisnikEntity.getRang().equals(RangConstants.leader)) {
+                        newEventButton.setVisibility(View.GONE);
+                    }
+                }
+                else {
                     newEventButton.setVisibility(View.GONE);
                 }
             }
@@ -362,8 +372,13 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 Toast.makeText(GuildDetailsActivity.this, result, Toast.LENGTH_SHORT).show();
             }
             else {
-                if(!korisnikEntity.getRang().equals(RangConstants.coordinator)) {
-                    Button newEventButton = findViewById(R.id.btnAddSubgoal);
+                Button newEventButton = findViewById(R.id.btnAddSubgoal);
+                if(sifraKorisnikovogCeha == sifraTrazenogCeha) {
+                    if(!korisnikEntity.getRang().equals(RangConstants.coordinator)) {
+                        newEventButton.setVisibility(View.GONE);
+                    }
+                }
+                else {
                     newEventButton.setVisibility(View.GONE);
                 }
             }

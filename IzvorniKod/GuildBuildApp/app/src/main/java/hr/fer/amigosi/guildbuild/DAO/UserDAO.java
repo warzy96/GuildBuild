@@ -287,4 +287,16 @@ public class UserDAO {
             throw e;
         }
     }
+
+    public void removeRanksAndSifraCehaForGuild(int sifraCeha)  throws SQLException{
+        String query = "UPDATE korisnik SET korisnik.rang = "
+                + null + ", korisnik.sifCeh = " + 0 + " WHERE korisnik.sifCeh = " + sifraCeha;
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+        }
+        catch (SQLException e) {
+            throw e;
+        }
+    }
 }

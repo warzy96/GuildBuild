@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +106,13 @@ public class AddGoalActivity extends AppCompatActivity {
                     isSuccess = false;
                     z = ex.getMessage();
                 }
+                finally {
+                    try {
+                        DogadajDAO.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
             return z;
         }
@@ -139,6 +147,13 @@ public class AddGoalActivity extends AppCompatActivity {
             catch (Exception ex)
             {
                 z = ex.getMessage();
+            }
+            finally {
+                try {
+                    DogadajDAO.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
             return result;
         }

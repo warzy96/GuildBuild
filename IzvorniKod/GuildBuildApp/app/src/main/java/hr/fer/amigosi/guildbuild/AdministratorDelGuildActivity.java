@@ -25,8 +25,6 @@ import hr.fer.amigosi.guildbuild.entities.CehEntity;
 
 public class AdministratorDelGuildActivity extends AppCompatActivity {
 
-    //TODO: Kad se brise ceh, svim korisnicima u cehu maknuti rang i sifru ceha
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +56,7 @@ public class AdministratorDelGuildActivity extends AppCompatActivity {
             LinearLayout layout = findViewById(R.id.linLayout2);
             layout.removeAllViews();
             for(CehEntity ceh : cehEntities) {
-                TextView cehName = new TextView(getApplicationContext());
+                TextView cehName = new TextView(AdministratorDelGuildActivity.this);
                 Button removeButton = new Button(new ContextThemeWrapper(getApplicationContext(),R.style.button_style), null, R.style.button_style);
 
                 cehName.setText(ceh.getNaziv());
@@ -74,12 +72,12 @@ public class AdministratorDelGuildActivity extends AppCompatActivity {
                     removeCeh.execute(ceh);
                 });
 
-                LinearLayout mainLayout = new LinearLayout(getApplicationContext());
+                LinearLayout mainLayout = new LinearLayout(AdministratorDelGuildActivity.this);
                 mainLayout.setOrientation(LinearLayout.VERTICAL);
                 mainLayout.setMinimumWidth(layout.getWidth());
-                LinearLayout removeButtonLayout = new LinearLayout(getApplicationContext());
+                LinearLayout removeButtonLayout = new LinearLayout(AdministratorDelGuildActivity.this);
                 removeButtonLayout.setOrientation(LinearLayout.VERTICAL);
-                TextView v = new TextView(getApplicationContext());
+                TextView v = new TextView(AdministratorDelGuildActivity.this);
                 v.setText(" ");
                 v.setTextSize(3);
 
@@ -100,10 +98,12 @@ public class AdministratorDelGuildActivity extends AppCompatActivity {
             try {
                 CehDAO cehDAO = new CehDAO();
                 cehDAO.deleteGuild(cehEntity.getSifraCeha());
+                UserDAO userDAO = new UserDAO();
+                userDAO.removeRanksAndSifraCehaForGuild(cehEntity.getSifraCeha());
                 return "Removed successfully";
             } catch (Exception e) {
                 e.printStackTrace();
-                return "Removing user unsuccessful";
+                return "Removing guild unsuccessful";
             }
             finally {
                 try {

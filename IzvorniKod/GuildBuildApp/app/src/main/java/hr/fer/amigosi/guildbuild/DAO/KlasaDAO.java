@@ -85,4 +85,20 @@ public class KlasaDAO {
             throw e;
         }
     }
+
+    public int getSifraKlase(String className, int sifraIgre) throws SQLException{
+        String querry = "SELECT * FROM klasa WHERE naziv = '" +
+                className + "' AND sifIgre = " + sifraIgre;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(querry);
+            if(resultSet.next()) {
+                return resultSet.getInt("sifKlase");
+            }
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+        return 0;
+    }
 }
