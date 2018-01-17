@@ -111,9 +111,9 @@ public class CiljDAO {
         }
     }
 
-    public List<String> getAllGoalsForGuild(int sifraCeha) throws SQLException{
+    public List<String> getAllGoalsForGuild(String sifraCeha) throws SQLException{
         String querry = "SELECT cilj.nazivCilja FROM cilj,dogadaj WHERE cilj.sifDog = dogadaj.sifDog AND" +
-                " dogadaj.sifCeh = " + sifraCeha;
+                " dogadaj.sifCeh = " + Integer.parseInt(sifraCeha);
         List<String> result = new ArrayList<>();
 
         try {

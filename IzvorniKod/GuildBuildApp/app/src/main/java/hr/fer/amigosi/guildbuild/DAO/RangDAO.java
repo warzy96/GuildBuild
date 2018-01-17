@@ -22,8 +22,8 @@ public class RangDAO {
     }
 
     public void updateUserRank(String nickname, String rank) throws SQLException{
-        String querry = "UPDATE korisnik SET rang='" + rank + "'"
-                + " WHERE korisnik.nadimak='" +nickname+"'";
+        String querry = "UPDATE rang SET rang.rang='" + rank + "'"
+                + " WHERE rang.nadimak='" +nickname+"'";
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(querry);

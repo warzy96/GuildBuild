@@ -165,8 +165,9 @@ public class CehDAO {
         }
     }
 
-    public List<KorisnikEntity> getGuildMembers(int sifraCeha) throws SQLException{
-        String querry = "SELECT * FROM korisnik WHERE korisnik.sifCeh =" + sifraCeha;
+    public List<KorisnikEntity> getGuildMembers(String sifraCeha) throws SQLException{
+        String querry = "SELECT * FROM korisnik WHERE korisnik.sifCeh LIKE '%"
+                + sifraCeha + "%'";
         List<KorisnikEntity> result = new ArrayList<>();
 
         try {
@@ -179,7 +180,7 @@ public class CehDAO {
                 String lozinka =rs.getString("lozinka");
                 boolean statusR = rs.getBoolean("statusR");
                 String rang = rs.getString("rang");
-                int sifCeh = rs.getInt("sifCeh");
+                String sifCeh = rs.getString("sifCeh");
                 boolean statusP = rs.getBoolean("statusP");
                 String opis = rs.getString("opis");
                 boolean isAdmin = rs.getBoolean("isAdmin");
@@ -195,8 +196,9 @@ public class CehDAO {
         }
     }
 
-    public List<KorisnikEntity> getGuildMembersWithoutCurrentMember(int sifraCeha, String nickname) throws SQLException{
-        String querry = "SELECT * FROM korisnik WHERE korisnik.sifCeh =" + sifraCeha;
+    public List<KorisnikEntity> getGuildMembersWithoutCurrentMember(String sifraCeha, String nickname) throws SQLException{
+        String querry = "SELECT * FROM korisnik WHERE korisnik.sifCeh LIKE '%"
+                + sifraCeha + "%'";
         List<KorisnikEntity> result = new ArrayList<>();
 
         try {
@@ -210,7 +212,7 @@ public class CehDAO {
                 String lozinka =rs.getString("lozinka");
                 boolean statusR = rs.getBoolean("statusR");
                 String rang = rs.getString("rang");
-                int sifCeh = rs.getInt("sifCeh");
+                String sifCeh = rs.getString("sifCeh");
                 boolean statusP = rs.getBoolean("statusP");
                 String opis = rs.getString("opis");
                 boolean isAdmin = rs.getBoolean("isAdmin");
@@ -226,8 +228,9 @@ public class CehDAO {
         }
     }
 
-    public boolean checkIfMemExists(int sifraCeha) throws SQLException{
-        String querry = "SELECT * FROM korisnik WHERE korisnik.sifCeh =" + sifraCeha;
+    public boolean checkIfMemExists(String sifraCeha) throws SQLException{
+        String querry = "SELECT * FROM korisnik WHERE korisnik.sifCeh LIKE '%"
+                + sifraCeha + "%'";
 
         try {
             Statement statement = connection.createStatement();

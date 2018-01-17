@@ -1,5 +1,7 @@
 package hr.fer.amigosi.guildbuild.DAO;
 
+import android.content.Intent;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +30,7 @@ public class VoteDAO {
         connection.close();
     }
 
-    public List<VoteEntity> maxVotes(int sifraCeha) throws SQLException{
+    public List<VoteEntity> maxVotes(String sifraCeha) throws SQLException{
         int maxGlasova=0;
         String query = "SELECT MAX(brGlasova) AS glasovi FROM vote";
 
@@ -40,7 +42,7 @@ public class VoteDAO {
             while(resultSetMaxBrGlasova.next()){
                 maxGlasova = resultSetMaxBrGlasova.getInt("glasovi");
             }
-            String query1 = "SELECT * FROM vote WHERE sifCeh=" + sifraCeha + " AND brGlasova =" +maxGlasova;
+            String query1 = "SELECT * FROM vote WHERE sifCeh='" + sifraCeha + "' AND brGlasova =" +maxGlasova;
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query1);
             while(rs.next()){
@@ -56,11 +58,11 @@ public class VoteDAO {
             Statement statement2 = connection.createStatement();
             statement2.executeUpdate(query2);
 
-            String query3 = "UPDATE vote SET brGlasova=0 WHERE sifCeh = "+sifraCeha;
+            String query3 = "UPDATE vote SET brGlasova=0 WHERE sifCeh = "+ Integer.parseInt(sifraCeha);
             Statement statement3 = connection.createStatement();
             statement3.executeUpdate(query3);
 
-            String query4 = "UPDATE vote SET isGlasao=0 WHERE sifCeh = "+sifraCeha;
+            String query4 = "UPDATE vote SET isGlasao=0 WHERE sifCeh = "+Integer.parseInt(sifraCeha);
             Statement statement4 = connection.createStatement();
             statement4.executeUpdate(query4);
 
@@ -123,7 +125,7 @@ public class VoteDAO {
         }
     }
 
-    public void insertAllCoordinatorsFromGuildIntoVote(int sifraCeha) throws SQLException, Exception {
+    public void insertAllCoordinatorsFromGuildIntoVote(String sifraCeha) throws SQLException, Exception {
 
         try{
             UserDAO userDAO = new UserDAO();
@@ -158,8 +160,8 @@ public class VoteDAO {
 
     }
 
-    public List<VoteEntity> loadAllCoordinatorsForGivenGuild(int sifraCeha) throws SQLException{
-        String query = "SELECT * FROM vote WHERE sifCeh = "+sifraCeha;
+    public List<VoteEntity> loadAllCoordinatorsForGivenGuild(String sifraCeha) throws SQLException{
+        String query = "SELECT * FROM vote WHERE sifCeh = "+Integer.parseInt(sifraCeha);
         List<VoteEntity> result = new ArrayList<>();
         try{
             Statement statement = connection.createStatement();
@@ -180,8 +182,8 @@ public class VoteDAO {
         }
     }
 
-    public void votingFinished(int sifraCeha) throws SQLException{
-        String query = "DELETE FROM vote WHERE vote.sifCeh ="+sifraCeha;
+    public void votingFinished(String sifraCeha) throws SQLException{
+        String query = "DELETE FROM vote WHERE vote.sifCeh ="+Integer.parseInt(sifraCeha);
 
         try{
             Statement statement = connection.createStatement();

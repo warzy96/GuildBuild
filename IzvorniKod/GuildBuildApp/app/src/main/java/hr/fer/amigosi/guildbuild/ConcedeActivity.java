@@ -24,6 +24,7 @@ import java.util.List;
 import hr.fer.amigosi.guildbuild.AdministratorAddGameActivity;
 import hr.fer.amigosi.guildbuild.AdministratorProfileActivity;
 import hr.fer.amigosi.guildbuild.DAO.CehDAO;
+import hr.fer.amigosi.guildbuild.DAO.RangDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.DatabaseConnection;
 import hr.fer.amigosi.guildbuild.R;
@@ -62,9 +63,9 @@ public class ConcedeActivity extends AppCompatActivity {
             String result = "";
             String newLeaderNickname = strings[0];
             try {
-                UserDAO userDAO = new UserDAO();
-                userDAO.updateUserRank(nickname, RangConstants.coordinator);
-                userDAO.updateUserRank(newLeaderNickname, RangConstants.leader);
+                RangDAO rangDAO = new RangDAO();
+                rangDAO.updateUserRank(nickname, RangConstants.coordinator);
+                rangDAO.updateUserRank(newLeaderNickname, RangConstants.leader);
                 result = "Success";
                 success = true;
             }
@@ -73,7 +74,7 @@ public class ConcedeActivity extends AppCompatActivity {
             }
             finally {
                 try {
-                    UserDAO.close();
+                    RangDAO.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
