@@ -1,11 +1,19 @@
 #prvi sastanak 17.10.2017.
+Prisutni: Filip Kerman, Matija Krivošić, Kruno Lapat, Karlo Poljanec, Ivan Premužić, Ivan Varga
 Upoznavanje s zadatkom, definiranje ciljeva za prvu predaju.
 
 #drugi sastanak 23.10.2017.
+Prisutni: Filip Kerman, Matija Krivošić, Kruno Lapat, Karlo Poljanec, Ivan Premužić, Ivan Varga
 Podjela zadataka po članovima grupe. Rješavanje formalnih nejasnoća.
 
 #treći sastanak 6.11.2017.
+Prisutni: Karlo Poljanec, Ivan Varga
 Revizija trenutne dokumentacije, promjena pogrešaka.
 
 #četvrti sastanak 13.11.2017.
+Prisutni: Karlo Poljanec, Ivan Varga
 Revizija trenutne dokumentacije, promjena pogrešaka.
+
+#peti sastanak 15.1.2018
+Prisutni: Filip Kerman, Karlo Poljanec, Ivan Premužić, Ivan Varga
+Revizija trenutne implementacije, promjena grešaka i dogovaranje konačne verzije implementacije i dokumentacije.
