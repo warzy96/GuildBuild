@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ public class UserProfileActivity extends AppCompatActivity {
     //private LinearLayout characterList;
     private Button myCharsBtn;
     private Button myEventsBtn;
+    private String userWatchingNickname;
 
 
     @Override
@@ -51,6 +53,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         nickNameStr = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
+        userWatchingNickname = intent.getStringExtra(GuildMembersActivity.NADIMAK_KORISNIKA_KOJI_POKRECE_ACTIVITY);
+
 
         nickTextView = (TextView) findViewById(R.id.Nick);
         nickTextView.setText(nickNameStr);
@@ -59,6 +63,17 @@ public class UserProfileActivity extends AppCompatActivity {
         //characterList = findViewById(R.id.characterList);
         myCharsBtn=(Button) findViewById(R.id.myCharactersBtn);
         myEventsBtn=(Button) findViewById(R.id.myEventsButton);
+
+        if(!nickNameStr.equals(userWatchingNickname)) {
+            Button editProfile = findViewById(R.id.EditProfile);
+            ImageButton imageButton = findViewById(R.id.imageButton);
+
+            myCharsBtn.setVisibility(View.GONE);
+            myEventsBtn.setVisibility(View.GONE);
+            editProfile.setVisibility(View.GONE);
+            imageButton.setVisibility(View.GONE);
+        }
+
 
         myCharsBtn.setOnClickListener(new View.OnClickListener() {
 

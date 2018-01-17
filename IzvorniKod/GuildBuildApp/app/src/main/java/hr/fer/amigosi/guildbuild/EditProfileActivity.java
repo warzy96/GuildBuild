@@ -109,6 +109,11 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private class DeleteUserProfile extends AsyncTask<Void, Void, String> {
         private String message;
         private boolean success = false;

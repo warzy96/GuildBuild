@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
 public class GuildMembersActivity extends AppCompatActivity {
 
+    public static final String NADIMAK_KORISNIKA_KOJI_POKRECE_ACTIVITY = "nadimakKorisnika";
     private TextView imeCeha;
     private LinearLayout layout1;
     private int sifraCeha;
@@ -129,6 +131,12 @@ public class GuildMembersActivity extends AppCompatActivity {
                 textView.setText(korisnikEntity.getNadimak()+ ", " + korisnikEntity.getRang());
                 textView.setTextSize(35);
                 textView.setTextColor(Color.WHITE);
+                textView.setOnClickListener(view -> {
+                    Intent intent = new Intent(GuildMembersActivity.this, UserProfileActivity.class);
+                    intent.putExtra(MainActivity.EXTRA_MESSAGE1, korisnikEntity.getNadimak());
+                    intent.putExtra(NADIMAK_KORISNIKA_KOJI_POKRECE_ACTIVITY, nadimak);
+                    startActivity(intent);
+                });
                 layout1.addView(textView);
             }
         }

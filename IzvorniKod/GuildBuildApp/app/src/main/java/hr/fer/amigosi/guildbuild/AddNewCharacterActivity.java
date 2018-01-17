@@ -81,6 +81,11 @@ public class AddNewCharacterActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private class FillSpinnerWithGames extends AsyncTask<String,String,List<String>>{
         @Override
         protected void onPreExecute()
