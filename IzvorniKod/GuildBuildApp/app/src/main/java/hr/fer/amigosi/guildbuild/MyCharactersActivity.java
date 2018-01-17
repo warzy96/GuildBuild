@@ -19,7 +19,6 @@ import hr.fer.amigosi.guildbuild.entities.LikEntity;
 public class MyCharactersActivity extends AppCompatActivity {
     private String nickName;
     private LinearLayout characterList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +26,15 @@ public class MyCharactersActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         nickName = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
+        String userWatching;
+        userWatching = intent.getStringExtra(GuildMembersActivity.NADIMAK_KORISNIKA_KOJI_POKRECE_ACTIVITY);
 
         characterList = (LinearLayout) findViewById(R.id.characterList);
 
+        if(!userWatching.equals(nickName)) {
+            TextView myCharactersText = findViewById(R.id.myCharactersTxt);
+            myCharactersText.setText(nickName + "'s characters");
+        }
     }
 
     @Override

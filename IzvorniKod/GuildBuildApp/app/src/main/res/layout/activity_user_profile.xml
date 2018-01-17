@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="EditProfile"
-                android:text="My events"
+                android:text="My Events"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
 

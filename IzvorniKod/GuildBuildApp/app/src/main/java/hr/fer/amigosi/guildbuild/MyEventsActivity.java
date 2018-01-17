@@ -25,11 +25,16 @@ public class MyEventsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_events);
 
+        String userWatching;
         Intent intent = getIntent();
         nickName = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
-
+        userWatching = intent.getStringExtra(GuildMembersActivity.NADIMAK_KORISNIKA_KOJI_POKRECE_ACTIVITY);
         eventsList = (LinearLayout) findViewById(R.id.eventsList);
 
+        if(!userWatching.equals(nickName)) {
+            TextView myEventsTxt = findViewById(R.id.myEventsTxt);
+            myEventsTxt.setText(nickName + "'s events");
+        }
     }
 
     @Override

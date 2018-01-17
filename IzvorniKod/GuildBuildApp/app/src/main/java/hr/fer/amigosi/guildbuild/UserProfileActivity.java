@@ -68,8 +68,8 @@ public class UserProfileActivity extends AppCompatActivity {
             Button editProfile = findViewById(R.id.EditProfile);
             ImageButton imageButton = findViewById(R.id.imageButton);
 
-            myCharsBtn.setVisibility(View.GONE);
-            myEventsBtn.setVisibility(View.GONE);
+            myCharsBtn.setText(nickNameStr + "'s characters");
+            myEventsBtn.setText(nickNameStr + "'s events");
             editProfile.setVisibility(View.GONE);
             imageButton.setVisibility(View.GONE);
         }
@@ -81,6 +81,7 @@ public class UserProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent myCharsIntent = new Intent(UserProfileActivity.this, MyCharactersActivity.class);
                 myCharsIntent.putExtra(MainActivity.EXTRA_MESSAGE1, nickNameStr);
+                myCharsIntent.putExtra(GuildMembersActivity.NADIMAK_KORISNIKA_KOJI_POKRECE_ACTIVITY, userWatchingNickname);
                 startActivity(myCharsIntent);
             }
         });
@@ -88,6 +89,7 @@ public class UserProfileActivity extends AppCompatActivity {
         myEventsBtn.setOnClickListener(View -> {
             Intent myEventsIntent = new Intent(UserProfileActivity.this, MyEventsActivity.class);
             myEventsIntent.putExtra(MainActivity.EXTRA_MESSAGE1, nickNameStr);
+            myEventsIntent.putExtra(GuildMembersActivity.NADIMAK_KORISNIKA_KOJI_POKRECE_ACTIVITY, userWatchingNickname);
             startActivity(myEventsIntent);
         });
 
