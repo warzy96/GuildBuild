@@ -98,7 +98,8 @@
         <activity android:name=".VoteActivity" />
         <activity android:name=".EventsListActivity" />
         <activity android:name=".GoalsListActivity" />
-        <activity android:name=".SubgoalsListActivity"></activity>
+        <activity android:name=".SubgoalsListActivity" />
+        <activity android:name=".MyEventsActivity"></activity>
     </application>
 
 </manifest>

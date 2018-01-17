@@ -41,6 +41,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private String nickNameStr;
     //private LinearLayout characterList;
     private Button myCharsBtn;
+    private Button myEventsBtn;
 
 
     @Override
@@ -57,6 +58,7 @@ public class UserProfileActivity extends AppCompatActivity {
         aboutMeTv = (TextView) findViewById(R.id.aboutMe);
         //characterList = findViewById(R.id.characterList);
         myCharsBtn=(Button) findViewById(R.id.myCharactersBtn);
+        myEventsBtn=(Button) findViewById(R.id.myEventsButton);
 
         myCharsBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -68,6 +70,11 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
+        myEventsBtn.setOnClickListener(View -> {
+            Intent myEventsIntent = new Intent(UserProfileActivity.this, MyEventsActivity.class);
+            myEventsIntent.putExtra(MainActivity.EXTRA_MESSAGE1, nickNameStr);
+            startActivity(myEventsIntent);
+        });
 
         ImageView mIcon = findViewById(R.id.ivProfile);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.mrpresident);                  //kasnije promijenit

@@ -266,13 +266,15 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 Toast.makeText(GuildDetailsActivity.this, result, Toast.LENGTH_SHORT).show();
             }
             else {
-                if(korisnikEntity.getRang() == null) {
-                    Button requestsButton = findViewById(R.id.JoinRequestsButton);
-                    requestsButton.setVisibility(View.GONE);
-                } else if (!korisnikEntity.getRang().equals(RangConstants.leader)
+                Button requestsButton = findViewById(R.id.JoinRequestsButton);
+
+                if(sifraKorisnikovogCeha==sifraTrazenogCeha) {
+                    if (!korisnikEntity.getRang().equals(RangConstants.leader)
                             && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
-                        Button requestsButton = findViewById(R.id.JoinRequestsButton);
                         requestsButton.setVisibility(View.GONE);
+                    }
+                }else{
+                    requestsButton.setVisibility(View.GONE);
                 }
             }
 
@@ -302,12 +304,14 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 Toast.makeText(GuildDetailsActivity.this, result, Toast.LENGTH_SHORT).show();
             }
             else {
-                if(korisnikEntity.getRang() == null) {
-                    Button newEventButton = findViewById(R.id.btnAddEvent);
-                    newEventButton.setVisibility(View.GONE);
-                }else if (!korisnikEntity.getRang().equals(RangConstants.leader)
-                        && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
-                    Button newEventButton = findViewById(R.id.btnAddEvent);
+                Button newEventButton = findViewById(R.id.btnAddEvent);
+
+                if(sifraKorisnikovogCeha==sifraTrazenogCeha) {
+                    if (!korisnikEntity.getRang().equals(RangConstants.leader)
+                            && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
+                        newEventButton.setVisibility(View.GONE);
+                    }
+                }else{
                     newEventButton.setVisibility(View.GONE);
                 }
 
@@ -339,12 +343,15 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 Toast.makeText(GuildDetailsActivity.this, result, Toast.LENGTH_SHORT).show();
             }
             else {
-                if(korisnikEntity.getRang() == null) {
-                    Button newEventButton = findViewById(R.id.btnAddGoal);
-                    newEventButton.setVisibility(View.GONE);
-                }else if (!korisnikEntity.getRang().equals(RangConstants.leader)) {
-                        Button newEventButton = findViewById(R.id.btnAddGoal);
-                        newEventButton.setVisibility(View.GONE);
+                Button newGoalButton = findViewById(R.id.btnAddGoal);
+
+                if(sifraKorisnikovogCeha==sifraTrazenogCeha) {
+                    if (!korisnikEntity.getRang().equals(RangConstants.leader)
+                            && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
+                        newGoalButton.setVisibility(View.GONE);
+                    }
+                }else{
+                    newGoalButton.setVisibility(View.GONE);
                 }
             }
 
@@ -374,12 +381,15 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 Toast.makeText(GuildDetailsActivity.this, result, Toast.LENGTH_SHORT).show();
             }
             else {
-                if(korisnikEntity.getRang() == null) {
-                    Button newEventButton = findViewById(R.id.btnAddSubgoal);
-                    newEventButton.setVisibility(View.GONE);
-                }else if (!korisnikEntity.getRang().equals(RangConstants.coordinator)) {
-                    Button newEventButton = findViewById(R.id.btnAddSubgoal);
-                    newEventButton.setVisibility(View.GONE);
+                Button newSubgoalButton = findViewById(R.id.btnAddSubgoal);
+
+                if(sifraKorisnikovogCeha==sifraTrazenogCeha) {
+                    if (!korisnikEntity.getRang().equals(RangConstants.leader)
+                            && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
+                        newSubgoalButton.setVisibility(View.GONE);
+                    }
+                }else{
+                    newSubgoalButton.setVisibility(View.GONE);
                 }
 
             }
@@ -403,7 +413,6 @@ public class GuildDetailsActivity extends AppCompatActivity {
             btnApply.setVisibility(View.GONE);
         }else{
             btnLeaveGuild.setVisibility(View.GONE);
-            btnSeeEvents.setVisibility(View.GONE);
         }
         FillNameAndDesc fillNameAndDesc = new FillNameAndDesc();
         fillNameAndDesc.execute("");

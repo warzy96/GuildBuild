@@ -30,11 +30,14 @@ public class MyCharactersActivity extends AppCompatActivity {
 
         characterList = (LinearLayout) findViewById(R.id.characterList);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         PopulateCharacterList populateCharacterList = new PopulateCharacterList();
         populateCharacterList.execute();
     }
-
-
 
     private class PopulateCharacterList extends AsyncTask<Void,Void, List<LikEntity>> {
 

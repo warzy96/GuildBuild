@@ -178,4 +178,26 @@ public class DogadajDAO {
             throw e;
         }
     }
+
+    public DogadajEntity getEvent(int sifraDogadaja) throws  SQLException{
+        String querry = "SELECT * FROM dogadaj WHERE dogadaj.sifDog =" + sifraDogadaja;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(querry);
+
+            rs.next();
+            int sifDog = rs.getInt("sifDog");
+            String nazivDog = rs.getString("nazivDog");
+            int sifCeh = rs.getInt("sifCeh");
+            boolean ispunjen = rs.getBoolean("ispunjen");
+            boolean vidljiv = rs.getBoolean("vidljiv");
+
+            DogadajEntity dogadaj = new DogadajEntity(sifDog, nazivDog, sifCeh, ispunjen, vidljiv);
+            return dogadaj;
+        }
+        catch(SQLException e)
+        {
+            throw e;
+        }
+    }
 }

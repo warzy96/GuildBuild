@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuild.DAO.DogadajDAO;
+import hr.fer.amigosi.guildbuild.DAO.PrisustvoDAO;
+import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.entities.DogadajEntity;
+import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
 public class EventsListActivity extends AppCompatActivity {
 
@@ -23,6 +28,7 @@ public class EventsListActivity extends AppCompatActivity {
     private int sifraKorisnikovogCeha;
     private int sifraTrazenogCeha;
     private String nadimak;
+    private Boolean notInGuild=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,7 @@ public class EventsListActivity extends AppCompatActivity {
                     dogadaji = dogadajDAO.getAllEventsForGuild(sifraTrazenogCeha);
                 }else{
                     dogadaji = dogadajDAO.getVisibleEventsForGuild(sifraTrazenogCeha);
+                    notInGuild=true;
                 }
             }
             catch(Exception e) {
@@ -80,7 +87,9 @@ public class EventsListActivity extends AppCompatActivity {
                 LinearLayout linearLayout = findViewById(R.id.EventLayout);
                 linearLayout.removeAllViews();
                 for(DogadajEntity dogadajEntity : dogadajEntities) {
+                    LinearLayout eventLayout = new LinearLayout(EventsListActivity.this);
                     TextView eventName = new TextView(EventsListActivity.this);
+
                     if(dogadajEntity.isIspunjenost()){
                         eventName.setTextColor(Color.GREEN);
                     }else{
@@ -89,6 +98,9 @@ public class EventsListActivity extends AppCompatActivity {
                     eventName.setText(dogadajEntity.getNazivDogadaja());
                     eventName.setTextSize(35);
 
+                    eventLayout.setOrientation(LinearLayout.VERTICAL);
+                    eventLayout.addView(eventName);
+
                     eventName.setOnClickListener(View -> {
                         Intent intent = new Intent(EventsListActivity.this, GoalsListActivity.class);
                         intent.putExtra(EventsListActivity.SIFRA_DOGADAJA,dogadajEntity.getSifraDogadaja());
@@ -96,11 +108,113 @@ public class EventsListActivity extends AppCompatActivity {
                         startActivity(intent);
                     });
 
-                    linearLayout.addView(eventName);
+                    if(!notInGuild) {
+
+                        Button joinButton = new Button(new ContextThemeWrapper(EventsListActivity.this, R.style.button_style), null, R.style.button_style);
+                        Button visibleButton = new Button(new ContextThemeWrapper(EventsListActivity.this, R.style.button_style), null, R.style.button_style);
+
+                        joinButton.setText("Join");
+                        joinButton.setTextSize(25);
+                        joinButton.setTextColor(Color.WHITE);
+
+                        visibleButton.setText("Set visible");
+                        visibleButton.setTextSize(25);
+                        visibleButton.setTextColor(Color.WHITE);
+
+
+                        eventLayout.addView(joinButton);
+                        eventLayout.addView(visibleButton);
+
+                        visibleButton.setOnClickListener(View -> {
+                            SetVisible setVisible = new SetVisible();
+                            setVisible.execute(dogadajEntity.getSifraDogadaja());
+                        });
+
+                        joinButton.setOnClickListener(View -> {
+                            JoinToEvent joinToEvent = new JoinToEvent();
+                            joinToEvent.execute(dogadajEntity.getSifraDogadaja());
+                        });
+
+                    }
+                    linearLayout.addView(eventLayout);
                 }
             }
         }
     }
+
+    private class JoinToEvent extends AsyncTask<Integer,Void,String>{
+
+
+
+        @Override
+        protected String doInBackground(Integer... integers) {
+
+            try{
+                PrisustvoDAO prisustvoDAO= new PrisustvoDAO();
+                if(!prisustvoDAO.checkEventJoining(integers[0].intValue(),nadimak)) {
+                    prisustvoDAO.insertPrisustvo(integers[0].intValue(), nadimak);
+                }else{
+                    return "You already joined this event!";
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            try{
+                PrisustvoDAO.close();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return "Joining successfull";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(EventsListActivity.this, s,
+                    Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    private class SetVisible extends AsyncTask<Integer,Void,String>{
+
+
+
+        @Override
+        protected String doInBackground(Integer... integers) {
+
+            try{
+                UserDAO userDao = new UserDAO();
+                KorisnikEntity korisnikEntity = userDao.getUser(nadimak);
+                if(korisnikEntity.getRang().equals(RangConstants.member)){
+                    return "No authorities";
+                }else{
+                    DogadajDAO dogadajDAO = new DogadajDAO();
+                    DogadajEntity dogadajEntity = dogadajDAO.getEvent(integers[0].intValue());
+                    dogadajEntity.setVidljivost(true);
+                    dogadajDAO.updateEvent(dogadajEntity);
+                    return "Event now visible";
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            try{
+                PrisustvoDAO.close();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(EventsListActivity.this, s,
+                    Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
