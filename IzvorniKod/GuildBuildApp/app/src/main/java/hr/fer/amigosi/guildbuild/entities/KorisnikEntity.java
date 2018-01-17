@@ -11,7 +11,7 @@ public class KorisnikEntity {
     private String lozinka;
     private boolean statusRegistracije;
     private String rang;
-    private int sifraCeha;
+    private String sifraCeha;
     private boolean statusPrijave;
     private String opisKorisnika;
     private boolean isAdmin;
@@ -22,7 +22,7 @@ public class KorisnikEntity {
 
 
     public KorisnikEntity(String email, String nadimak, String lozinka, boolean statusRegistracije, String rang,
-                          int sifraCeha, boolean statusPrijave, String opisKorisnika, boolean isAdmin) {
+                          String sifraCeha, boolean statusPrijave, String opisKorisnika, boolean isAdmin) {
         super();
         this.email = email;
         this.nadimak = nadimak;
@@ -77,11 +77,11 @@ public class KorisnikEntity {
         this.rang = rang;
     }
 
-    public int getSifraCeha() {
+    public String getSifraCeha() {
         return sifraCeha;
     }
 
-    public void setSifraCeha(int sifraCeha) {
+    public void setSifraCeha(String sifraCeha) {
         this.sifraCeha = sifraCeha;
     }
 

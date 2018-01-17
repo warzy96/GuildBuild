@@ -33,7 +33,7 @@ public class UserDAO {
                 String lozinka =rs.getString("lozinka");
                 boolean statusR = rs.getBoolean("statusR");
                 String rang = rs.getString("rang");
-                int sifCeh = rs.getInt("sifCeh");
+                String sifCeh = rs.getString("sifCeh");
                 boolean statusP = rs.getBoolean("statusP");
                 String opis = rs.getString("opis");
                 boolean isAdmin = rs.getBoolean("isAdmin");
@@ -59,7 +59,7 @@ public class UserDAO {
                 String lozinka =rs.getString("lozinka");
                 boolean statusR = rs.getBoolean("statusR");
                 String rang = rs.getString("rang");
-                int sifCeh = rs.getInt("sifCeh");
+                String sifCeh = rs.getString("sifCeh");
                 boolean statusP = rs.getBoolean("statusP");
                 String opis = rs.getString("opis");
                 boolean isAdmin = rs.getBoolean("isAdmin");
@@ -109,8 +109,8 @@ public class UserDAO {
                 + korisnik.getEmail() + "', lozinka = '"
                 + korisnik.getLozinka() + "', statusR ="
                 + korisnik.isStatusRegistracije() + ", rang = '"
-                + korisnik.getRang() + "', sifCeh = "
-                + korisnik.getSifraCeha() + ", statusP = "
+                + korisnik.getRang() + "', sifCeh = '"
+                + korisnik.getSifraCeha() + "', statusP = "
                 + korisnik.isStatusPrijave() + ", opis = '"
                 + korisnik.getOpisKorisnika() + "', isAdmin = "
                 + korisnik.isAdmin()
@@ -138,7 +138,7 @@ public class UserDAO {
                 String lozinka =rs.getString("lozinka");
                 boolean statusR = rs.getBoolean("statusR");
                 String rang = rs.getString("rang");
-                int sifCeh = rs.getInt("sifCeh");
+                String sifCeh = rs.getString("sifCeh");
                 boolean statusP = rs.getBoolean("statusP");
                 String opis = rs.getString("opis");
                 boolean isAdmin = rs.getBoolean("isAdmin");
@@ -167,7 +167,7 @@ public class UserDAO {
                 String lozinka =rs.getString("lozinka");
                 boolean statusR = rs.getBoolean("statusR");
                 String rang = rs.getString("rang");
-                int sifCeh = rs.getInt("sifCeh");
+                String sifCeh = rs.getString("sifCeh");
                 boolean statusP = rs.getBoolean("statusP");
                 String opis = rs.getString("opis");
                 boolean isAdmin = rs.getBoolean("isAdmin");
@@ -196,21 +196,10 @@ public class UserDAO {
         }
     }
 
-    public void updateUserGuild(String nickname, int sifraCeha) throws SQLException {
+    public void updateUserGuild(String nickname, String sifraCeha) throws SQLException {
         String querry = "UPDATE korisnik SET "
-                + "sifCeh =" + sifraCeha
-                + " WHERE korisnik.nadimak = '" + nickname + "'";
-        try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(querry);
-        }
-        catch(SQLException e) {
-            throw e;
-        }
-    }
-    public void updateUserRank(String nickname, String rank) throws SQLException{
-        String querry = "UPDATE korisnik SET rang='" + rank + "'"
-                + " WHERE korisnik.nadimak='" +nickname+"'";
+                + "sifCeh ='" + sifraCeha
+                + "' WHERE korisnik.nadimak = '" + nickname + "'";
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(querry);
@@ -220,13 +209,14 @@ public class UserDAO {
         }
     }
 
-    public boolean checkIfGuildHasALeader(int sifraCeha) throws SQLException{
 
-        if(sifraCeha == 0){
+    public boolean checkIfGuildHasALeader(String sifraCeha) throws SQLException{
+
+        if(sifraCeha == null){
             return true;
         }
-        String query = "SELECT * FROM korisnik WHERE korisnik.sifCeh ="+sifraCeha
-                + " AND korisnik.rang = 'leader'";
+        String query = "SELECT * FROM korisnik NATURAL JOIN rang WHERE korisnik.sifCeh LIKE '%"+sifraCeha
+                + "%' AND rang.rang = 'leader'";
 
         try{
             Statement statement = connection.createStatement();
@@ -245,8 +235,8 @@ public class UserDAO {
     }
 
 
-    public List<KorisnikEntity> loadAllCoordinators(int sifraCeha) throws SQLException{
-        String query = "SELECT * FROM korisnik WHERE korisnik.sifCeh = " + sifraCeha + " AND korisnik.rang = '"
+    public List<KorisnikEntity> loadAllCoordinators(String sifraCeha) throws SQLException{
+        String query = "SELECT * FROM korisnik NATURAL JOIN rang WHERE korisnik.sifCeh LIKE '%" + sifraCeha + "%' AND rang.rang = '"
                 + RangConstants.coordinator + "'";
         List<KorisnikEntity> result = new ArrayList<>();
 
@@ -260,7 +250,7 @@ public class UserDAO {
                     String lozinka = rs.getString("lozinka");
                     boolean statusR = rs.getBoolean("statusR");
                     String rang = rs.getString("rang");
-                    int sifCeh = rs.getInt("sifCeh");
+                    String sifCeh = rs.getString("sifCeh");
                     boolean statusP = rs.getBoolean("statusP");
                     String opis = rs.getString("opis");
                     boolean isAdmin = rs.getBoolean("isAdmin");
@@ -276,24 +266,17 @@ public class UserDAO {
 
     }
 
-    public void setLeader(String nickname) throws SQLException{
-        String query = "UPDATE korisnik SET korisnik.rang = '"
-                + RangConstants.leader + "' WHERE korisnik.nadimak = '" + nickname +"'";
 
-        try{
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(query);
-        }catch(SQLException e){
-            throw e;
-        }
-    }
 
-    public void removeRanksAndSifraCehaForGuild(int sifraCeha)  throws SQLException{
-        String query = "UPDATE korisnik SET korisnik.rang = "
-                + null + ", korisnik.sifCeh = " + 0 + " WHERE korisnik.sifCeh = " + sifraCeha;
+    public void removeRanksAndSifraCehaForGuild(String sifraCeha)  throws SQLException{
+        String query = "UPDATE korisnik SET korisnik.sifCeh = " + null + " WHERE korisnik.sifCeh LIKE '%"
+                + sifraCeha + "%'";
+        String query2 = "DELETE * FROM rang WHERE rang.sifCeh LIKE '%"
+                + sifraCeha + "%'";
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(query);
+            statement.executeUpdate(query2);
         }
         catch (SQLException e) {
             throw e;
