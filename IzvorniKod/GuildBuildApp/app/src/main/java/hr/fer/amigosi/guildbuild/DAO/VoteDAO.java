@@ -32,7 +32,7 @@ public class VoteDAO {
 
     public List<VoteEntity> maxVotes(String sifraCeha) throws SQLException{
         int maxGlasova=0;
-        String query = "SELECT MAX(brGlasova) AS glasovi FROM vote";
+        String query = "SELECT MAX(brGlasova) AS glasovi FROM vote WHERE sifCeh = '" + sifraCeha + "'" ;
 
 
         List<VoteEntity> result = new ArrayList<>();
@@ -54,11 +54,13 @@ public class VoteDAO {
                 result.add(voteEntity);
 
             }
-            String query2 = "DELETE FROM vote WHERE vote.brGlasova < "+maxGlasova;
+
+
+            String query2 = "UPDATE vote SET brGlasova = -1 WHERE vote.brGlasova < "+maxGlasova + " AND sifCeh = '" + sifraCeha +"'";
             Statement statement2 = connection.createStatement();
             statement2.executeUpdate(query2);
 
-            String query3 = "UPDATE vote SET brGlasova=0 WHERE sifCeh = "+ Integer.parseInt(sifraCeha);
+            String query3 = "UPDATE vote SET brGlasova=0 WHERE sifCeh = "+ Integer.parseInt(sifraCeha) + " AND brGlasova = " + maxGlasova;
             Statement statement3 = connection.createStatement();
             statement3.executeUpdate(query3);
 
@@ -72,9 +74,9 @@ public class VoteDAO {
             throw e;
         }
     }
-    public boolean isFinished() throws SQLException{
+    public boolean isFinished(String sifraCeha) throws SQLException{
         boolean flag=false;
-        String query = "SELECT * FROM vote WHERE isGlasao=0";
+        String query = "SELECT * FROM vote WHERE isGlasao=0 AND sifCeh = '" + sifraCeha + "'";
         try{
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
