@@ -126,10 +126,11 @@ public class EditProfileActivity extends AppCompatActivity {
                 UserDAO userDAO = new UserDAO();
 
                 KorisnikEntity korisnikEntity = userDAO.getUser(nickname);
-                if(korisnikEntity.getRang().equals(RangConstants.leader)){
+                //TODO: Solve rang problem
+                /*if(korisnikEntity.getRang().equals(RangConstants.leader)){
                     VoteDAO voteDAO = new VoteDAO();
                     voteDAO.insertAllCoordinatorsFromGuildIntoVote(korisnikEntity.getSifraCeha());
-                }
+                }*/
 
                 userDAO.deleteUser(nickname);
                 message = "Delete successful";

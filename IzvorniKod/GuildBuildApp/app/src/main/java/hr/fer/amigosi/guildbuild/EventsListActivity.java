@@ -25,8 +25,8 @@ public class EventsListActivity extends AppCompatActivity {
 
     public static final String SIFRA_DOGADAJA = "sifra_dogadaja";
 
-    private int sifraKorisnikovogCeha;
-    private int sifraTrazenogCeha;
+    private Integer sifraKorisnikovogCeha;
+    private Integer sifraTrazenogCeha;
     private String nadimak;
     private Boolean notInGuild=false;
 
@@ -57,9 +57,9 @@ public class EventsListActivity extends AppCompatActivity {
             try {
                 DogadajDAO dogadajDAO = new DogadajDAO();
                 if(sifraTrazenogCeha==sifraKorisnikovogCeha) {
-                    dogadaji = dogadajDAO.getAllEventsForGuild(sifraTrazenogCeha);
+                    dogadaji = dogadajDAO.getAllEventsForGuild(sifraTrazenogCeha.toString());
                 }else{
-                    dogadaji = dogadajDAO.getVisibleEventsForGuild(sifraTrazenogCeha);
+                    dogadaji = dogadajDAO.getVisibleEventsForGuild(sifraTrazenogCeha.toString());
                     notInGuild=true;
                 }
             }
@@ -186,7 +186,7 @@ public class EventsListActivity extends AppCompatActivity {
             try{
                 UserDAO userDao = new UserDAO();
                 KorisnikEntity korisnikEntity = userDao.getUser(nadimak);
-                if(korisnikEntity.getRang().equals(RangConstants.member)){
+                /*if(korisnikEntity.getRang().equals(RangConstants.member)){
                     return "No authorities";
                 }else{
                     DogadajDAO dogadajDAO = new DogadajDAO();
@@ -194,7 +194,7 @@ public class EventsListActivity extends AppCompatActivity {
                     dogadajEntity.setVidljivost(true);
                     dogadajDAO.updateEvent(dogadajEntity);
                     return "Event now visible";
-                }
+                }*/
             }catch (Exception e){
                 e.printStackTrace();
             }

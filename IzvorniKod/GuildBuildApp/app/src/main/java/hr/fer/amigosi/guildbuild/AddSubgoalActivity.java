@@ -28,7 +28,7 @@ public class AddSubgoalActivity extends AppCompatActivity {
     private EditText subgoalName;
     private Button btnAddSubgoal;
 
-    private int sifraKorisnikovogCeha;
+    private String sifraKorisnikovogCeha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class AddSubgoalActivity extends AppCompatActivity {
         subgoalName = (EditText) findViewById(R.id.subgoalToAdd);
 
         Intent pastIntent = getIntent();
-        sifraKorisnikovogCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2,0);
+        sifraKorisnikovogCeha = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE2);
 
         btnAddSubgoal.setOnClickListener(new View.OnClickListener()
         {

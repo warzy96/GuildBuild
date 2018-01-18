@@ -25,8 +25,8 @@ public class GuildMembersActivity extends AppCompatActivity {
     public static final String NADIMAK_KORISNIKA_KOJI_POKRECE_ACTIVITY = "nadimakKorisnika";
     private TextView imeCeha;
     private LinearLayout layout1;
-    private int sifraCeha;
-    private int sifraTrazenogCeha;
+    private Integer sifraCeha;
+    private Integer sifraTrazenogCeha;
     private String nadimak;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +87,7 @@ public class GuildMembersActivity extends AppCompatActivity {
         protected List<KorisnikEntity> doInBackground(String... strings) {
             try {
                 CehDAO cehDAO = new CehDAO();
-                List<KorisnikEntity> korisnikEntityList = cehDAO.getGuildMembers(sifraTrazenogCeha);
+                List<KorisnikEntity> korisnikEntityList = cehDAO.getGuildMembers(sifraTrazenogCeha.toString());
                 return korisnikEntityList;
             } catch (Exception e) {
                 e.printStackTrace();

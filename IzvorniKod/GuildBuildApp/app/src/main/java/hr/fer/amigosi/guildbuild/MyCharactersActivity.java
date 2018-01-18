@@ -31,7 +31,7 @@ public class MyCharactersActivity extends AppCompatActivity {
 
         characterList = (LinearLayout) findViewById(R.id.characterList);
 
-        if(!userWatching.equals(nickName)) {
+        if(!nickName.equals(userWatching)) {
             TextView myCharactersText = findViewById(R.id.myCharactersTxt);
             myCharactersText.setText(nickName + "'s characters");
         }

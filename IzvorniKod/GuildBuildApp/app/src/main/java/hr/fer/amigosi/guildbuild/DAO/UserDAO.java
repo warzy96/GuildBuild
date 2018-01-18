@@ -32,12 +32,11 @@ public class UserDAO {
                 String email1 = rs.getString("email");
                 String lozinka =rs.getString("lozinka");
                 boolean statusR = rs.getBoolean("statusR");
-                String rang = rs.getString("rang");
                 String sifCeh = rs.getString("sifCeh");
                 boolean statusP = rs.getBoolean("statusP");
                 String opis = rs.getString("opis");
                 boolean isAdmin = rs.getBoolean("isAdmin");
-                korisnikEntity = new KorisnikEntity(email1, nadimak, lozinka, statusR, rang, sifCeh, statusP, opis, isAdmin);
+                korisnikEntity = new KorisnikEntity(email1, nadimak, lozinka, statusR, sifCeh, statusP, opis, isAdmin);
                 return korisnikEntity;
             }
         }
@@ -58,12 +57,11 @@ public class UserDAO {
                 String email1 = rs.getString("email");
                 String lozinka =rs.getString("lozinka");
                 boolean statusR = rs.getBoolean("statusR");
-                String rang = rs.getString("rang");
                 String sifCeh = rs.getString("sifCeh");
                 boolean statusP = rs.getBoolean("statusP");
                 String opis = rs.getString("opis");
                 boolean isAdmin = rs.getBoolean("isAdmin");
-                korisnikEntity = new KorisnikEntity(email1, nadimak, lozinka, statusR, rang, sifCeh, statusP, opis, isAdmin);
+                korisnikEntity = new KorisnikEntity(email1, nadimak, lozinka, statusR, sifCeh, statusP, opis, isAdmin);
                 return korisnikEntity;
             }
         }
@@ -78,8 +76,7 @@ public class UserDAO {
                 + korisnik.getEmail() + "', '"
                 + korisnik.getLozinka() + "', "
                 + korisnik.isStatusRegistracije() + ", '"
-                + korisnik.getRang() + "', "
-                + korisnik.getSifraCeha() + ", "
+                + korisnik.getSifraCeha() + "', "
                 + korisnik.isStatusPrijave() + ", '"
                 + korisnik.getOpisKorisnika() + "', "
                 + korisnik.isAdmin()
@@ -108,8 +105,7 @@ public class UserDAO {
                 + korisnik.getNadimak() + "', email = '"
                 + korisnik.getEmail() + "', lozinka = '"
                 + korisnik.getLozinka() + "', statusR ="
-                + korisnik.isStatusRegistracije() + ", rang = '"
-                + korisnik.getRang() + "', sifCeh = '"
+                + korisnik.isStatusRegistracije() + ", sifCeh = '"
                 + korisnik.getSifraCeha() + "', statusP = "
                 + korisnik.isStatusPrijave() + ", opis = '"
                 + korisnik.getOpisKorisnika() + "', isAdmin = "

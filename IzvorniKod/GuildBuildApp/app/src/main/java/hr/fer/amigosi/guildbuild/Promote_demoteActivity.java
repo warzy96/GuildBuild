@@ -17,12 +17,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuild.DAO.CehDAO;
+import hr.fer.amigosi.guildbuild.DAO.RangDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
 public class Promote_demoteActivity extends AppCompatActivity {
     private LinearLayout userListLayout;
-    private int sifraCeha;
+    private Integer sifraCeha;
     private String nadimak;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class Promote_demoteActivity extends AppCompatActivity {
             try {
                 CehDAO cehDAO = new CehDAO();
                 List<KorisnikEntity> korisnikEntityList = cehDAO
-                        .getGuildMembersWithoutCurrentMember(sifraCeha, nadimak);
+                        .getGuildMembersWithoutCurrentMember(sifraCeha.toString(), nadimak);
                 UserDAO userDAO = new UserDAO();
                 korisnik = userDAO.getUser(nadimak);
                 return korisnikEntityList;
@@ -141,8 +142,8 @@ public class Promote_demoteActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             String result = "";
             try {
-                UserDAO userDAO = new UserDAO();
-                userDAO.updateUserRank(strings[0], strings[1]);
+                RangDAO rangDAO = new RangDAO();
+                rangDAO.updateUserRank(strings[0], strings[1]);
                 result = "Successful";
                 success = true;
             }

@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         Boolean isVoteActivity = true;
         Boolean isKoordinator = false;
         String nadimak;
-        int sifraCeha;
+        String sifraCeha;
 
         @Override
         protected void onPostExecute(String r)
@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
             {
                 if(korisnikEntity.isAdmin()){
                     Toast.makeText(MainActivity.this , "Hello Admin" , Toast.LENGTH_LONG).show();
-                    //finish()
                     Intent intent = new Intent(MainActivity.this, AdministratorProfileActivity.class);
                     startActivity(intent);
                 }
@@ -111,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                         intent.putExtra(EXTRA_MESSAGE1, korisnikEntity.getNadimak());
-                        intent.putExtra(EXTRA_MESSAGE2, korisnikEntity.getSifraCeha());
+                        intent.putExtra(EXTRA_MESSAGE2, sifraCeha);
                         startActivity(intent);
                  }
                 }

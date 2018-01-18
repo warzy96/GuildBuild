@@ -13,7 +13,7 @@ import android.widget.TextView;
  */
 public class HomeActivity extends AppCompatActivity {
     private static String nickname;
-    private static int sifraCeha;
+    private static String sifraCeha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Intent intent = getIntent();
         nickname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
-        sifraCeha = intent.getIntExtra(MainActivity.EXTRA_MESSAGE2, 0);
+        sifraCeha = intent.getStringExtra(MainActivity.EXTRA_MESSAGE2);
 
         TextView textView = findViewById(R.id.Nickname);
         textView.setText(nickname);
@@ -33,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //Ako korisnik nije u cehu -> sakrij gumb za pregled njegovog ceha
         //Ako korisnik je u cehu -> sakrij gumb za stvaranje novog ceha
-        if(sifraCeha == 0) {
+        if(sifraCeha == null) {
             myGuildButton.setVisibility(View.GONE);
         }
         else {

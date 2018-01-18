@@ -36,8 +36,9 @@ import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
 public class ConcedeActivity extends AppCompatActivity {
 
-    //private int sifraCeha;
-    KorisnikEntity korisnik;
+    private Integer sifraCeha;
+    private KorisnikEntity korisnik;
+    private String rang;
     private String nickname;
     Connection con;
 
@@ -48,6 +49,7 @@ public class ConcedeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         nickname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
+        sifraCeha = Integer.parseInt(intent.getStringExtra(GuildDetailsActivity.EXTRA_MESSAGE3));
     }
 
     @Override
@@ -103,7 +105,7 @@ public class ConcedeActivity extends AppCompatActivity {
             }
             else {
                 for(KorisnikEntity korisnik : members) {
-                    if(korisnik.getRang().equals(RangConstants.leader)) continue;
+                    if(rang.equals(RangConstants.leader)) continue;
                     TextView textView = new TextView(ConcedeActivity.this);
                     textView.setText(korisnik.getNadimak());
                     textView.setTextSize(35);
@@ -142,7 +144,9 @@ public class ConcedeActivity extends AppCompatActivity {
                 } else {
                     CehDAO ceh = new CehDAO();
                     UserDAO userDAO = new UserDAO();
+                    RangDAO rangDAO = new RangDAO();
                     korisnik = userDAO.getUser(nickname);
+                    rang = rangDAO.getUserRang(nickname, korisnik.getSifraCeha());
                     members = ceh.getGuildMembers(korisnik.getSifraCeha());
                     isSuccess = true;
                 }

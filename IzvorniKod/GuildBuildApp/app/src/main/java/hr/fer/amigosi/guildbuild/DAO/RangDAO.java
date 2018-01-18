@@ -1,6 +1,7 @@
 package hr.fer.amigosi.guildbuild.DAO;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -33,9 +34,10 @@ public class RangDAO {
         }
     }
 
-    public void setLeader(String nickname) throws SQLException{
-        String query = "UPDATE korisnik SET korisnik.rang = '"
-                + RangConstants.leader + "' WHERE korisnik.nadimak = '" + nickname +"'";
+    public void setLeader(String nickname, String sifraCeha) throws SQLException{
+        String query = "UPDATE rang SET rang.rang = '"
+                + RangConstants.leader + "' WHERE rang.nadimak = '" + nickname
+                +"' AND rang.sifCeh = " + Integer.parseInt(sifraCeha);
 
         try{
             Statement statement = connection.createStatement();
@@ -43,5 +45,22 @@ public class RangDAO {
         }catch(SQLException e){
             throw e;
         }
+    }
+
+    public String getUserRang(String nickname, String sifraCeha) throws SQLException{
+        String query = "SELECT * FROM rang WHERE rang.rang = '"
+                + RangConstants.leader + "' WHERE rang.nadimak = '" + nickname
+                +"' AND rang.sifCeh = " + Integer.parseInt(sifraCeha);
+
+        try{
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            if(rs.next()) {
+                return rs.getString("rang");
+            }
+        }catch(SQLException e){
+            throw e;
+        }
+        return "";
     }
 }

@@ -1,18 +1,31 @@
 package hr.fer.amigosi.guildbuild;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import hr.fer.amigosi.guildbuild.DAO.CehDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
@@ -33,16 +46,18 @@ public class GuildDetailsActivity extends AppCompatActivity {
     private Button btnSeeEvents;
     private Button btnLeaveGuild;
 
-    private int sifraKorisnikovogCeha;
-    private int sifraTrazenogCeha;
+    private String sifraKorisnikovogCeha;
+    private Integer sifraTrazenogCeha;
     private String nadimak;
     private String imeCeha;
-
+    private TreeMap<Integer, Integer> pozicijaSifraCeha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guild_details);
+
+        pozicijaSifraCeha = new TreeMap<>();
 
         guildName = (TextView) findViewById(R.id.GuildNameText);
         guildDesc = (TextView) findViewById(R.id.GuildOpis);
@@ -53,19 +68,10 @@ public class GuildDetailsActivity extends AppCompatActivity {
 
         Intent pastIntent = getIntent();
         nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
-        sifraKorisnikovogCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2,0);
-        sifraTrazenogCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
-
-        if(sifraKorisnikovogCeha==sifraTrazenogCeha){
-            btnApply.setVisibility(View.GONE);
-        }else{
-            btnLeaveGuild.setVisibility(View.GONE);
-        }
-
-
+        sifraKorisnikovogCeha = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE2);
 
         btnApply.setOnClickListener(view -> {
-            if(sifraKorisnikovogCeha!=0){
+            if(sifraKorisnikovogCeha!= null){
                 Toast.makeText(GuildDetailsActivity.this,
                         "You are already in guild!", Toast.LENGTH_SHORT).show();
             }else{
@@ -101,7 +107,6 @@ public class GuildDetailsActivity extends AppCompatActivity {
             alertDialog.show();
         });
 
-        new IsRequestsButtonVisible().execute();
 
         Button requestsButton = findViewById(R.id.JoinRequestsButton);
         requestsButton.setOnClickListener(View -> {
@@ -110,7 +115,6 @@ public class GuildDetailsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        new IsNewEventButtonVisible().execute();
         Button newEventButton = findViewById(R.id.btnAddEvent);
         newEventButton.setOnClickListener(View -> {
             Intent intent = new Intent(GuildDetailsActivity.this, AddEventActivity.class);
@@ -118,7 +122,6 @@ public class GuildDetailsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        new IsNewGoalButtonVisible().execute();
         Button newGoalButton = findViewById(R.id.btnAddGoal);
         newGoalButton.setOnClickListener(View -> {
             Intent intent = new Intent(GuildDetailsActivity.this, AddGoalActivity.class);
@@ -126,7 +129,6 @@ public class GuildDetailsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        new IsNewSubgoalButtonVisible().execute();
         Button newSubgoalButton = findViewById(R.id.btnAddSubgoal);
         newSubgoalButton.setOnClickListener(View -> {
             Intent intent = new Intent(GuildDetailsActivity.this, AddSubgoalActivity.class);
@@ -141,6 +143,117 @@ public class GuildDetailsActivity extends AppCompatActivity {
             intent.putExtra(GuildDetailsActivity.EXTRA_MESSAGE3,sifraTrazenogCeha);
             startActivity(intent);
         });
+
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent pastIntent = getIntent();
+        Spinner chooseGuildSpinner = findViewById(R.id.chooseGuildSpinner);
+        TextView textView = findViewById(R.id.chooseGuildTextView);
+
+        if(pastIntent.getBooleanExtra(GuildListActivity.IS_FROM_GUILD_LIST_ACTIVITY, false)) {
+            chooseGuildSpinner.setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
+            sifraTrazenogCeha = Integer.parseInt(pastIntent.getStringExtra(GuildDetailsActivity.EXTRA_MESSAGE3));
+
+            new FillNameAndDesc().execute("");
+            new IsRequestsButtonVisible().execute();
+            new IsNewEventButtonVisible().execute();
+            new IsNewGoalButtonVisible().execute();
+            new IsNewSubgoalButtonVisible().execute();
+            if(sifraKorisnikovogCeha.contains(sifraTrazenogCeha.toString())){
+                btnApply.setVisibility(View.GONE);
+            }else{
+                btnLeaveGuild.setVisibility(View.GONE);
+            }
+
+        }
+        else {
+            if(sifraKorisnikovogCeha != null) {
+                new PopulateSpinnerWithGuildNames().execute();
+            }
+            else {
+                //TODO: Ako korisnik nije ni u jednom cehu onda nešto...
+            }
+        }
+
+        chooseGuildSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ProgressBar progressBar = findViewById(R.id.progressbar);
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                progressBar.setVisibility(View.VISIBLE);
+
+                sifraTrazenogCeha = pozicijaSifraCeha.get(adapterView.getSelectedItemPosition());
+                new FillNameAndDesc().execute("");
+                //new IsRequestsButtonVisible().execute();
+                //new IsNewEventButtonVisible().execute();
+                //new IsNewGoalButtonVisible().execute();
+                //new IsNewSubgoalButtonVisible().execute();
+
+                if(sifraKorisnikovogCeha.contains(sifraTrazenogCeha.toString())){
+                    btnApply.setVisibility(View.GONE);
+                }else{
+                    btnLeaveGuild.setVisibility(View.GONE);
+                }
+                progressBar.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(GuildDetailsActivity.this, "You have to choose a guild!"
+                        , Toast.LENGTH_SHORT).show();
+            }
+        });
+        nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
+        sifraKorisnikovogCeha = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE2);
+
+    }
+
+    private class PopulateSpinnerWithGuildNames extends AsyncTask<Void, Void, List<String>> {
+
+        @Override
+        protected ArrayList<String> doInBackground(Void... voids) {
+            ArrayList<String> guildNames = new ArrayList<>();
+            try {
+                int i = 0;
+                CehDAO cehDAO = new CehDAO();
+                for(String sifCeh : sifraKorisnikovogCeha.split(",")) {
+                    String nazivCeha = cehDAO.getGuild(Integer.parseInt(sifCeh)).getNaziv();
+                    guildNames.add(nazivCeha);
+                    pozicijaSifraCeha.put(i, Integer.parseInt(sifCeh));
+                    i++;
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return guildNames;
+        }
+
+        @Override
+        protected void onPostExecute(List<String> strings) {
+            Spinner chooseGuildSpinner = findViewById(R.id.chooseGuildSpinner);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(GuildDetailsActivity.this,
+                    android.R.layout.simple_spinner_item, strings);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            chooseGuildSpinner.setAdapter(adapter);
+            LinearLayout everythingLayout = findViewById(R.id.hideGuildDetails);
+            everythingLayout.setVisibility(View.GONE);
+        }
     }
 
     public class FillNameAndDesc extends AsyncTask<String,String,CehEntity>{
@@ -173,7 +286,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
         protected Boolean doInBackground(String... strings) {
             try {
                 CehDAO cehDAO = new CehDAO();
-                boolean guildMembers = cehDAO.checkIfMemExists(sifraTrazenogCeha);
+                boolean guildMembers = cehDAO.checkIfMemExists(sifraTrazenogCeha.toString());
                 return guildMembers;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -216,7 +329,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
 
                 }
 
-                korisnikEntity.setSifraCeha(0);
+                korisnikEntity.setSifraCeha(null);
                 korisnikEntity.setRang(null);
                 korisnikEntity.setStatusPrijave(false);
                 userDAO.updateUser(korisnikEntity);
@@ -268,7 +381,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
             else {
                 Button requestsButton = findViewById(R.id.JoinRequestsButton);
 
-                if(sifraKorisnikovogCeha==sifraTrazenogCeha) {
+                if(sifraKorisnikovogCeha.contains(sifraTrazenogCeha.toString())) {
                     if (!korisnikEntity.getRang().equals(RangConstants.leader)
                             && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
                         requestsButton.setVisibility(View.GONE);
@@ -306,7 +419,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
             else {
                 Button newEventButton = findViewById(R.id.btnAddEvent);
 
-                if(sifraKorisnikovogCeha==sifraTrazenogCeha) {
+                if(sifraKorisnikovogCeha.contains(sifraTrazenogCeha.toString())) {
                     if (!korisnikEntity.getRang().equals(RangConstants.leader)
                             && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
                         newEventButton.setVisibility(View.GONE);
@@ -345,7 +458,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
             else {
                 Button newGoalButton = findViewById(R.id.btnAddGoal);
 
-                if(sifraKorisnikovogCeha==sifraTrazenogCeha) {
+                if(sifraKorisnikovogCeha.contains(sifraTrazenogCeha.toString())) {
                     if (!korisnikEntity.getRang().equals(RangConstants.leader)
                             && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
                         newGoalButton.setVisibility(View.GONE);
@@ -383,7 +496,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
             else {
                 Button newSubgoalButton = findViewById(R.id.btnAddSubgoal);
 
-                if(sifraKorisnikovogCeha==sifraTrazenogCeha) {
+                if(sifraKorisnikovogCeha.contains(sifraTrazenogCeha.toString())) {
                     if (!korisnikEntity.getRang().equals(RangConstants.leader)
                             && !korisnikEntity.getRang().equals(RangConstants.coordinator)) {
                         newSubgoalButton.setVisibility(View.GONE);
@@ -397,24 +510,5 @@ public class GuildDetailsActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Intent pastIntent = getIntent();
-        nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
-        sifraKorisnikovogCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2,0);
-        sifraTrazenogCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
-        if(sifraKorisnikovogCeha==sifraTrazenogCeha){
-            btnApply.setVisibility(View.GONE);
-        }else{
-            btnLeaveGuild.setVisibility(View.GONE);
-        }
-        FillNameAndDesc fillNameAndDesc = new FillNameAndDesc();
-        fillNameAndDesc.execute("");
-    }
 }

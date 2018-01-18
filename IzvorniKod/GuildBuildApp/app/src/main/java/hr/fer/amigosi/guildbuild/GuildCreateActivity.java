@@ -22,6 +22,7 @@ import java.util.Map;
 
 import hr.fer.amigosi.guildbuild.DAO.CehDAO;
 import hr.fer.amigosi.guildbuild.DAO.IgraDAO;
+import hr.fer.amigosi.guildbuild.DAO.RangDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.entities.CehEntity;
 import hr.fer.amigosi.guildbuild.entities.IgraEntity;
@@ -115,10 +116,11 @@ public class GuildCreateActivity extends AppCompatActivity{
                 CehDAO cehDAO = new CehDAO();
                 cehDAO.insertGuild(strings[0], igreMap.get(key), guildDescription.getText().toString());
                 UserDAO userDAO = new UserDAO();
-                int guildNumber = cehDAO.getGuildNumber(strings[0], igreMap.get(key));
+                Integer guildNumber = cehDAO.getGuildNumber(strings[0], igreMap.get(key));
+                RangDAO rangDAO = new RangDAO();
                 if(guildNumber != 0) {
-                    userDAO.updateUserGuild(nickname, guildNumber);
-                    userDAO.updateUserRank(nickname, RangConstants.leader);
+                    userDAO.updateUserGuild(nickname, guildNumber.toString());
+                    rangDAO.updateUserRank(nickname, RangConstants.leader);
                     result = "Guild created successfully!";
                     success = true;
                 }

@@ -229,8 +229,7 @@ public class CehDAO {
     }
 
     public boolean checkIfMemExists(String sifraCeha) throws SQLException{
-        String querry = "SELECT * FROM korisnik WHERE korisnik.sifCeh LIKE '%"
-                + sifraCeha + "%'";
+        String querry = "SELECT * FROM korisnik WHERE korisnik.sifCeh LIKE '%" + sifraCeha;
 
         try {
             Statement statement = connection.createStatement();

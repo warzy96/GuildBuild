@@ -17,11 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuild.DAO.ObrazacDAO;
+import hr.fer.amigosi.guildbuild.DAO.RangDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.entities.ObrazacEntity;
 
 public class UserRequestsForGuild extends AppCompatActivity {
-    private int sifraCeha;
+    private Integer sifraCeha;
     private LinearLayout layoutToRemove;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,9 @@ public class UserRequestsForGuild extends AppCompatActivity {
             String userNickname = strings[0];
             try {
                 UserDAO userDAO = new UserDAO();
-                userDAO.updateUserGuild(userNickname, sifraCeha);
-                userDAO.updateUserRank(userNickname, RangConstants.member);
+                userDAO.updateUserGuild(userNickname, sifraCeha.toString());
+                RangDAO rangDAO = new RangDAO();
+                rangDAO.updateUserRank(userNickname, RangConstants.member);
                 ObrazacDAO obrazacDAO = new ObrazacDAO();
                 obrazacDAO.deleteForm(userNickname, sifraCeha);
                 return "User added successfully";
@@ -103,7 +105,7 @@ public class UserRequestsForGuild extends AppCompatActivity {
             List<ObrazacEntity> obrasci = new ArrayList<>();
             try {
                 ObrazacDAO obrazacDAO = new ObrazacDAO();
-                obrasci = obrazacDAO.getAllFormsForGuild(sifraCeha);
+                obrasci = obrazacDAO.getAllFormsForGuild(sifraCeha.toString());
             }
             catch(Exception e) {
 
