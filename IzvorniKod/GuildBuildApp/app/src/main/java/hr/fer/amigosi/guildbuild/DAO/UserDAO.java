@@ -78,7 +78,7 @@ public class UserDAO {
         KorisnikEntity korisnikEntity = null;
         String querry = "SELECT * FROM korisnik JOIN rang ON korisnik.nadimak = rang.nadimak "
                 + "WHERE korisnik.nadimak= '"
-                + nickname + "' AND statusR AND rang.sifCeh = '" + sifraCeha +"'";
+                + nickname + "' AND statusR AND rang.sifCeh = " + Integer.parseInt(sifraCeha);
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(querry);

@@ -121,7 +121,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
         Button requestsButton = findViewById(R.id.JoinRequestsButton);
         requestsButton.setOnClickListener(View -> {
             Intent intent = new Intent(GuildDetailsActivity.this, UserRequestsForGuild.class);
-            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraKorisnikovogCeha);
+            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraTrazenogCeha);
             startActivity(intent);
         });
 
@@ -240,6 +240,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
                     pozicijaSifraCeha.put(i, Integer.parseInt(sifCeh));
                     i++;
                 }
+                CehDAO.close();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
@@ -269,6 +270,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 CehDAO cehDAO = new CehDAO();
                 CehEntity ceh = cehDAO.getGuild(sifraTrazenogCeha);
                 imeCeha = ceh.getNaziv();
+                CehDAO.close();
                 return ceh;
             }catch(Exception e){
                 e.printStackTrace();
@@ -293,6 +295,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
             try {
                 CehDAO cehDAO = new CehDAO();
                 boolean guildMembers = cehDAO.checkIfMemExists(sifraTrazenogCeha.toString());
+                CehDAO.close();
                 return guildMembers;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -341,6 +344,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 userDAO.updateUser(korisnikEntity);
                 message = "You left the guild.";
                 success = true;
+                UserDAO.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -372,6 +376,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 UserDAO userDAO = new UserDAO();
                 korisnikEntity = userDAO.getUserWithRank(nadimak, sifraTrazenogCeha.toString());
                 success = true;
+                UserDAO.close();
             }
             catch(Exception e) {
                 result = e.getMessage();
@@ -411,6 +416,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 UserDAO userDAO = new UserDAO();
                 korisnikEntity = userDAO.getUserWithRank(nadimak, sifraTrazenogCeha.toString());
                 success = true;
+                UserDAO.close();
             }
             catch(Exception e) {
                 result = "Check your internet connection";
@@ -450,6 +456,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 UserDAO userDAO = new UserDAO();
                 korisnikEntity = userDAO.getUserWithRank(nadimak, sifraTrazenogCeha.toString());
                 success = true;
+                UserDAO.close();
             }
             catch(Exception e) {
                 result = "Check your internet connection";
@@ -488,6 +495,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 UserDAO userDAO = new UserDAO();
                 korisnikEntity = userDAO.getUserWithRank(nadimak, sifraTrazenogCeha.toString());
                 success = true;
+                UserDAO.close();
             }
             catch(Exception e) {
                 result = "Check your internet connection";
