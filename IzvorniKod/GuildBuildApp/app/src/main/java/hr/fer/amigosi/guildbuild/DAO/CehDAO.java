@@ -166,7 +166,7 @@ public class CehDAO {
     }
 
     public List<KorisnikEntity> getGuildMembers(String sifraCeha) throws SQLException{
-        String querry = "SELECT * FROM korisnik WHERE korisnik.sifCeh LIKE '%"
+        String querry = "SELECT * FROM korisnik JOIN rang ON korisnik.nadimak = rang.nadimak WHERE korisnik.sifCeh LIKE '%"
                 + sifraCeha + "%'";
         List<KorisnikEntity> result = new ArrayList<>();
 

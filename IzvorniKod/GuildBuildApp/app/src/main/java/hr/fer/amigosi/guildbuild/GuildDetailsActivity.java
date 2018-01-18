@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 import hr.fer.amigosi.guildbuild.DAO.CehDAO;
+import hr.fer.amigosi.guildbuild.DAO.IgraDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.DAO.VoteDAO;
 import hr.fer.amigosi.guildbuild.entities.CehEntity;
@@ -81,25 +82,12 @@ public class GuildDetailsActivity extends AppCompatActivity {
         sifraKorisnikovogCeha = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE2);
 
         btnApply.setOnClickListener(view -> {
-            for(String temp : sifraKorisnikovogCeha.split(",")) {
-                if(temp.equals(sifraTrazenogCeha.toString())) {
-                    new IsRequestsButtonVisible().execute();
-                    new IsNewEventButtonVisible().execute();
-                    new IsNewGoalButtonVisible().execute();
-                    new IsNewSubgoalButtonVisible().execute();
-                    btnApply.setVisibility(View.GONE);
-                }
-            }
-            if(sifraKorisnikovogCeha != null){
-                Toast.makeText(GuildDetailsActivity.this,
-                        "You are already in guild!", Toast.LENGTH_SHORT).show();
-            }else{
+
                 Intent form = new Intent(GuildDetailsActivity.this,FormApplicationActivity.class);
                 form.putExtra(MainActivity.EXTRA_MESSAGE1,nadimak);
                 form.putExtra(GuildDetailsActivity.EXTRA_MESSAGE3,sifraTrazenogCeha);
                 form.putExtra(GuildDetailsActivity.EXTRA_MESSAGE4,imeCeha);
                 startActivity(form);
-            }
         });
 
         btnSeeMembers.setOnClickListener(view -> {
@@ -195,7 +183,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
                     new IsNewEventButtonVisible().execute();
                     new IsNewGoalButtonVisible().execute();
                     new IsNewSubgoalButtonVisible().execute();
-                    btnApply.setVisibility(View.GONE);
+                    new IsApplyButtonVisible().execute();
                     isInCeh = true;
                 }
             }
@@ -220,9 +208,6 @@ public class GuildDetailsActivity extends AppCompatActivity {
         else {
             if(sifraKorisnikovogCeha != null) {
                 new PopulateSpinnerWithGuildNames().execute();
-            }
-            else {
-                //TODO: Ako korisnik nije ni u jednom cehu onda nešto...
             }
         }
 
@@ -393,6 +378,43 @@ public class GuildDetailsActivity extends AppCompatActivity {
 
         }
     }
+
+    private class IsApplyButtonVisible extends AsyncTask<Void, Void, KorisnikEntity> {
+        boolean success = false;
+        @Override
+        protected KorisnikEntity doInBackground(Void... voids) {
+            try {
+                CehDAO cehDAO = new CehDAO();
+                CehEntity cehEntity = cehDAO.getGuild(sifraTrazenogCeha);
+                List<CehEntity> cehEntities = cehDAO.getGuildsForGame(cehEntity.getSifraIgre());
+                for(CehEntity cehEntity1 : cehEntities) {
+                    if(cehEntity1.getSifraCeha() == cehEntity.getSifraCeha()) {
+                        success = true;
+                        UserDAO.close();
+                        return null;
+                    }
+                }
+                success = false;
+                UserDAO.close();
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(KorisnikEntity korisnikEntity) {
+            if(success) {
+                btnApply.setVisibility(View.GONE);
+            }
+            else {
+                btnApply.setVisibility(View.VISIBLE);
+            }
+
+        }
+    }
+
 
     private class IsRequestsButtonVisible extends AsyncTask<Void, Void, KorisnikEntity> {
         String result = "";

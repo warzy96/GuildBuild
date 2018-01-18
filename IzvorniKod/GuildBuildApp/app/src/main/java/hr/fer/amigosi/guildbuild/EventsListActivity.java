@@ -25,7 +25,7 @@ public class EventsListActivity extends AppCompatActivity {
 
     public static final String SIFRA_DOGADAJA = "sifra_dogadaja";
 
-    private Integer sifraKorisnikovogCeha;
+    private String sifraKorisnikovogCeha;
     private Integer sifraTrazenogCeha;
     private String nadimak;
     private Boolean notInGuild=false;
@@ -46,7 +46,7 @@ public class EventsListActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             Intent intent = getIntent();
-            sifraKorisnikovogCeha = intent.getIntExtra(MainActivity.EXTRA_MESSAGE2, 0);
+            sifraKorisnikovogCeha = intent.getStringExtra(MainActivity.EXTRA_MESSAGE2);
             sifraTrazenogCeha = intent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
             nadimak = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
         }
@@ -56,15 +56,17 @@ public class EventsListActivity extends AppCompatActivity {
             List<DogadajEntity> dogadaji = new ArrayList<>();
             try {
                 DogadajDAO dogadajDAO = new DogadajDAO();
-                if(sifraTrazenogCeha==sifraKorisnikovogCeha) {
-                    dogadaji = dogadajDAO.getAllEventsForGuild(sifraTrazenogCeha);
-                }else{
-                    dogadaji = dogadajDAO.getVisibleEventsForGuild(sifraTrazenogCeha);
-                    notInGuild=true;
+                for(String temp : sifraKorisnikovogCeha.split(",")) {
+                    if(temp.equals(sifraTrazenogCeha.toString())) {
+                        dogadaji = dogadajDAO.getAllEventsForGuild(sifraTrazenogCeha);
+                        return dogadaji;
+                    }
                 }
+                dogadaji = dogadajDAO.getVisibleEventsForGuild(sifraTrazenogCeha);
+                notInGuild=true;
             }
             catch(Exception e) {
-
+                e.printStackTrace();
             }
             finally {
                 try {
@@ -185,8 +187,8 @@ public class EventsListActivity extends AppCompatActivity {
 
             try{
                 UserDAO userDao = new UserDAO();
-                KorisnikEntity korisnikEntity = userDao.getUser(nadimak);
-                /*if(korisnikEntity.getRang().equals(RangConstants.member)){
+                KorisnikEntity korisnikEntity = userDao.getUserWithRank(nadimak, sifraTrazenogCeha.toString());
+                if(korisnikEntity.getRang().equals(RangConstants.member)){
                     return "No authorities";
                 }else{
                     DogadajDAO dogadajDAO = new DogadajDAO();
@@ -194,7 +196,7 @@ public class EventsListActivity extends AppCompatActivity {
                     dogadajEntity.setVidljivost(true);
                     dogadajDAO.updateEvent(dogadajEntity);
                     return "Event now visible";
-                }*/
+                }
             }catch (Exception e){
                 e.printStackTrace();
             }
