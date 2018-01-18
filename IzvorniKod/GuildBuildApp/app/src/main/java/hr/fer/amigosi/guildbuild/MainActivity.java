@@ -137,12 +137,14 @@ public class MainActivity extends AppCompatActivity {
                             z = "Login successful";
                             isSuccess = true;
                             VoteDAO voteDAO = new VoteDAO();
-                            isVoteActivity = voteDAO.checkIfGuildHasToVote(korisnikEntity.getSifraCeha());
-                            Integer guildToVote = voteDAO.getGuildToVote(korisnikEntity.getSifraCeha());
-                            korisnikEntity = userDAO.getUserWithRank(korisnikEntity.getNadimak(), guildToVote.toString());
-                            isKoordinator = korisnikEntity.getRang().equals(RangConstants.coordinator);
+                            if(!korisnikEntity.isAdmin()) {
+                                isVoteActivity = voteDAO.checkIfGuildHasToVote(korisnikEntity.getSifraCeha());
+                                Integer guildToVote = voteDAO.getGuildToVote(korisnikEntity.getSifraCeha());
+                                korisnikEntity = userDAO.getUserWithRank(korisnikEntity.getNadimak(), guildToVote.toString());
+                                isKoordinator = korisnikEntity.getRang().equals(RangConstants.coordinator);
+                                sifraCeha = guildToVote;
+                            }
                             nadimak = korisnikEntity.getNadimak();
-                            sifraCeha = guildToVote;
                         }
                         else
                         {
