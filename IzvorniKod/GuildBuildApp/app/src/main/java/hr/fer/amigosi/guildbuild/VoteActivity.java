@@ -113,8 +113,8 @@ public class VoteActivity extends AppCompatActivity {
                             VoteFor voteFor = new VoteFor();
                             voteFor.execute(voteEntity);
                         });
-                        LinearLayout horizontalView = new LinearLayout(getApplicationContext());
-                        horizontalView.setOrientation(LinearLayout.HORIZONTAL);
+                        LinearLayout horizontalView = new LinearLayout(VoteActivity.this);
+                        horizontalView.setOrientation(LinearLayout.VERTICAL);
                         horizontalView.setMinimumWidth(gornjiLayout.getWidth());
 
                         horizontalView.addView(nicknameView);

@@ -57,7 +57,7 @@ public class Promote_demoteActivity extends AppCompatActivity {
                 List<KorisnikEntity> korisnikEntityList = cehDAO
                         .getGuildMembersWithoutCurrentMember(sifraCeha.toString(), nadimak);
                 UserDAO userDAO = new UserDAO();
-                korisnik = userDAO.getUser(nadimak);
+                korisnik = userDAO.getUserWithRank(nadimak, sifraCeha.toString());
                 return korisnikEntityList;
             } catch (Exception e) {
                 e.printStackTrace();

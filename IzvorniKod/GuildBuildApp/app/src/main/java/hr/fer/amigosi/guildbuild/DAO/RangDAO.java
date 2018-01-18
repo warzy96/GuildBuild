@@ -63,7 +63,7 @@ public class RangDAO {
 
     public String getUserRang(String nickname, String sifraCeha) throws SQLException{
         String query = "SELECT * FROM rang WHERE rang.rang = '"
-                + RangConstants.leader + "' WHERE rang.nadimak = '" + nickname
+                + RangConstants.leader + "' AND rang.nadimak = '" + nickname
                 +"' AND rang.sifCeh = " + Integer.parseInt(sifraCeha);
 
         try{

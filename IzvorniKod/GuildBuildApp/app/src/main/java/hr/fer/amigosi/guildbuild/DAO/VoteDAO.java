@@ -133,7 +133,7 @@ public class VoteDAO {
 
             for(KorisnikEntity korisnikEntity : korisnikEntities){
                 String query2 = "INSERT INTO vote VALUES ("
-                        + sifraCeha + ", '"
+                        + Integer.parseInt(sifraCeha) + ", '"
                         + korisnikEntity.getNadimak() + "',"
                         + "0,0)";
                 Statement statement2 = connection.createStatement(); // u petlji ili gore?
@@ -194,4 +194,43 @@ public class VoteDAO {
 
     }
 
+    public Boolean checkIfGuildHasToVote(String sifraCeha) throws SQLException{
+        String query = "SELECT vote.sifceh FROM vote";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                for(String temp : sifraCeha.split(",")) {
+                    Integer sifCeh = rs.getInt("sifCeh");
+                    if(temp.equals(sifCeh.toString())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+        return false;
+    }
+
+    public Integer getGuildToVote(String sifraCeha) throws SQLException{
+        String query = "SELECT vote.sifceh FROM vote";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                for(String temp : sifraCeha.split(",")) {
+                    Integer sifCeh = rs.getInt("sifCeh");
+                    if(temp.equals(sifCeh.toString())) {
+                        return sifCeh;
+                    }
+                }
+            }
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+        return 0;
+    }
 }

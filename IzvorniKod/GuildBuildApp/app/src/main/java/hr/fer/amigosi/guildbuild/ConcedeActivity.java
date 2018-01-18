@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,8 +38,6 @@ import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 public class ConcedeActivity extends AppCompatActivity {
 
     private Integer sifraCeha;
-    private KorisnikEntity korisnik;
-    private String rang;
     private String nickname;
     Connection con;
 
@@ -49,7 +48,7 @@ public class ConcedeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         nickname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
-        sifraCeha = Integer.parseInt(intent.getStringExtra(GuildDetailsActivity.EXTRA_MESSAGE3));
+        sifraCeha = intent.getIntExtra(MainActivity.EXTRA_MESSAGE2, 0);
     }
 
     @Override
@@ -105,7 +104,7 @@ public class ConcedeActivity extends AppCompatActivity {
             }
             else {
                 for(KorisnikEntity korisnik : members) {
-                    if(rang.equals(RangConstants.leader)) continue;
+                    if(korisnik.getRang().equals(RangConstants.leader)) continue;
                     TextView textView = new TextView(ConcedeActivity.this);
                     textView.setText(korisnik.getNadimak());
                     textView.setTextSize(35);
@@ -143,21 +142,17 @@ public class ConcedeActivity extends AppCompatActivity {
                     z = "Check Your Internet Access!";
                 } else {
                     CehDAO ceh = new CehDAO();
-                    UserDAO userDAO = new UserDAO();
-                    RangDAO rangDAO = new RangDAO();
-                    korisnik = userDAO.getUser(nickname);
-                    rang = rangDAO.getUserRang(nickname, korisnik.getSifraCeha());
-                    members = ceh.getGuildMembers(korisnik.getSifraCeha());
+                    members = ceh.getGuildMembers(sifraCeha.toString());
                     isSuccess = true;
                 }
             } catch (Exception ex) {
                 isSuccess = false;
+                ex.printStackTrace();
                 z = ex.getMessage();
             }
             finally {
                 try {
                     UserDAO.close();
-                    CehDAO.close();
                     con.close();
                 } catch (SQLException e) {
                     e.printStackTrace();

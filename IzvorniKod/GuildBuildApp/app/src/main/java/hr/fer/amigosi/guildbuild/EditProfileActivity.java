@@ -22,6 +22,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import hr.fer.amigosi.guildbuild.DAO.RangDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.DAO.VoteDAO;
 import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
@@ -36,7 +37,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText descriptionEditText;
     private String aboutMeText="";
     private String nickname;
-    private int sifraCeha;
+    private Integer sifraCeha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,14 +126,15 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
                 UserDAO userDAO = new UserDAO();
 
-                KorisnikEntity korisnikEntity = userDAO.getUser(nickname);
-                //TODO: Solve rang problem
-                /*if(korisnikEntity.getRang().equals(RangConstants.leader)){
+                KorisnikEntity korisnikEntity = userDAO.getUserWithRank(nickname, sifraCeha.toString());
+                if(korisnikEntity.getRang().equals(RangConstants.leader)){
                     VoteDAO voteDAO = new VoteDAO();
-                    voteDAO.insertAllCoordinatorsFromGuildIntoVote(korisnikEntity.getSifraCeha());
-                }*/
+                    voteDAO.insertAllCoordinatorsFromGuildIntoVote(sifraCeha.toString());
+                }
 
                 userDAO.deleteUser(nickname);
+                RangDAO rangDAO = new RangDAO();
+                rangDAO.deleteUser(nickname);
                 message = "Delete successful";
                 success = true;
             } catch (Exception e) {
@@ -141,7 +143,6 @@ public class EditProfileActivity extends AppCompatActivity {
             finally {
                 try {
                     UserDAO.close();
-                    VoteDAO.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

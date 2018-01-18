@@ -353,10 +353,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
 
                 }
 
-                korisnikEntity.setSifraCeha(null);
-                korisnikEntity.setRang(null);
-                korisnikEntity.setStatusPrijave(false);
-                userDAO.updateUser(korisnikEntity);
+                userDAO.updateUserGuild(nadimak, sifraTrazenogCeha.toString());
                 message = "You left the guild.";
                 success = true;
                 UserDAO.close();
@@ -375,6 +372,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 Intent returnToHomeScreen =
                         new Intent(GuildDetailsActivity.this, HomeActivity.class);
                 returnToHomeScreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                returnToHomeScreen.putExtra(MainActivity.EXTRA_MESSAGE1, nadimak);
                 startActivity(returnToHomeScreen);
             }
 

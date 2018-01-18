@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         Boolean isVoteActivity = true;
         Boolean isKoordinator = false;
         String nadimak;
-        String sifraCeha;
+        Integer sifraCeha;
 
         @Override
         protected void onPostExecute(String r)
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 else{
-                        if(!isVoteActivity && isKoordinator){
+                        if(isVoteActivity && isKoordinator){
                             Intent intenterino = new Intent(MainActivity.this, VoteActivity.class);
                             intenterino.putExtra(EXTRA_MESSAGE1, nadimak);
                             intenterino.putExtra(EXTRA_MESSAGE2, sifraCeha);
@@ -136,12 +136,13 @@ public class MainActivity extends AppCompatActivity {
                         if(korisnikEntity != null) {
                             z = "Login successful";
                             isSuccess = true;
-                            isVoteActivity = userDAO.checkIfGuildHasALeader(korisnikEntity.getSifraCeha());
-                            if(korisnikEntity.getRang() != null){
-                                isKoordinator = korisnikEntity.getRang().equals(RangConstants.coordinator);
-                            }
+                            VoteDAO voteDAO = new VoteDAO();
+                            isVoteActivity = voteDAO.checkIfGuildHasToVote(korisnikEntity.getSifraCeha());
+                            Integer guildToVote = voteDAO.getGuildToVote(korisnikEntity.getSifraCeha());
+                            korisnikEntity = userDAO.getUserWithRank(korisnikEntity.getNadimak(), guildToVote.toString());
+                            isKoordinator = korisnikEntity.getRang().equals(RangConstants.coordinator);
                             nadimak = korisnikEntity.getNadimak();
-                            sifraCeha = korisnikEntity.getSifraCeha();
+                            sifraCeha = guildToVote;
                         }
                         else
                         {

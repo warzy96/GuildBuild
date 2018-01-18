@@ -45,12 +45,13 @@ public class GuildMembersActivity extends AppCompatActivity {
         giveUpLeadershipButton.setOnClickListener(view -> {
             Intent intent = new Intent(GuildMembersActivity.this, ConcedeActivity.class);
             intent.putExtra(MainActivity.EXTRA_MESSAGE1, nadimak);
+            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraTrazenogCeha);
             startActivity(intent);
         });
         promoteDemoteButton.setOnClickListener(view -> {
             Intent intent = new Intent(GuildMembersActivity.this, Promote_demoteActivity.class);
             intent.putExtra(MainActivity.EXTRA_MESSAGE1, nadimak);
-            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraCeha);
+            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraTrazenogCeha);
             startActivity(intent);
         });
     }
