@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import hr.fer.amigosi.guildbuild.DatabaseConnection;
 import hr.fer.amigosi.guildbuild.RangConstants;
@@ -90,5 +92,38 @@ public class RangDAO {
             throw e;
         }
         return "";
+    }
+
+    public List<Integer> isUserLeader(String nadimak) throws SQLException{
+        List<Integer> sifreCehovaGdjeJeVoda = new ArrayList<>();
+        String query = "SELECT * FROM rang WHERE rang.nadimak = '" + nadimak +
+                "'";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while(rs.next()) {
+                Integer sifraCeha = rs.getInt("sifCeh");
+                String rang = rs.getString("rang");
+                if(rang.equals(RangConstants.leader)) {
+                    sifreCehovaGdjeJeVoda.add(sifraCeha);
+                }
+            }
+        }
+        catch (SQLException e) {
+            throw e;
+        }
+        return sifreCehovaGdjeJeVoda;
+    }
+
+    public void removeRow(String nadimak, String s)  throws SQLException{
+        String query = "DELETE FROM rang WHERE rang.nadimak = '" + nadimak
+                + "' AND rang.sifCeh = " + Integer.parseInt(s);
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+        }
+        catch (SQLException e) {
+            throw e;
+        }
     }
 }

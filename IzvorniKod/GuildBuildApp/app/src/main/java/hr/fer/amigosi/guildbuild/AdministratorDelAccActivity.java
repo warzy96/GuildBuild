@@ -22,6 +22,7 @@ import java.util.List;
 import hr.fer.amigosi.guildbuild.DAO.ObrazacDAO;
 import hr.fer.amigosi.guildbuild.DAO.RangDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
+import hr.fer.amigosi.guildbuild.DAO.VoteDAO;
 import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
 public class AdministratorDelAccActivity extends AppCompatActivity {
@@ -113,6 +114,13 @@ public class AdministratorDelAccActivity extends AppCompatActivity {
                 ObrazacDAO obrazacDAO = new ObrazacDAO();
                 obrazacDAO.deleteForm(korisnikEntity.getNadimak());
                 RangDAO rangDAO = new RangDAO();
+                List<Integer> gdjeJeVoda = rangDAO.isUserLeader(korisnikEntity.getNadimak());
+                if(!gdjeJeVoda.isEmpty()) {
+                    for(Integer sif : gdjeJeVoda) {
+                        VoteDAO voteDAO = new VoteDAO();
+                        voteDAO.insertAllCoordinatorsFromGuildIntoVote(sif.toString());
+                    }
+                }
                 rangDAO.deleteUser(korisnikEntity.getNadimak());
                 return "Removed successfully";
             } catch (Exception e) {

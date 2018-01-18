@@ -29,6 +29,7 @@ import java.util.TreeMap;
 
 import hr.fer.amigosi.guildbuild.DAO.CehDAO;
 import hr.fer.amigosi.guildbuild.DAO.IgraDAO;
+import hr.fer.amigosi.guildbuild.DAO.RangDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.DAO.VoteDAO;
 import hr.fer.amigosi.guildbuild.entities.CehEntity;
@@ -354,6 +355,8 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 }
 
                 userDAO.updateUserGuild(nadimak, sifraTrazenogCeha.toString());
+                RangDAO rangDAO = new RangDAO();
+                rangDAO.removeRow(nadimak, sifraTrazenogCeha.toString());
                 message = "You left the guild.";
                 success = true;
                 UserDAO.close();
