@@ -138,7 +138,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
                 obrazacDAO.deleteForm(nickname);
                 userDAO.deleteUser(nickname);
-                rangDAO.deleteUser(nickname);
                 message = "Delete successful";
                 success = true;
             } catch (Exception e) {

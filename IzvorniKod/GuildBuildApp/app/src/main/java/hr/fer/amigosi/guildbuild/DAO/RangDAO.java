@@ -1,5 +1,7 @@
 package hr.fer.amigosi.guildbuild.DAO;
 
+import android.util.Log;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -82,7 +84,7 @@ public class RangDAO {
 
     //constraint in table should take care of this
     public String deleteUser(String nickname) throws SQLException{
-        String query = "DELETE * FROM rang WHERE rang.nadimak = '"
+        String query = "DELETE FROM rang WHERE rang.nadimak = '"
                 + nickname + "'";
 
         try{
