@@ -56,7 +56,17 @@ public class GuildDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guild_details);
+        LinearLayout everythingLayout = findViewById(R.id.hideGuildDetails);
+        everythingLayout.setVisibility(View.GONE);
+        Spinner chooseGuildSpinner = findViewById(R.id.chooseGuildSpinner);
+        TextView textView = findViewById(R.id.chooseGuildTextView);
 
+        textView.setVisibility(View.GONE);
+        chooseGuildSpinner.setVisibility(View.GONE);
+        ProgressBar progressBar = findViewById(R.id.progressbar);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        progressBar.setVisibility(View.VISIBLE);
         pozicijaSifraCeha = new TreeMap<>();
 
         guildName = (TextView) findViewById(R.id.GuildNameText);
@@ -157,8 +167,10 @@ public class GuildDetailsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Intent pastIntent = getIntent();
-        Spinner chooseGuildSpinner = findViewById(R.id.chooseGuildSpinner);
         TextView textView = findViewById(R.id.chooseGuildTextView);
+        nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
+        sifraKorisnikovogCeha = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE2);
+        Spinner chooseGuildSpinner = findViewById(R.id.chooseGuildSpinner);
 
         if(pastIntent.getBooleanExtra(GuildListActivity.IS_FROM_GUILD_LIST_ACTIVITY, false)) {
             chooseGuildSpinner.setVisibility(View.GONE);
@@ -189,25 +201,20 @@ public class GuildDetailsActivity extends AppCompatActivity {
         chooseGuildSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ProgressBar progressBar = findViewById(R.id.progressbar);
-                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                progressBar.setVisibility(View.VISIBLE);
 
                 sifraTrazenogCeha = pozicijaSifraCeha.get(adapterView.getSelectedItemPosition());
                 new FillNameAndDesc().execute("");
-                //new IsRequestsButtonVisible().execute();
-                //new IsNewEventButtonVisible().execute();
-                //new IsNewGoalButtonVisible().execute();
-                //new IsNewSubgoalButtonVisible().execute();
+                new IsRequestsButtonVisible().execute();
+                new IsNewEventButtonVisible().execute();
+                new IsNewGoalButtonVisible().execute();
+                new IsNewSubgoalButtonVisible().execute();
 
                 if(sifraKorisnikovogCeha.contains(sifraTrazenogCeha.toString())){
                     btnApply.setVisibility(View.GONE);
                 }else{
                     btnLeaveGuild.setVisibility(View.GONE);
                 }
-                progressBar.setVisibility(View.GONE);
-                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
             }
 
             @Override
@@ -216,8 +223,6 @@ public class GuildDetailsActivity extends AppCompatActivity {
                         , Toast.LENGTH_SHORT).show();
             }
         });
-        nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
-        sifraKorisnikovogCeha = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE2);
 
     }
 
@@ -251,8 +256,9 @@ public class GuildDetailsActivity extends AppCompatActivity {
                     android.R.layout.simple_spinner_item, strings);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             chooseGuildSpinner.setAdapter(adapter);
-            LinearLayout everythingLayout = findViewById(R.id.hideGuildDetails);
-            everythingLayout.setVisibility(View.GONE);
+            TextView textView = findViewById(R.id.chooseGuildTextView);
+            textView.setVisibility(View.VISIBLE);
+            chooseGuildSpinner.setVisibility(View.VISIBLE);
         }
     }
 
@@ -364,11 +370,12 @@ public class GuildDetailsActivity extends AppCompatActivity {
             KorisnikEntity korisnikEntity = new KorisnikEntity();
             try {
                 UserDAO userDAO = new UserDAO();
-                korisnikEntity = userDAO.getUser(nadimak);
+                korisnikEntity = userDAO.getUserWithRank(nadimak, sifraTrazenogCeha.toString());
                 success = true;
             }
             catch(Exception e) {
-                result = "Check your internet connection";
+                result = e.getMessage();
+                e.printStackTrace();
             }
             return korisnikEntity;
         }
@@ -402,7 +409,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
             KorisnikEntity korisnikEntity = new KorisnikEntity();
             try {
                 UserDAO userDAO = new UserDAO();
-                korisnikEntity = userDAO.getUser(nadimak);
+                korisnikEntity = userDAO.getUserWithRank(nadimak, sifraTrazenogCeha.toString());
                 success = true;
             }
             catch(Exception e) {
@@ -441,7 +448,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
             KorisnikEntity korisnikEntity = new KorisnikEntity();
             try {
                 UserDAO userDAO = new UserDAO();
-                korisnikEntity = userDAO.getUser(nadimak);
+                korisnikEntity = userDAO.getUserWithRank(nadimak, sifraTrazenogCeha.toString());
                 success = true;
             }
             catch(Exception e) {
@@ -479,7 +486,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
             KorisnikEntity korisnikEntity = new KorisnikEntity();
             try {
                 UserDAO userDAO = new UserDAO();
-                korisnikEntity = userDAO.getUser(nadimak);
+                korisnikEntity = userDAO.getUserWithRank(nadimak, sifraTrazenogCeha.toString());
                 success = true;
             }
             catch(Exception e) {
@@ -504,7 +511,15 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 }else{
                     newSubgoalButton.setVisibility(View.GONE);
                 }
-
+                TextView textView1 = findViewById(R.id.chooseGuildTextView);
+                Spinner chooseGuildSpinner = findViewById(R.id.chooseGuildSpinner);
+                ProgressBar progressBar = findViewById(R.id.progressbar);
+                progressBar.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                LinearLayout everythingLayout = findViewById(R.id.hideGuildDetails);
+                textView1.setVisibility(View.VISIBLE);
+                chooseGuildSpinner.setVisibility(View.VISIBLE);
+                everythingLayout.setVisibility(View.VISIBLE);
             }
 
         }

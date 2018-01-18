@@ -111,6 +111,7 @@ public class GuildMembersActivity extends AppCompatActivity {
             if(korisnikEntityList == null) {
                 Toast.makeText(GuildMembersActivity.this, "Something went wrong... Try again", Toast.LENGTH_SHORT).show();
                 finish();
+                return;
             }
             //Ako je korisnik sam u Cehu (leader) gumbi nemaju smisla
             if(korisnikEntityList.size() == 1) {

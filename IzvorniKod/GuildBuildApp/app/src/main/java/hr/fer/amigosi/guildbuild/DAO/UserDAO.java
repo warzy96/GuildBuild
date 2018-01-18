@@ -45,10 +45,12 @@ public class UserDAO {
         }
         return null;
     }
+
     public KorisnikEntity getUser(String nickname) throws SQLException{
         KorisnikEntity korisnikEntity = null;
-        String querry = "SELECT * FROM korisnik WHERE nadimak= '"
-                + nickname + "' AND statusR ";
+        String querry = "SELECT * FROM korisnik "
+                + "WHERE nadimak= '"
+                + nickname + "' AND statusR";
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(querry);
@@ -62,6 +64,35 @@ public class UserDAO {
                 String opis = rs.getString("opis");
                 boolean isAdmin = rs.getBoolean("isAdmin");
                 korisnikEntity = new KorisnikEntity(email1, nadimak, lozinka, statusR, sifCeh, statusP, opis, isAdmin);
+                return korisnikEntity;
+            }
+        }
+        catch (SQLException e) {
+            throw e;
+        }
+        return  null;
+    }
+
+
+    public KorisnikEntity getUserWithRank(String nickname, String sifraCeha) throws SQLException{
+        KorisnikEntity korisnikEntity = null;
+        String querry = "SELECT * FROM korisnik JOIN rang ON korisnik.nadimak = rang.nadimak "
+                + "WHERE korisnik.nadimak= '"
+                + nickname + "' AND statusR AND rang.sifCeh = '" + sifraCeha +"'";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(querry);
+            if(rs.next()) {
+                String nadimak = rs.getString("nadimak");
+                String email1 = rs.getString("email");
+                String lozinka =rs.getString("lozinka");
+                boolean statusR = rs.getBoolean("statusR");
+                String rang = rs.getString("rang");
+                //String sifCeh = rs.getString("sifCeh");
+                boolean statusP = rs.getBoolean("statusP");
+                String opis = rs.getString("opis");
+                boolean isAdmin = rs.getBoolean("isAdmin");
+                korisnikEntity = new KorisnikEntity(email1, nadimak, lozinka, statusR, rang, sifraCeha, statusP, opis, isAdmin);
                 return korisnikEntity;
             }
         }

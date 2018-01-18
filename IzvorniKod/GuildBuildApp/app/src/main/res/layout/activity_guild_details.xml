@@ -22,16 +22,16 @@
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-7dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:indeterminate="true"
                 android:indeterminateTint="@android:color/background_light"
                 android:max="100" />
+
             <TextView
                 android:id="@+id/chooseGuildTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Please choose a guild"
+                android:text="Guild to display:"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="18sp" />
