@@ -57,9 +57,9 @@ public class EventsListActivity extends AppCompatActivity {
             try {
                 DogadajDAO dogadajDAO = new DogadajDAO();
                 if(sifraTrazenogCeha==sifraKorisnikovogCeha) {
-                    dogadaji = dogadajDAO.getAllEventsForGuild(sifraTrazenogCeha.toString());
+                    dogadaji = dogadajDAO.getAllEventsForGuild(sifraTrazenogCeha);
                 }else{
-                    dogadaji = dogadajDAO.getVisibleEventsForGuild(sifraTrazenogCeha.toString());
+                    dogadaji = dogadajDAO.getVisibleEventsForGuild(sifraTrazenogCeha);
                     notInGuild=true;
                 }
             }

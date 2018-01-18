@@ -137,21 +137,21 @@ public class GuildDetailsActivity extends AppCompatActivity {
         Button newEventButton = findViewById(R.id.btnAddEvent);
         newEventButton.setOnClickListener(View -> {
             Intent intent = new Intent(GuildDetailsActivity.this, AddEventActivity.class);
-            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraKorisnikovogCeha);
+            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraTrazenogCeha);
             startActivity(intent);
         });
 
         Button newGoalButton = findViewById(R.id.btnAddGoal);
         newGoalButton.setOnClickListener(View -> {
             Intent intent = new Intent(GuildDetailsActivity.this, AddGoalActivity.class);
-            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraKorisnikovogCeha);
+            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraTrazenogCeha);
             startActivity(intent);
         });
 
         Button newSubgoalButton = findViewById(R.id.btnAddSubgoal);
         newSubgoalButton.setOnClickListener(View -> {
             Intent intent = new Intent(GuildDetailsActivity.this, AddSubgoalActivity.class);
-            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraKorisnikovogCeha);
+            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraTrazenogCeha);
             startActivity(intent);
         });
 

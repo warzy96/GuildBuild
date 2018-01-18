@@ -30,7 +30,7 @@ public class AddGoalActivity extends AppCompatActivity {
     private EditText goalName;
     private Button btnAddGoal;
 
-    private String sifraKorisnikovogCeha;
+    private Integer sifraKorisnikovogCeha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class AddGoalActivity extends AppCompatActivity {
         goalName = (EditText) findViewById(R.id.goalToAdd);
 
         Intent pastIntent = getIntent();
-        sifraKorisnikovogCeha = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE2);
+        sifraKorisnikovogCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2, 0);
 
         btnAddGoal.setOnClickListener(new View.OnClickListener()
         {

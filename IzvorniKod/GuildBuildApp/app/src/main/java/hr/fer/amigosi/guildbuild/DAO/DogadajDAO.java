@@ -62,8 +62,8 @@ public class DogadajDAO {
         }
     }
 
-    public List<DogadajEntity> getAllEventsForGuild(String sifraCeha) throws SQLException{
-        String querry = "SELECT * FROM dogadaj WHERE dogadaj.sifCeh =" + Integer.parseInt(sifraCeha);
+    public List<DogadajEntity> getAllEventsForGuild(int sifraCeha) throws SQLException{
+        String querry = "SELECT * FROM dogadaj WHERE dogadaj.sifCeh =" + sifraCeha;
         List<DogadajEntity> result = new ArrayList<>();
 
         try {
@@ -89,8 +89,8 @@ public class DogadajDAO {
         }
     }
 
-    public List<DogadajEntity> getVisibleEventsForGuild(String sifraCeha) throws SQLException{
-        String querry = "SELECT * FROM dogadaj WHERE dogadaj.sifCeh =" + Integer.parseInt(sifraCeha)
+    public List<DogadajEntity> getVisibleEventsForGuild(int sifraCeha) throws SQLException{
+        String querry = "SELECT * FROM dogadaj WHERE dogadaj.sifCeh =" + sifraCeha
                 +" AND vidljiv";
         List<DogadajEntity> result = new ArrayList<>();
 
@@ -116,8 +116,8 @@ public class DogadajDAO {
         }
     }
 
-    public List<DogadajEntity> getFinishedEventsForGuild(String sifraCeha) throws SQLException{
-        String querry = "SELECT * FROM dogadaj WHERE dogadaj.sifCeh =" + Integer.parseInt(sifraCeha)
+    public List<DogadajEntity> getFinishedEventsForGuild(int sifraCeha) throws SQLException{
+        String querry = "SELECT * FROM dogadaj WHERE dogadaj.sifCeh =" + sifraCeha
                 +" AND ispunjen";
         List<DogadajEntity> result = new ArrayList<>();
 
@@ -143,9 +143,9 @@ public class DogadajDAO {
         }
     }
 
-    public DogadajEntity getEvent(String nazivDogadaja, String sifraCeha) throws  SQLException{
+    public DogadajEntity getEvent(String nazivDogadaja, int sifraCeha) throws  SQLException{
         String querry = "SELECT * FROM dogadaj WHERE dogadaj.nazivDog ='" + nazivDogadaja
-                +"' AND dogadaj.sifCeh="+  Integer.parseInt(sifraCeha);
+                +"' AND dogadaj.sifCeh="+  sifraCeha;
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(querry);
