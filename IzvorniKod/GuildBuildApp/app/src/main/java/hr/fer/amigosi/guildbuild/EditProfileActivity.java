@@ -21,7 +21,9 @@ import android.widget.Toast;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
+import hr.fer.amigosi.guildbuild.DAO.ObrazacDAO;
 import hr.fer.amigosi.guildbuild.DAO.RangDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.DAO.VoteDAO;
@@ -125,15 +127,17 @@ public class EditProfileActivity extends AppCompatActivity {
                     message = "Check Your Internet Access!";
                 }
                 UserDAO userDAO = new UserDAO();
-
-                KorisnikEntity korisnikEntity = userDAO.getUserWithRank(nickname, sifraCeha.toString());
-                if(korisnikEntity.getRang().equals(RangConstants.leader)){
-                    VoteDAO voteDAO = new VoteDAO();
-                    voteDAO.insertAllCoordinatorsFromGuildIntoVote(sifraCeha.toString());
-                }
-
-                userDAO.deleteUser(nickname);
                 RangDAO rangDAO = new RangDAO();
+                ObrazacDAO obrazacDAO = new ObrazacDAO();
+                List<Integer> gdjeJeVoda = rangDAO.isUserLeader(nickname);
+                if(!gdjeJeVoda.isEmpty()) {
+                    for(Integer sif : gdjeJeVoda) {
+                        VoteDAO voteDAO = new VoteDAO();
+                        voteDAO.insertAllCoordinatorsFromGuildIntoVote(sif.toString());
+                    }
+                }
+                obrazacDAO.deleteForm(nickname);
+                userDAO.deleteUser(nickname);
                 rangDAO.deleteUser(nickname);
                 message = "Delete successful";
                 success = true;
