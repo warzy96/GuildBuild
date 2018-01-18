@@ -1,11 +1,14 @@
 package hr.fer.amigosi.guildbuild;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 
 /**
  *  @author Filip Kerman
@@ -33,9 +36,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //Ako korisnik nije u cehu -> sakrij gumb za pregled njegovog ceha
         //Ako korisnik je u cehu -> sakrij gumb za stvaranje novog ceha
-        if(sifraCeha == null) {
-            myGuildButton.setVisibility(View.GONE);
-        }
+
 
         createNewGuildButton.setOnClickListener(view -> {
             Intent newGuild = new Intent(HomeActivity.this, GuildCreateActivity.class);
@@ -61,6 +62,15 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new getGuildsForUser().execute();
+        TextView textView = findViewById(R.id.Nickname);
+        textView.setText(nickname);
+
+    }
+
     public void UserProfile(View view){
         Intent intent = new Intent(this, UserProfileActivity.class);
         intent.putExtra(MainActivity.EXTRA_MESSAGE1, nickname);
@@ -74,5 +84,29 @@ public class HomeActivity extends AppCompatActivity {
         intent.putExtra(MainActivity.EXTRA_MESSAGE1, nickname);
         intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraCeha);
         startActivity(intent);
+    }
+
+
+    private class getGuildsForUser extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            UserDAO userDAO = null;
+            try {
+                userDAO = new UserDAO();
+                sifraCeha = userDAO.getSifCeh(nickname);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(sifraCeha == null) {
+                Button myGuildButton = findViewById(R.id.MyGuild);
+                myGuildButton.setVisibility(View.GONE);
+            }
+        }
     }
 }

@@ -56,10 +56,12 @@ public class EventsListActivity extends AppCompatActivity {
             List<DogadajEntity> dogadaji = new ArrayList<>();
             try {
                 DogadajDAO dogadajDAO = new DogadajDAO();
-                for(String temp : sifraKorisnikovogCeha.split(",")) {
-                    if(temp.equals(sifraTrazenogCeha.toString())) {
-                        dogadaji = dogadajDAO.getAllEventsForGuild(sifraTrazenogCeha);
-                        return dogadaji;
+                if(sifraKorisnikovogCeha != null) {
+                    for(String temp : sifraKorisnikovogCeha.split(",")) {
+                        if(temp.equals(sifraTrazenogCeha.toString())) {
+                            dogadaji = dogadajDAO.getAllEventsForGuild(sifraTrazenogCeha);
+                            return dogadaji;
+                        }
                     }
                 }
                 dogadaji = dogadajDAO.getVisibleEventsForGuild(sifraTrazenogCeha);

@@ -177,14 +177,16 @@ public class GuildDetailsActivity extends AppCompatActivity {
             new FillNameAndDesc().execute("");
 
             Boolean isInCeh = false;
-            for(String temp : sifraKorisnikovogCeha.split(",")) {
-                if(temp.equals(sifraTrazenogCeha.toString())) {
-                    new IsRequestsButtonVisible().execute();
-                    new IsNewEventButtonVisible().execute();
-                    new IsNewGoalButtonVisible().execute();
-                    new IsNewSubgoalButtonVisible().execute();
-                    new IsApplyButtonVisible().execute();
-                    isInCeh = true;
+            if(sifraKorisnikovogCeha != null) {
+                for(String temp : sifraKorisnikovogCeha.split(",")) {
+                    if(temp.equals(sifraTrazenogCeha.toString())) {
+                        new IsRequestsButtonVisible().execute();
+                        new IsNewEventButtonVisible().execute();
+                        new IsNewGoalButtonVisible().execute();
+                        new IsNewSubgoalButtonVisible().execute();
+                        new IsApplyButtonVisible().execute();
+                        isInCeh = true;
+                    }
                 }
             }
             if(!isInCeh) {
@@ -342,7 +344,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
                     message = "Check Your Internet Access!";
                 }
                 UserDAO userDAO = new UserDAO();
-                KorisnikEntity korisnikEntity = userDAO.getUser(nadimak);
+                KorisnikEntity korisnikEntity = userDAO.getUserWithRank(nadimak, sifraTrazenogCeha.toString());
 
 
                 if(korisnikEntity.getRang().equals(RangConstants.leader)){

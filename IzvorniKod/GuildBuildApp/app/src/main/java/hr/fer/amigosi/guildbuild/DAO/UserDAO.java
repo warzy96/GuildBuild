@@ -164,13 +164,12 @@ public class UserDAO {
                 String email = rs.getString("email");
                 String lozinka =rs.getString("lozinka");
                 boolean statusR = rs.getBoolean("statusR");
-                String rang = rs.getString("rang");
                 String sifCeh = rs.getString("sifCeh");
                 boolean statusP = rs.getBoolean("statusP");
                 String opis = rs.getString("opis");
                 boolean isAdmin = rs.getBoolean("isAdmin");
 
-                KorisnikEntity korisnik = new KorisnikEntity(email, nadimak, lozinka, statusR, rang, sifCeh, statusP, opis, isAdmin);
+                KorisnikEntity korisnik = new KorisnikEntity(email, nadimak, lozinka, statusR, sifCeh, statusP, opis, isAdmin);
                 result.add(korisnik);
             }
             return result;
@@ -193,13 +192,12 @@ public class UserDAO {
                 String email = rs.getString("email");
                 String lozinka =rs.getString("lozinka");
                 boolean statusR = rs.getBoolean("statusR");
-                String rang = rs.getString("rang");
                 String sifCeh = rs.getString("sifCeh");
                 boolean statusP = rs.getBoolean("statusP");
                 String opis = rs.getString("opis");
                 boolean isAdmin = rs.getBoolean("isAdmin");
 
-                KorisnikEntity korisnik = new KorisnikEntity(email, nadimak, lozinka, statusR, rang, sifCeh, statusP, opis, isAdmin);
+                KorisnikEntity korisnik = new KorisnikEntity(email, nadimak, lozinka, statusR, sifCeh, statusP, opis, isAdmin);
                 result.add(korisnik);
             }
             return result;
@@ -295,19 +293,43 @@ public class UserDAO {
 
 
 
-    public void removeRanksAndSifraCehaForGuild(String sifraCeha)  throws SQLException{
-        String query = "UPDATE korisnik SET korisnik.sifCeh = " + null + " WHERE korisnik.sifCeh LIKE '%"
-                + sifraCeha + "%'";
-        String query2 = "DELETE * FROM rang WHERE rang.sifCeh LIKE '%"
-                + sifraCeha + "%'";
+    public void removeRanksAndSifraCehaForGuild(String sifraCeha)  throws SQLException, Exception{
         try {
+            CehDAO cehDAO = new CehDAO();
+            List<KorisnikEntity> korisnikEntityList = cehDAO.getGuildMembers(sifraCeha);
+            for(KorisnikEntity korisnikEntity : korisnikEntityList) {
+                if(korisnikEntity.getSifraCeha().contains(",")) {
+                    String novaSifraCeha = korisnikEntity.getSifraCeha().replace(sifraCeha, "");
+                    if(novaSifraCeha.startsWith(",")) {
+                        novaSifraCeha = novaSifraCeha.replace(",", "");
+                    }
+                    else {
+                        if(novaSifraCeha.contains(",,")) {
+                            novaSifraCeha = novaSifraCeha.replace(",,", ",");
+                        }
+                    }
+                    updateUserGuild(korisnikEntity.getNadimak(), novaSifraCeha);
+                }
+                else {
+                    String query = "UPDATE korisnik SET "
+                            + "sifCeh = NULL WHERE korisnik.nadimak = '" + korisnikEntity.getNadimak() + "'";
+                    Statement statement = connection.createStatement();
+                    statement.executeUpdate(query);
+                }
+            }
+            String query2 = "DELETE FROM rang WHERE rang.sifCeh = "
+                    + Integer.parseInt(sifraCeha);
             Statement statement = connection.createStatement();
-            statement.executeUpdate(query);
             statement.executeUpdate(query2);
         }
         catch (SQLException e) {
             throw e;
         }
+        catch (Exception e) {
+            throw e;
+        }
+
+
     }
 
     public String getSifCeh(String nickname) throws SQLException{

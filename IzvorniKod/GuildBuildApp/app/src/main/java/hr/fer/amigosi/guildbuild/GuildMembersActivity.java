@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -25,7 +26,7 @@ public class GuildMembersActivity extends AppCompatActivity {
     public static final String NADIMAK_KORISNIKA_KOJI_POKRECE_ACTIVITY = "nadimakKorisnika";
     private TextView imeCeha;
     private LinearLayout layout1;
-    private Integer sifraCeha;
+    private String sifraCeha;
     private Integer sifraTrazenogCeha;
     private String nadimak;
     @Override
@@ -59,14 +60,15 @@ public class GuildMembersActivity extends AppCompatActivity {
         super.onResume();
         Intent pastIntent = getIntent();
         sifraTrazenogCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
-        sifraCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2, 0);
+        sifraCeha = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE2);
         nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
         Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
         Button promoteDemoteButton = findViewById(R.id.promote_demoteMembersButton);
-        if(sifraCeha != sifraTrazenogCeha) {
+        if(sifraCeha == null) {
             giveUpLeadershipButton.setVisibility(View.GONE);
             promoteDemoteButton.setVisibility(View.GONE);
         }
+
         new PopulateGuildMembers().execute("");
     }
 
@@ -108,7 +110,7 @@ public class GuildMembersActivity extends AppCompatActivity {
             Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
             Button promoteDemoteButton = findViewById(R.id.promote_demoteMembersButton);
 
-            if(korisnikEntityList == null) {
+            if(korisnikEntityList.isEmpty()) {
                 Toast.makeText(GuildMembersActivity.this, "Something went wrong... Try again", Toast.LENGTH_SHORT).show();
                 finish();
                 return;
