@@ -95,8 +95,9 @@ public class VoteActivity extends AppCompatActivity {
                 else{
 
                     for(VoteEntity voteEntity : voteEntities) {
-                        if(voteEntity.getNadimak().equals(nickname))
+                        if((voteEntity.getNadimak().equals(nickname)) || (voteEntity.getBrojGlasova() == -1))
                             continue;
+
                         TextView nicknameView = new TextView(getApplicationContext());
                         Button btnVoteFor = new Button(new ContextThemeWrapper(getApplicationContext(), R.style.button_style), null, R.style.button_style);
 
@@ -137,7 +138,7 @@ public class VoteActivity extends AppCompatActivity {
                 VoteDAO voteDAO = new VoteDAO();
                 voteDAO.incrementBrGlasova(voteEntity);
                 voteDAO.markIsGlasao(nickname);
-                sviGlasali = voteDAO.isFinished();
+                sviGlasali = voteDAO.isFinished(sifraCeha.toString());
 
                 if(sviGlasali){
                     List<VoteEntity> maxVoteEntities = voteDAO.maxVotes(sifraCeha.toString());
