@@ -42,7 +42,8 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".EditProfileActivity"
-            android:parentActivityName=".UserProfileActivity" />
+            android:parentActivityName=".UserProfileActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".GuildCreateActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -69,7 +70,8 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".AddNewCharacterActivity"
-            android:parentActivityName=".EditProfileActivity" />
+            android:parentActivityName=".EditProfileActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".GuildDetailsActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

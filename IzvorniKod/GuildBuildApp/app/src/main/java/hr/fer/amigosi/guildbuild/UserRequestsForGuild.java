@@ -16,9 +16,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import hr.fer.amigosi.guildbuild.DAO.CehDAO;
 import hr.fer.amigosi.guildbuild.DAO.ObrazacDAO;
 import hr.fer.amigosi.guildbuild.DAO.RangDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
+import hr.fer.amigosi.guildbuild.entities.CehEntity;
 import hr.fer.amigosi.guildbuild.entities.ObrazacEntity;
 
 public class UserRequestsForGuild extends AppCompatActivity {
@@ -37,18 +39,38 @@ public class UserRequestsForGuild extends AppCompatActivity {
     }
 
     private class AcceptUserForm extends AsyncTask<String, Void, String> {
-
         @Override
         protected String doInBackground(String... strings) {
             String userNickname = strings[0];
             try {
                 UserDAO userDAO = new UserDAO();
-                userDAO.updateUserGuild(userNickname, sifraCeha.toString());
+                CehDAO cehDAO = new CehDAO();
                 RangDAO rangDAO = new RangDAO();
-                rangDAO.updateUserRank(userNickname, RangConstants.member, sifraCeha.toString());
                 ObrazacDAO obrazacDAO = new ObrazacDAO();
-                obrazacDAO.deleteForm(userNickname, sifraCeha);
-                return "User added successfully";
+                String sifreCehova = userDAO.getSifCeh(userNickname);
+                if(sifreCehova != null) {
+                    List<CehEntity> sviCehoviZaIgru = cehDAO.getGuildsForGame(cehDAO.getGuild(sifraCeha).getSifraIgre());
+                    for(CehEntity cehEntity : sviCehoviZaIgru) {
+                        Integer sifCeh = cehEntity.getSifraCeha();
+                        if(sifreCehova.contains(sifCeh.toString())) {
+                            obrazacDAO.deleteForm(userNickname, sifraCeha);
+                            UserDAO.close();
+                            return "User already joined another guild!";
+                        }
+                    }
+                    userDAO.updateUserGuild(userNickname, sifreCehova + "," + sifraCeha.toString());
+                    rangDAO.insertUserRank(userNickname, RangConstants.member, sifraCeha.toString());
+                    obrazacDAO.deleteForm(userNickname, sifraCeha);
+                    UserDAO.close();
+                    return "User accepted";
+                }
+                else {
+                    userDAO.updateUserGuild(userNickname, sifraCeha.toString());
+                    rangDAO.insertUserRank(userNickname, RangConstants.member, sifraCeha.toString());
+                    obrazacDAO.deleteForm(userNickname, sifraCeha);
+                    UserDAO.close();
+                    return "User accepted";
+                }
             }
             catch (Exception e) {
                 return e.getMessage();

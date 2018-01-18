@@ -81,7 +81,16 @@ public class GuildDetailsActivity extends AppCompatActivity {
         sifraKorisnikovogCeha = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE2);
 
         btnApply.setOnClickListener(view -> {
-            if(sifraKorisnikovogCeha!= null){
+            for(String temp : sifraKorisnikovogCeha.split(",")) {
+                if(temp.equals(sifraTrazenogCeha.toString())) {
+                    new IsRequestsButtonVisible().execute();
+                    new IsNewEventButtonVisible().execute();
+                    new IsNewGoalButtonVisible().execute();
+                    new IsNewSubgoalButtonVisible().execute();
+                    btnApply.setVisibility(View.GONE);
+                }
+            }
+            if(sifraKorisnikovogCeha != null){
                 Toast.makeText(GuildDetailsActivity.this,
                         "You are already in guild!", Toast.LENGTH_SHORT).show();
             }else{
@@ -178,14 +187,33 @@ public class GuildDetailsActivity extends AppCompatActivity {
             sifraTrazenogCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3, 0);
 
             new FillNameAndDesc().execute("");
-            new IsRequestsButtonVisible().execute();
-            new IsNewEventButtonVisible().execute();
-            new IsNewGoalButtonVisible().execute();
-            new IsNewSubgoalButtonVisible().execute();
-            if(sifraKorisnikovogCeha.contains(sifraTrazenogCeha.toString())){
-                btnApply.setVisibility(View.GONE);
-            }else{
+
+            Boolean isInCeh = false;
+            for(String temp : sifraKorisnikovogCeha.split(",")) {
+                if(temp.equals(sifraTrazenogCeha.toString())) {
+                    new IsRequestsButtonVisible().execute();
+                    new IsNewEventButtonVisible().execute();
+                    new IsNewGoalButtonVisible().execute();
+                    new IsNewSubgoalButtonVisible().execute();
+                    btnApply.setVisibility(View.GONE);
+                    isInCeh = true;
+                }
+            }
+            if(!isInCeh) {
+                Button newEventButton = findViewById(R.id.btnAddEvent);
+                Button newSubgoalButton = findViewById(R.id.btnAddSubgoal);
+                Button newGoalButton = findViewById(R.id.btnAddGoal);
+                Button userRequests = findViewById(R.id.JoinRequestsButton);
+                userRequests.setVisibility(View.GONE);
+                newEventButton.setVisibility(View.GONE);
+                newSubgoalButton.setVisibility(View.GONE);
+                newGoalButton.setVisibility(View.GONE);
                 btnLeaveGuild.setVisibility(View.GONE);
+                LinearLayout everythingLayout = findViewById(R.id.hideGuildDetails);
+                ProgressBar progressBar = findViewById(R.id.progressbar);
+                progressBar.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                everythingLayout.setVisibility(View.VISIBLE);
             }
 
         }
@@ -525,8 +553,11 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 LinearLayout everythingLayout = findViewById(R.id.hideGuildDetails);
-                textView1.setVisibility(View.VISIBLE);
-                chooseGuildSpinner.setVisibility(View.VISIBLE);
+                Intent pastIntent = getIntent();
+                if(!pastIntent.getBooleanExtra(GuildListActivity.IS_FROM_GUILD_LIST_ACTIVITY, false)) {
+                    textView1.setVisibility(View.VISIBLE);
+                    chooseGuildSpinner.setVisibility(View.VISIBLE);
+                }
                 everythingLayout.setVisibility(View.VISIBLE);
             }
 

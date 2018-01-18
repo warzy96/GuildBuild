@@ -106,6 +106,9 @@ public class UserProfileActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Intent intent = getIntent();
+        nickNameStr = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
+        userWatchingNickname = intent.getStringExtra(GuildMembersActivity.NADIMAK_KORISNIKA_KOJI_POKRECE_ACTIVITY);
         nickTextView.setText(nickNameStr);
         new CheckClass().execute("");
     }

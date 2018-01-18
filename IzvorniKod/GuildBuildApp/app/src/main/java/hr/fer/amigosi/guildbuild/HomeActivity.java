@@ -72,6 +72,7 @@ public class HomeActivity extends AppCompatActivity {
     public void GuildList(View view){
         Intent intent = new Intent(this, GuildListActivity.class);
         intent.putExtra(MainActivity.EXTRA_MESSAGE1, nickname);
+        intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraCeha);
         startActivity(intent);
     }
 }
