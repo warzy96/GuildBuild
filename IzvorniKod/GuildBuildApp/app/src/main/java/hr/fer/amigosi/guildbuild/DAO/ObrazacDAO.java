@@ -91,8 +91,8 @@ public class ObrazacDAO {
     }
 
 
-    public List<ObrazacEntity> getAllFormsForGuild(int sifraCeha) throws SQLException{
-        String querry = "SELECT * FROM obrazac WHERE obrazac.sifCeha =" + sifraCeha;
+    public List<ObrazacEntity> getAllFormsForGuild(String sifraCeha) throws SQLException{
+        String querry = "SELECT * FROM obrazac WHERE obrazac.sifCeha =" + Integer.parseInt(sifraCeha);
         List<ObrazacEntity> result = new ArrayList<>();
 
         try {

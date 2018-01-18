@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -25,8 +26,8 @@ public class GuildMembersActivity extends AppCompatActivity {
     public static final String NADIMAK_KORISNIKA_KOJI_POKRECE_ACTIVITY = "nadimakKorisnika";
     private TextView imeCeha;
     private LinearLayout layout1;
-    private int sifraCeha;
-    private int sifraTrazenogCeha;
+    private String sifraCeha;
+    private Integer sifraTrazenogCeha;
     private String nadimak;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +45,13 @@ public class GuildMembersActivity extends AppCompatActivity {
         giveUpLeadershipButton.setOnClickListener(view -> {
             Intent intent = new Intent(GuildMembersActivity.this, ConcedeActivity.class);
             intent.putExtra(MainActivity.EXTRA_MESSAGE1, nadimak);
+            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraTrazenogCeha);
             startActivity(intent);
         });
         promoteDemoteButton.setOnClickListener(view -> {
             Intent intent = new Intent(GuildMembersActivity.this, Promote_demoteActivity.class);
             intent.putExtra(MainActivity.EXTRA_MESSAGE1, nadimak);
-            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraCeha);
+            intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraTrazenogCeha);
             startActivity(intent);
         });
     }
@@ -59,14 +61,15 @@ public class GuildMembersActivity extends AppCompatActivity {
         super.onResume();
         Intent pastIntent = getIntent();
         sifraTrazenogCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
-        sifraCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2, 0);
+        sifraCeha = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE2);
         nadimak = pastIntent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
         Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
         Button promoteDemoteButton = findViewById(R.id.promote_demoteMembersButton);
-        if(sifraCeha != sifraTrazenogCeha) {
+        if(sifraCeha == null) {
             giveUpLeadershipButton.setVisibility(View.GONE);
             promoteDemoteButton.setVisibility(View.GONE);
         }
+
         new PopulateGuildMembers().execute("");
     }
 
@@ -87,7 +90,7 @@ public class GuildMembersActivity extends AppCompatActivity {
         protected List<KorisnikEntity> doInBackground(String... strings) {
             try {
                 CehDAO cehDAO = new CehDAO();
-                List<KorisnikEntity> korisnikEntityList = cehDAO.getGuildMembers(sifraTrazenogCeha);
+                List<KorisnikEntity> korisnikEntityList = cehDAO.getGuildMembers(sifraTrazenogCeha.toString());
                 return korisnikEntityList;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -108,9 +111,10 @@ public class GuildMembersActivity extends AppCompatActivity {
             Button giveUpLeadershipButton = findViewById(R.id.giveUpLeadershipButton);
             Button promoteDemoteButton = findViewById(R.id.promote_demoteMembersButton);
 
-            if(korisnikEntityList == null) {
+            if(korisnikEntityList.isEmpty()) {
                 Toast.makeText(GuildMembersActivity.this, "Something went wrong... Try again", Toast.LENGTH_SHORT).show();
                 finish();
+                return;
             }
             //Ako je korisnik sam u Cehu (leader) gumbi nemaju smisla
             if(korisnikEntityList.size() == 1) {

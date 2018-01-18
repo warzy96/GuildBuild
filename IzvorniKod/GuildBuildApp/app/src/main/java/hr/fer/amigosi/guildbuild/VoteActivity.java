@@ -18,6 +18,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import hr.fer.amigosi.guildbuild.DAO.RangDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.DAO.VoteDAO;
 import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
@@ -25,7 +26,7 @@ import hr.fer.amigosi.guildbuild.entities.VoteEntity;
 
 public class VoteActivity extends AppCompatActivity {
     private String nickname;
-    private int sifraCeha;
+    private Integer sifraCeha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class VoteActivity extends AppCompatActivity {
                 VoteDAO voteDAO = new VoteDAO();
                 VoteEntity voteEntity = voteDAO.getVoter(nickname);
                 jeGlasao = voteEntity.isGlasao();
-                List<VoteEntity> voteEntities = voteDAO.loadAllCoordinatorsForGivenGuild(sifraCeha);
+                List<VoteEntity> voteEntities = voteDAO.loadAllCoordinatorsForGivenGuild(sifraCeha.toString());
                 return voteEntities;
 
             }catch (Exception ex){
@@ -112,8 +113,8 @@ public class VoteActivity extends AppCompatActivity {
                             VoteFor voteFor = new VoteFor();
                             voteFor.execute(voteEntity);
                         });
-                        LinearLayout horizontalView = new LinearLayout(getApplicationContext());
-                        horizontalView.setOrientation(LinearLayout.HORIZONTAL);
+                        LinearLayout horizontalView = new LinearLayout(VoteActivity.this);
+                        horizontalView.setOrientation(LinearLayout.VERTICAL);
                         horizontalView.setMinimumWidth(gornjiLayout.getWidth());
 
                         horizontalView.addView(nicknameView);
@@ -139,16 +140,16 @@ public class VoteActivity extends AppCompatActivity {
                 sviGlasali = voteDAO.isFinished();
 
                 if(sviGlasali){
-                    List<VoteEntity> maxVoteEntities = voteDAO.maxVotes(sifraCeha);
+                    List<VoteEntity> maxVoteEntities = voteDAO.maxVotes(sifraCeha.toString());
                     if(maxVoteEntities.size() > 1){
                         oneLeader=false;
                     }else{
                         oneLeader=true;
-                        UserDAO userDAO = new UserDAO();
+                        RangDAO rangDAO = new RangDAO();
                         String nadimakLeadera = maxVoteEntities.get(0).getNadimak();
                         if(nadimakLeadera != null){
-                            userDAO.setLeader(nadimakLeadera);
-                            voteDAO.votingFinished(sifraCeha);
+                            rangDAO.setLeader(nadimakLeadera, sifraCeha.toString());
+                            voteDAO.votingFinished(sifraCeha.toString());
                         }
 
                     }

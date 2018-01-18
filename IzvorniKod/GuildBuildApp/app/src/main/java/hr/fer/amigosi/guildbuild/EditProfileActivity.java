@@ -21,7 +21,10 @@ import android.widget.Toast;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
+import hr.fer.amigosi.guildbuild.DAO.ObrazacDAO;
+import hr.fer.amigosi.guildbuild.DAO.RangDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.DAO.VoteDAO;
 import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
@@ -36,7 +39,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText descriptionEditText;
     private String aboutMeText="";
     private String nickname;
-    private int sifraCeha;
+    private Integer sifraCeha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,13 +127,16 @@ public class EditProfileActivity extends AppCompatActivity {
                     message = "Check Your Internet Access!";
                 }
                 UserDAO userDAO = new UserDAO();
-
-                KorisnikEntity korisnikEntity = userDAO.getUser(nickname);
-                if(korisnikEntity.getRang().equals(RangConstants.leader)){
-                    VoteDAO voteDAO = new VoteDAO();
-                    voteDAO.insertAllCoordinatorsFromGuildIntoVote(korisnikEntity.getSifraCeha());
+                RangDAO rangDAO = new RangDAO();
+                ObrazacDAO obrazacDAO = new ObrazacDAO();
+                List<Integer> gdjeJeVoda = rangDAO.isUserLeader(nickname);
+                if(!gdjeJeVoda.isEmpty()) {
+                    for(Integer sif : gdjeJeVoda) {
+                        VoteDAO voteDAO = new VoteDAO();
+                        voteDAO.insertAllCoordinatorsFromGuildIntoVote(sif.toString());
+                    }
                 }
-
+                obrazacDAO.deleteForm(nickname);
                 userDAO.deleteUser(nickname);
                 message = "Delete successful";
                 success = true;
@@ -140,7 +146,6 @@ public class EditProfileActivity extends AppCompatActivity {
             finally {
                 try {
                     UserDAO.close();
-                    VoteDAO.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

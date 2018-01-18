@@ -40,7 +40,7 @@ public class AddSubgoalActivity extends AppCompatActivity {
         subgoalName = (EditText) findViewById(R.id.subgoalToAdd);
 
         Intent pastIntent = getIntent();
-        sifraKorisnikovogCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2,0);
+        sifraKorisnikovogCeha = pastIntent.getIntExtra(MainActivity.EXTRA_MESSAGE2, 0);
 
         btnAddSubgoal.setOnClickListener(new View.OnClickListener()
         {

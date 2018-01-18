@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import java.util.List;
 import hr.fer.amigosi.guildbuild.AdministratorAddGameActivity;
 import hr.fer.amigosi.guildbuild.AdministratorProfileActivity;
 import hr.fer.amigosi.guildbuild.DAO.CehDAO;
+import hr.fer.amigosi.guildbuild.DAO.RangDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.DatabaseConnection;
 import hr.fer.amigosi.guildbuild.R;
@@ -35,8 +37,7 @@ import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
 public class ConcedeActivity extends AppCompatActivity {
 
-    //private int sifraCeha;
-    KorisnikEntity korisnik;
+    private Integer sifraCeha;
     private String nickname;
     Connection con;
 
@@ -47,6 +48,7 @@ public class ConcedeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         nickname = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
+        sifraCeha = intent.getIntExtra(MainActivity.EXTRA_MESSAGE2, 0);
     }
 
     @Override
@@ -62,9 +64,9 @@ public class ConcedeActivity extends AppCompatActivity {
             String result = "";
             String newLeaderNickname = strings[0];
             try {
-                UserDAO userDAO = new UserDAO();
-                userDAO.updateUserRank(nickname, RangConstants.coordinator);
-                userDAO.updateUserRank(newLeaderNickname, RangConstants.leader);
+                RangDAO rangDAO = new RangDAO();
+                rangDAO.updateUserRank(nickname, RangConstants.coordinator, sifraCeha.toString());
+                rangDAO.updateUserRank(newLeaderNickname, RangConstants.leader, sifraCeha.toString());
                 result = "Success";
                 success = true;
             }
@@ -73,7 +75,7 @@ public class ConcedeActivity extends AppCompatActivity {
             }
             finally {
                 try {
-                    UserDAO.close();
+                    RangDAO.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -140,19 +142,17 @@ public class ConcedeActivity extends AppCompatActivity {
                     z = "Check Your Internet Access!";
                 } else {
                     CehDAO ceh = new CehDAO();
-                    UserDAO userDAO = new UserDAO();
-                    korisnik = userDAO.getUser(nickname);
-                    members = ceh.getGuildMembers(korisnik.getSifraCeha());
+                    members = ceh.getGuildMembers(sifraCeha.toString());
                     isSuccess = true;
                 }
             } catch (Exception ex) {
                 isSuccess = false;
+                ex.printStackTrace();
                 z = ex.getMessage();
             }
             finally {
                 try {
                     UserDAO.close();
-                    CehDAO.close();
                     con.close();
                 } catch (SQLException e) {
                     e.printStackTrace();

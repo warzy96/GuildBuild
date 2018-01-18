@@ -99,7 +99,8 @@ public class AdministratorDelGuildActivity extends AppCompatActivity {
                 CehDAO cehDAO = new CehDAO();
                 cehDAO.deleteGuild(cehEntity.getSifraCeha());
                 UserDAO userDAO = new UserDAO();
-                userDAO.removeRanksAndSifraCehaForGuild(cehEntity.getSifraCeha());
+                Integer sifraCeha = cehEntity.getSifraCeha();
+                userDAO.removeRanksAndSifraCehaForGuild(sifraCeha.toString());
                 return "Removed successfully";
             } catch (Exception e) {
                 e.printStackTrace();

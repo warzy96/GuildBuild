@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +21,9 @@ import java.sql.Statement;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuild.DAO.ObrazacDAO;
+import hr.fer.amigosi.guildbuild.DAO.RangDAO;
 import hr.fer.amigosi.guildbuild.DAO.UserDAO;
+import hr.fer.amigosi.guildbuild.DAO.VoteDAO;
 import hr.fer.amigosi.guildbuild.entities.KorisnikEntity;
 
 public class AdministratorDelAccActivity extends AppCompatActivity {
@@ -108,9 +111,17 @@ public class AdministratorDelAccActivity extends AppCompatActivity {
             KorisnikEntity korisnikEntity = korisnikEntities[0];
             try {
                 UserDAO userDAO = new UserDAO();
+                RangDAO rangDAO = new RangDAO();
+                List<Integer> gdjeJeVoda = rangDAO.isUserLeader(korisnikEntity.getNadimak());
                 userDAO.deleteUser(korisnikEntity.getNadimak());
                 ObrazacDAO obrazacDAO = new ObrazacDAO();
                 obrazacDAO.deleteForm(korisnikEntity.getNadimak());
+                if(!gdjeJeVoda.isEmpty()) {
+                    for(Integer sif : gdjeJeVoda) {
+                        VoteDAO voteDAO = new VoteDAO();
+                        voteDAO.insertAllCoordinatorsFromGuildIntoVote(sif.toString());
+                    }
+                }
                 return "Removed successfully";
             } catch (Exception e) {
                 e.printStackTrace();

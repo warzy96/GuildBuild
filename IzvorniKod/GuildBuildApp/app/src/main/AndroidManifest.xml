@@ -42,7 +42,8 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".EditProfileActivity"
-            android:parentActivityName=".UserProfileActivity" />
+            android:parentActivityName=".UserProfileActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".GuildCreateActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -69,7 +70,8 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".AddNewCharacterActivity"
-            android:parentActivityName=".EditProfileActivity" />
+            android:parentActivityName=".EditProfileActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".GuildDetailsActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -91,15 +93,24 @@
         <activity
             android:name=".UserRequestsForGuild"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".Promote_demoteActivity" />
-        <activity android:name=".AddEventActivity" />
-        <activity android:name=".AddGoalActivity" />
-        <activity android:name=".AddSubgoalActivity" />
-        <activity android:name=".VoteActivity" />
-        <activity android:name=".EventsListActivity" />
-        <activity android:name=".GoalsListActivity" />
-        <activity android:name=".SubgoalsListActivity" />
-        <activity android:name=".MyEventsActivity"></activity>
+        <activity android:name=".Promote_demoteActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".AddEventActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".AddGoalActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".AddSubgoalActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".VoteActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".EventsListActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".GoalsListActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".SubgoalsListActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".MyEventsActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
 
 </manifest>

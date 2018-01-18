@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         Boolean isVoteActivity = true;
         Boolean isKoordinator = false;
         String nadimak;
-        int sifraCeha;
+        Integer sifraCeha;
 
         @Override
         protected void onPostExecute(String r)
@@ -96,13 +96,12 @@ public class MainActivity extends AppCompatActivity {
             {
                 if(korisnikEntity.isAdmin()){
                     Toast.makeText(MainActivity.this , "Hello Admin" , Toast.LENGTH_LONG).show();
-                    //finish()
                     Intent intent = new Intent(MainActivity.this, AdministratorProfileActivity.class);
                     startActivity(intent);
                 }
 
                 else{
-                        if(!isVoteActivity && isKoordinator){
+                        if(isVoteActivity && isKoordinator){
                             Intent intenterino = new Intent(MainActivity.this, VoteActivity.class);
                             intenterino.putExtra(EXTRA_MESSAGE1, nadimak);
                             intenterino.putExtra(EXTRA_MESSAGE2, sifraCeha);
@@ -111,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                         intent.putExtra(EXTRA_MESSAGE1, korisnikEntity.getNadimak());
-                        intent.putExtra(EXTRA_MESSAGE2, korisnikEntity.getSifraCeha());
+                        intent.putExtra(EXTRA_MESSAGE2, sifraCeha);
                         startActivity(intent);
                  }
                 }
@@ -137,12 +136,15 @@ public class MainActivity extends AppCompatActivity {
                         if(korisnikEntity != null) {
                             z = "Login successful";
                             isSuccess = true;
-                            isVoteActivity = userDAO.checkIfGuildHasALeader(korisnikEntity.getSifraCeha());
-                            if(korisnikEntity.getRang() != null){
+                            VoteDAO voteDAO = new VoteDAO();
+                            if(!korisnikEntity.isAdmin()) {
+                                isVoteActivity = voteDAO.checkIfGuildHasToVote(korisnikEntity.getSifraCeha());
+                                Integer guildToVote = voteDAO.getGuildToVote(korisnikEntity.getSifraCeha());
+                                korisnikEntity = userDAO.getUserWithRank(korisnikEntity.getNadimak(), guildToVote.toString());
                                 isKoordinator = korisnikEntity.getRang().equals(RangConstants.coordinator);
+                                sifraCeha = guildToVote;
                             }
                             nadimak = korisnikEntity.getNadimak();
-                            sifraCeha = korisnikEntity.getSifraCeha();
                         }
                         else
                         {
