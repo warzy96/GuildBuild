@@ -143,7 +143,7 @@ public class Promote_demoteActivity extends AppCompatActivity {
             String result = "";
             try {
                 RangDAO rangDAO = new RangDAO();
-                rangDAO.updateUserRank(strings[0], strings[1]);
+                rangDAO.updateUserRank(strings[0], strings[1], sifraCeha.toString());
                 result = "Successful";
                 success = true;
             }

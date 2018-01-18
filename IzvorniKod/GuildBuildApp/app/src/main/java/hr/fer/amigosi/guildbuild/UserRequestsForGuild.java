@@ -45,7 +45,7 @@ public class UserRequestsForGuild extends AppCompatActivity {
                 UserDAO userDAO = new UserDAO();
                 userDAO.updateUserGuild(userNickname, sifraCeha.toString());
                 RangDAO rangDAO = new RangDAO();
-                rangDAO.updateUserRank(userNickname, RangConstants.member);
+                rangDAO.updateUserRank(userNickname, RangConstants.member, sifraCeha.toString());
                 ObrazacDAO obrazacDAO = new ObrazacDAO();
                 obrazacDAO.deleteForm(userNickname, sifraCeha);
                 return "User added successfully";

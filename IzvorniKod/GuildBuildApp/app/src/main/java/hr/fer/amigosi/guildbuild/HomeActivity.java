@@ -36,9 +36,6 @@ public class HomeActivity extends AppCompatActivity {
         if(sifraCeha == null) {
             myGuildButton.setVisibility(View.GONE);
         }
-        else {
-            createNewGuildButton.setVisibility(View.GONE);
-        }
 
         createNewGuildButton.setOnClickListener(view -> {
             Intent newGuild = new Intent(HomeActivity.this, GuildCreateActivity.class);
@@ -67,6 +64,7 @@ public class HomeActivity extends AppCompatActivity {
     public void UserProfile(View view){
         Intent intent = new Intent(this, UserProfileActivity.class);
         intent.putExtra(MainActivity.EXTRA_MESSAGE1, nickname);
+        intent.putExtra(GuildMembersActivity.NADIMAK_KORISNIKA_KOJI_POKRECE_ACTIVITY, nickname);
         intent.putExtra(MainActivity.EXTRA_MESSAGE2, sifraCeha);
         startActivity(intent);
     }

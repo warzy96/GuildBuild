@@ -66,8 +66,8 @@ public class ConcedeActivity extends AppCompatActivity {
             String newLeaderNickname = strings[0];
             try {
                 RangDAO rangDAO = new RangDAO();
-                rangDAO.updateUserRank(nickname, RangConstants.coordinator);
-                rangDAO.updateUserRank(newLeaderNickname, RangConstants.leader);
+                rangDAO.updateUserRank(nickname, RangConstants.coordinator, sifraCeha.toString());
+                rangDAO.updateUserRank(newLeaderNickname, RangConstants.leader, sifraCeha.toString());
                 result = "Success";
                 success = true;
             }

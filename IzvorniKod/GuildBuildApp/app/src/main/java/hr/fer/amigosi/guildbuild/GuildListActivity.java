@@ -23,7 +23,7 @@ public class GuildListActivity extends AppCompatActivity {
     public static final String IS_FROM_GUILD_LIST_ACTIVITY = "fromGuildList";
     private LinearLayout guildList;
     private String nickname;
-    private int sifraCeha;
+    private Integer sifraCeha;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +85,7 @@ public class GuildListActivity extends AppCompatActivity {
                 textView.setOnClickListener(view -> {
                     Intent guildDetails = new Intent(GuildListActivity.this, GuildDetailsActivity.class);
                     guildDetails.putExtra(MainActivity.EXTRA_MESSAGE1, nickname);
-                    guildDetails.putExtra(MainActivity.EXTRA_MESSAGE2, sifraCeha);
+                    guildDetails.putExtra(MainActivity.EXTRA_MESSAGE2, sifraCeha.toString());
                     guildDetails.putExtra(GuildDetailsActivity.EXTRA_MESSAGE3, cehEntity.getSifraCeha());
                     guildDetails.putExtra(IS_FROM_GUILD_LIST_ACTIVITY, true);
                     startActivity(guildDetails);

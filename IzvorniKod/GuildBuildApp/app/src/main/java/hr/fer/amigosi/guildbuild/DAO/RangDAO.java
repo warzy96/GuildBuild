@@ -22,9 +22,23 @@ public class RangDAO {
         connection.close();
     }
 
-    public void updateUserRank(String nickname, String rank) throws SQLException{
+    public void insertUserRank(String nickname, String rank, String sifraCeha) throws SQLException{
+        String querry = "INSERT INTO rang (rang, nadimak, sifceh) VALUES ('" + rank + "'"
+                + ",'" +nickname+"',"
+                + Integer.parseInt(sifraCeha) + ")";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(querry);
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
+
+    public void updateUserRank(String nickname, String rank, String sifraCeha) throws SQLException{
         String querry = "UPDATE rang SET rang.rang='" + rank + "'"
-                + " WHERE rang.nadimak='" +nickname+"'";
+                + " WHERE rang.nadimak='" +nickname+"' AND rang.sifCeh ="
+                + Integer.parseInt(sifraCeha);
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(querry);
@@ -58,6 +72,20 @@ public class RangDAO {
             if(rs.next()) {
                 return rs.getString("rang");
             }
+        }catch(SQLException e){
+            throw e;
+        }
+        return "";
+    }
+
+    //constraint in table should take care of this
+    public String deleteUser(String nickname) throws SQLException{
+        String query = "DELETE * FROM rang WHERE rang.nadimak = '"
+                + nickname + "'";
+
+        try{
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
         }catch(SQLException e){
             throw e;
         }

@@ -175,7 +175,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
         if(pastIntent.getBooleanExtra(GuildListActivity.IS_FROM_GUILD_LIST_ACTIVITY, false)) {
             chooseGuildSpinner.setVisibility(View.GONE);
             textView.setVisibility(View.GONE);
-            sifraTrazenogCeha = Integer.parseInt(pastIntent.getStringExtra(GuildDetailsActivity.EXTRA_MESSAGE3));
+            sifraTrazenogCeha = pastIntent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3, 0);
 
             new FillNameAndDesc().execute("");
             new IsRequestsButtonVisible().execute();

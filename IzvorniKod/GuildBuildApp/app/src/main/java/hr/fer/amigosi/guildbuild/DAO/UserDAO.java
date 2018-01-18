@@ -309,4 +309,20 @@ public class UserDAO {
             throw e;
         }
     }
+
+    public String getSifCeh(String nickname) throws SQLException{
+        String query = "SELECT korisnik.sifCeh FROM korisnik WHERE korisnik.nadimak = '"
+                + nickname + "'";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            if(resultSet.next()) {
+                return resultSet.getString("sifCeh");
+            }
+        }
+        catch (SQLException e) {
+            throw e;
+        }
+        return null;
+    }
 }

@@ -114,15 +114,37 @@ public class GuildCreateActivity extends AppCompatActivity{
         protected String doInBackground(String... strings) {
             try {
                 CehDAO cehDAO = new CehDAO();
-                cehDAO.insertGuild(strings[0], igreMap.get(key), guildDescription.getText().toString());
                 UserDAO userDAO = new UserDAO();
-                Integer guildNumber = cehDAO.getGuildNumber(strings[0], igreMap.get(key));
                 RangDAO rangDAO = new RangDAO();
-                if(guildNumber != 0) {
-                    userDAO.updateUserGuild(nickname, guildNumber.toString());
-                    rangDAO.updateUserRank(nickname, RangConstants.leader);
-                    result = "Guild created successfully!";
-                    success = true;
+                String sifreCehova = userDAO.getSifCeh(nickname);
+                if(sifreCehova != null) {
+                    List<CehEntity> sviCehoviZaIgru = cehDAO.getGuildsForGame(igreMap.get(key));
+                    for(CehEntity cehEntity : sviCehoviZaIgru) {
+                        Integer sifCeh = cehEntity.getSifraCeha();
+                        if(sifreCehova.contains(sifCeh.toString())) {
+                            result = "You are already in a guild for this game!";
+                            success = false;
+                            return null;
+                        }
+                    }
+                    cehDAO.insertGuild(strings[0], igreMap.get(key), guildDescription.getText().toString());
+                    Integer guildNumber = cehDAO.getGuildNumber(strings[0], igreMap.get(key));
+                    if(guildNumber != 0) {
+                        userDAO.updateUserGuild(nickname, sifreCehova + "," + guildNumber.toString());
+                        rangDAO.insertUserRank(nickname, RangConstants.leader, guildNumber.toString());
+                        result = "Guild created successfully!";
+                        success = true;
+                    }
+                }
+                else {
+                    cehDAO.insertGuild(strings[0], igreMap.get(key), guildDescription.getText().toString());
+                    Integer guildNumber = cehDAO.getGuildNumber(strings[0], igreMap.get(key));
+                    if(guildNumber != 0) {
+                        userDAO.updateUserGuild(nickname, guildNumber.toString());
+                        rangDAO.insertUserRank(nickname, RangConstants.leader, guildNumber.toString());
+                        result = "Guild created successfully!";
+                        success = true;
+                    }
                 }
             }
             catch (SQLException e) {
@@ -140,7 +162,6 @@ public class GuildCreateActivity extends AppCompatActivity{
             finally {
                 try {
                     UserDAO.close();
-                    CehDAO.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -150,7 +171,7 @@ public class GuildCreateActivity extends AppCompatActivity{
 
         @Override
         protected void onPostExecute(String s) {
-            Toast.makeText(GuildCreateActivity.this, result, Toast.LENGTH_SHORT).show();
+            Toast.makeText(GuildCreateActivity.this, result, Toast.LENGTH_LONG).show();
             if(success)
                 finish();
         }
