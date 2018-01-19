@@ -109,6 +109,7 @@ public class EventsListActivity extends AppCompatActivity {
                         Intent intent = new Intent(EventsListActivity.this, GoalsListActivity.class);
                         intent.putExtra(EventsListActivity.SIFRA_DOGADAJA,dogadajEntity.getSifraDogadaja());
                         intent.putExtra(MainActivity.EXTRA_MESSAGE1, nadimak);
+                        intent.putExtra(GuildDetailsActivity.EXTRA_MESSAGE3,sifraTrazenogCeha);
                         startActivity(intent);
                     });
 

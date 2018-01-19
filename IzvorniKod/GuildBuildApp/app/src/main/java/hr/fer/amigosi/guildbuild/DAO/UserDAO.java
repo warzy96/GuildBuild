@@ -135,7 +135,7 @@ public class UserDAO {
     }
     public void updateUser(KorisnikEntity korisnik) throws SQLException {
         String querry;
-        if(korisnik.getSifraCeha().isEmpty()) {
+        if(korisnik.getSifraCeha() == null) {
             querry = "UPDATE korisnik SET nadimak = '"
                     + korisnik.getNadimak() + "', email = '"
                     + korisnik.getEmail() + "', lozinka = '"

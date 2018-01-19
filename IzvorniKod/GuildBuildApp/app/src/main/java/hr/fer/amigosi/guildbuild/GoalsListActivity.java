@@ -25,6 +25,7 @@ public class GoalsListActivity extends AppCompatActivity {
     public static final String SIFRA_CILJA = "sifra_cilja";
 
     private int sifraDogadaja;
+    private int sifraTrazenogCeha;
     private String nadimak;
 
     @Override
@@ -45,6 +46,7 @@ public class GoalsListActivity extends AppCompatActivity {
             Intent intent = getIntent();
             sifraDogadaja = intent.getIntExtra(EventsListActivity.SIFRA_DOGADAJA,0);
             nadimak = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
+            sifraTrazenogCeha=intent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
         }
 
         @Override
@@ -92,6 +94,7 @@ public class GoalsListActivity extends AppCompatActivity {
                         intent.putExtra(GoalsListActivity.SIFRA_CILJA,ciljEntity.getSifraCilja());
                         intent.putExtra(EventsListActivity.SIFRA_DOGADAJA, sifraDogadaja);
                         intent.putExtra(MainActivity.EXTRA_MESSAGE1,nadimak);
+                        intent.putExtra(GuildDetailsActivity.EXTRA_MESSAGE3,sifraTrazenogCeha);
                         startActivity(intent);
                     });
 

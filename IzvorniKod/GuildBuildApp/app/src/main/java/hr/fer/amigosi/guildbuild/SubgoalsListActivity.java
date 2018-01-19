@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hr.fer.amigosi.guildbuild.DAO.PodciljDAO;
+import hr.fer.amigosi.guildbuild.DAO.UserDAO;
 import hr.fer.amigosi.guildbuild.entities.ObrazacEntity;
 import hr.fer.amigosi.guildbuild.entities.PodciljEntity;
 
@@ -25,6 +26,8 @@ public class SubgoalsListActivity extends AppCompatActivity {
     private int sifraDogadaja;
     private int sifraCilja;
     private String nadimak;
+    private int sifraTrazenogCeha;
+    private String sifreCehova;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class SubgoalsListActivity extends AppCompatActivity {
             sifraDogadaja = intent.getIntExtra(EventsListActivity.SIFRA_DOGADAJA, 0);
             sifraCilja = intent.getIntExtra(GoalsListActivity.SIFRA_CILJA,0);
             nadimak = intent.getStringExtra(MainActivity.EXTRA_MESSAGE1);
+            sifraTrazenogCeha=intent.getIntExtra(GuildDetailsActivity.EXTRA_MESSAGE3,0);
         }
 
         @Override
@@ -59,6 +63,8 @@ public class SubgoalsListActivity extends AppCompatActivity {
             try {
                 PodciljDAO podciljDAO = new PodciljDAO();
                 podciljevi = podciljDAO.getAllSubgoalsForGoal(sifraCilja);
+                UserDAO userDAO = new UserDAO();
+                sifreCehova = userDAO.getSifreCehova(nadimak);
             }
             catch(Exception e) {
 
@@ -94,31 +100,35 @@ public class SubgoalsListActivity extends AppCompatActivity {
                     subgoalName.setText(podciljEntity.getNazivPodcilja());
                     subgoalName.setTextSize(35);
 
-                    subgoalName.setOnClickListener(View -> {
-                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(SubgoalsListActivity.this);
-                        alertDialog.setTitle("Subgoal finished?");
-                        alertDialog.setCancelable(false);
-                        alertDialog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        });
-                        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                new FinishSubgoal().execute(podciljEntity.getSifraPodcilja());
-                            }
-                        });
-                        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        });
-                        alertDialog.show();
-                    });
+                    if(sifreCehova!=null) {
+                        if (sifreCehova.contains(String.valueOf(sifraTrazenogCeha))) {
 
+                            subgoalName.setOnClickListener(View -> {
+                                AlertDialog.Builder alertDialog = new AlertDialog.Builder(SubgoalsListActivity.this);
+                                alertDialog.setTitle("Subgoal finished?");
+                                alertDialog.setCancelable(false);
+                                alertDialog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.cancel();
+                                    }
+                                });
+                                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        new FinishSubgoal().execute(podciljEntity.getSifraPodcilja());
+                                    }
+                                });
+                                alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.cancel();
+                                    }
+                                });
+                                alertDialog.show();
+                            });
+                        }
+                    }
                     linearLayout.addView(subgoalName);
                 }
             }
