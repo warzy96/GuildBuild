@@ -346,6 +346,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
                 }
                 UserDAO userDAO = new UserDAO();
                 KorisnikEntity korisnikEntity = userDAO.getUserWithRank(nadimak, sifraTrazenogCeha.toString());
+                String sifreCehova = userDAO.getSifreCehova(nadimak);
 
 
                 if(korisnikEntity.getRang().equals(RangConstants.leader)){
@@ -354,7 +355,7 @@ public class GuildDetailsActivity extends AppCompatActivity {
 
                 }
 
-                userDAO.updateUserGuild(nadimak, sifraTrazenogCeha.toString());
+                userDAO.deleteUserGuild(nadimak, sifreCehova, sifraTrazenogCeha.toString());
                 RangDAO rangDAO = new RangDAO();
                 rangDAO.removeRow(nadimak, sifraTrazenogCeha.toString());
                 message = "You left the guild.";

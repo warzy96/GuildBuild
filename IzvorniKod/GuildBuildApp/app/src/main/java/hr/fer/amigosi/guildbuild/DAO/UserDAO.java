@@ -1,5 +1,7 @@
 package hr.fer.amigosi.guildbuild.DAO;
 
+import android.support.annotation.NonNull;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -344,6 +346,52 @@ public class UserDAO {
         }
         catch (SQLException e) {
             throw e;
+        }
+        return null;
+    }
+
+    public void deleteUserGuild(String nadimak, String sifreCehova, String sifCeha) throws SQLException{
+        String novi,querry;
+        if(sifreCehova.contains(","+sifCeha)){
+            novi = sifreCehova.replace(","+sifCeha,"");
+        }else if(sifreCehova.contains(sifCeha+",")){
+            novi = sifreCehova.replace(sifCeha+",","");
+        }else{
+            novi = sifreCehova.replace(sifCeha,"");
+        }
+
+        if(novi.isEmpty()){
+            novi=null;
+            querry = "UPDATE korisnik SET "
+                    + "sifCeh =" + novi
+                    + " WHERE korisnik.nadimak = '" + nadimak + "'";
+        }else{
+            querry = "UPDATE korisnik SET "
+                    + "sifCeh ='" + novi
+                    + "' WHERE korisnik.nadimak = '" + nadimak + "'";
+        }
+
+
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(querry);
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+    }
+
+    public String getSifreCehova(String nadimak) throws SQLException{
+        String querry = "SELECT korisnik.sifCeh FROM korisnik WHERE korisnik.nadimak='"+nadimak+"'";
+
+        try{
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(querry);
+            rs.next();
+            String result = rs.getString("sifCeh");
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return null;
     }

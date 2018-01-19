@@ -120,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
                             isSuccess = false;
                         }else{
                             String insertQuery = "insert into korisnik values('"+mail+"','"+nick+"','"+pw
-                                    +"', false, null,0,false,null,false)";
+                                    +"', false, null,false,null,false)";
                             stmt1.executeUpdate(insertQuery);
                             isSuccess=true;
                             z="Register successfull, wait for admin accept";
