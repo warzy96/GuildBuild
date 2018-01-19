@@ -134,16 +134,30 @@ public class UserDAO {
         }
     }
     public void updateUser(KorisnikEntity korisnik) throws SQLException {
-        String querry = "UPDATE korisnik SET nadimak = '"
-                + korisnik.getNadimak() + "', email = '"
-                + korisnik.getEmail() + "', lozinka = '"
-                + korisnik.getLozinka() + "', statusR ="
-                + korisnik.isStatusRegistracije() + ", sifCeh = '"
-                + korisnik.getSifraCeha() + "', statusP = "
-                + korisnik.isStatusPrijave() + ", opis = '"
-                + korisnik.getOpisKorisnika() + "', isAdmin = "
-                + korisnik.isAdmin()
-                + " WHERE korisnik.nadimak = '" + korisnik.getNadimak() + "';";
+        String querry;
+        if(korisnik.getSifraCeha().isEmpty()) {
+            querry = "UPDATE korisnik SET nadimak = '"
+                    + korisnik.getNadimak() + "', email = '"
+                    + korisnik.getEmail() + "', lozinka = '"
+                    + korisnik.getLozinka() + "', statusR ="
+                    + korisnik.isStatusRegistracije() + ", sifCeh = "
+                    + null + ", statusP = "
+                    + korisnik.isStatusPrijave() + ", opis = '"
+                    + korisnik.getOpisKorisnika() + "', isAdmin = "
+                    + korisnik.isAdmin()
+                    + " WHERE korisnik.nadimak = '" + korisnik.getNadimak() + "';";
+        }else{
+            querry = "UPDATE korisnik SET nadimak = '"
+                    + korisnik.getNadimak() + "', email = '"
+                    + korisnik.getEmail() + "', lozinka = '"
+                    + korisnik.getLozinka() + "', statusR ="
+                    + korisnik.isStatusRegistracije() + ", sifCeh = '"
+                    + korisnik.getSifraCeha() + "', statusP = "
+                    + korisnik.isStatusPrijave() + ", opis = '"
+                    + korisnik.getOpisKorisnika() + "', isAdmin = "
+                    + korisnik.isAdmin()
+                    + " WHERE korisnik.nadimak = '" + korisnik.getNadimak() + "';";
+        }
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(querry);
